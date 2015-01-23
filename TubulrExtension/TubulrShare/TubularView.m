@@ -144,20 +144,20 @@
 -(void)heartButtonPressed:(UIButton *)sender{
     [self.delegateController didPressHeartHandler:^(BOOL success) {
         if (success) {
-            
+            [self removeFromSuperview];
         }
     }];
 }
 -(void)watchLaterButtonPressed:(UIButton *)sender{
     [self.delegateController didPressViewLaterHandler:^(BOOL success) {
         if (success) {
-            
+            [self removeFromSuperview];
         }
     }];
 }
 -(void)cancelButtonPressed:(UIButton *)sender{
     [self.delegateController didPressCancel:^{
-        
+        [self removeFromSuperview];
     }];
 }
 

@@ -110,6 +110,7 @@ static NSString * const kTubulrDomain = @"group.SRLabs.sharedData";
         
         if ([self.sharedTubulrDefaults synchronize]) {
             NSLog(@"Bookmark syncronized to NSUser");
+            [self dismissShareExtension];
             complete(YES);
         }
     }else{
@@ -119,10 +120,16 @@ static NSString * const kTubulrDomain = @"group.SRLabs.sharedData";
     
 }
 -(void)didPressViewLaterHandler:(void (^)(BOOL))complete{
-    
+    [self dismissShareExtension];
+    complete(YES);
 }
 -(void)didPressCancel:(void (^)(void))complete{
-    
+    [self dismissShareExtension];
+    complete();
+}
+
+-(void)dismissShareExtension{
+    [self.extensionContext completeRequestReturningItems:nil completionHandler:nil];
 }
 
 
