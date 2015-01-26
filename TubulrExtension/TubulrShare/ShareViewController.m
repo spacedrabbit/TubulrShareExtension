@@ -39,7 +39,7 @@ static NSString * const kTubulrDomain = @"group.SRLabs.sharedData";
         }
     };
 
-    [self presentationAnimationDidFinish];
+    [self presentTubularView];
     
     NSExtensionContext * extensionContext = self.extensionContext;
     NSExtensionItem * extensionItem = [extensionContext.inputItems firstObject];
@@ -59,34 +59,9 @@ static NSString * const kTubulrDomain = @"group.SRLabs.sharedData";
     
 }
 
--(void)presentationAnimationDidFinish{
-    
-    NSLog(@"Presentation Animation Did finish");
-
-    // --------- LOADING NIB  --------- //
-    
-    //NSBundle * extensionBundle = [NSBundle bundleForClass:[TubularView class]];
-    //NSArray * nibContents = [extensionBundle loadNibNamed:@"TubularView" owner:nil options:nil];
-    //self.shareVideoView = [nibContents firstObject];
-    
+-(void)presentTubularView{
+    NSLog(@"Present Tubular View Did finish");
     [TubularView presentInViewController:self];
-    //self.shareVideoView
-    //[self.shareVideoView setFrame:[UIScreen mainScreen].bounds];
-    //[self.shareVideoView layoutIfNeeded];
-    
-    //[self.view addSubview:self.shareVideoView];
-    
-    // --------- BUTTON SETUP --------- //
-    
-//    [self.shareVideoView.cancelButton addTarget:nil
-//                                         action:@selector(didPressCancel:)
-//                               forControlEvents:UIControlEventTouchUpInside];
-//    [self.shareVideoView.heartButton addTarget:nil
-//                                        action:@selector(didPressHeartHandler:)
-//                              forControlEvents:UIControlEventTouchUpInside];
-//    [self.shareVideoView.watchLaterButton addTarget:nil
-//                                             action:@selector(didPressViewLaterHandler:)
-//                                   forControlEvents:UIControlEventTouchUpInside];
     
 }
 

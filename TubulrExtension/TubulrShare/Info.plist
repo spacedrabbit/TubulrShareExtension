@@ -28,8 +28,6 @@
 		<string>ShareViewController</string>
 		<key>NSExtensionAttributes</key>
 		<dict>
-			<key>NSExtensionPrincipalClass</key>
-			<string>ShareViewController</string>
 			<key>NSExtensionActivationRule</key>
 			<dict>
 				<key>NSExtensionActivationSupportsAttachmentsWithMinCount</key>
