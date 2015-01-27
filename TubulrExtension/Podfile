@@ -1,0 +1,20 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '6.0'
+
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'TubulrExtension' do
+
+end
+
+target 'TubulrExtensionTests' do
+
+	pod 'Expecta',     '~> 0.2.4'
+	pod 'Specta'
+
+end
+
+target 'TubulrShare' do
+
+end
+

@@ -50,11 +50,16 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     self.sharedTubulrDefaults = [[NSUserDefaults alloc] initWithSuiteName:kTubulrDomain];
     
     
+    // --------- SHARE EXTENTION VIEW --------- //
     [self presentTubularView];
+    
+    
+    // --------- INSPECTING AND RETRIEVING VIDEO IDS --------- //
     [self inspectExtensionContext:self.extensionContext
                       WithSuccess:^(NSURL * url)
     {
-        if (url) {
+        if (url) // success indicates a URL was found by the extension
+        {
             NSArray * videos = [self returnVideoURLsFoundIn:url];
             NSLog(@"The videos found: %@", videos);
         }
@@ -70,13 +75,13 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
                           error:(void(^)(NSError *))error
 {
     
-    // --------- COMPLETION BLOCK ---------- //
+    // --------- CONTEXT COMPLETION BLOCK ---------- //
     
     NSItemProviderCompletionHandler itemCompletionHandler = ^(id<NSSecureCoding> item, NSError * contextError){
         if (!contextError)
         {
             NSURL * currentPageURL = (NSURL *)item;
-            success(currentPageURL);
+            success(currentPageURL); //bubble up the page URL found by the extension context
         }
         else
         {
@@ -84,6 +89,7 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
         }
     };
 
+    
     // --------- INSPECTING EXTENSION CONTEXT --------- //
     
     NSExtensionContext * extensionContext = context;
@@ -108,6 +114,7 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     
 }
 
+// nib is loaded into viewcontroller
 -(void)presentTubularView{
     NSLog(@"Present Tubular View Did finish");
     [TubularView presentInViewController:self];
@@ -161,9 +168,6 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     // ------- PATTERN 1 ------ seems to work the best, returns video ID's ----------- //
     NSString * youtubeRegexString = @"(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)";
     
-    //
-    //  refactor here
-    //
     #pragma _ mark all of the following should be re-written with enumerateMatchesInString:
     NSRegularExpression * youtubeRegex = [NSRegularExpression regularExpressionWithPattern:youtubeRegexString
                                                                                    options:NSRegularExpressionCaseInsensitive error:&regexError];
