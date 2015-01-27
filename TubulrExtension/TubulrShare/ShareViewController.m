@@ -30,8 +30,12 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
 
 @interface ShareViewController ()<TubularViewDelegate>
 
+@property (strong, nonatomic) UIPasteboard      * sharedPasteBoard;
+
 @property (strong, nonatomic) __block NSURL     * currentPageURL;
+
 @property (strong, nonatomic) NSUserDefaults    * sharedTubulrDefaults;
+
 @property (strong, nonatomic) TubularView       * shareVideoView;
 
 @end
@@ -44,30 +48,58 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
 
 -(void)viewDidLoad{
     
-    NSLog(@"View did load");
-    
-    // --------- NSUSERDEFAULTS --------- //
+    // --------- NSUSERDEFAULTS/UIPASTEBOARD --------- //
     self.sharedTubulrDefaults = [[NSUserDefaults alloc] initWithSuiteName:kTubulrDomain];
+    self.sharedPasteBoard     = [UIPasteboard generalPasteboard];
     
     
     // --------- SHARE EXTENTION VIEW --------- //
     [self presentTubularView];
+    [self checkPasteBoardForURLs]; //this should really check if the URL is a valid video URL
     
     
     // --------- INSPECTING AND RETRIEVING VIDEO IDS --------- //
+    [self beginLookingForVideoURLs];
+}
+
+-(void)presentTubularView
+{
+    // --------- LOADING NIB --------- //
+    self.shareVideoView = [TubularView presentInViewController:self];
+}
+
+
+
+
+/**********************************************************************************
+ *
+ *                  CHECKING EXTENSION CONTEXT FOR URLS
+ *
+ ***********************************************************************************/
+#pragma mark - INSPECTING EXTENSION CONTEXT -
+
+
+-(void) beginLookingForVideoURLs
+{
     [self inspectExtensionContext:self.extensionContext
                       WithSuccess:^(NSURL * url)
-    {
-        if (url) // success indicates a URL was found by the extension
-        {
-            NSArray * videos = [self returnVideoURLsFoundIn:url];
-            NSLog(@"The videos found: %@", videos);
-        }
-    }
+     {
+         if (url) // success indicates a URL was found by the extension
+         {
+             NSArray * videos = [self returnVideoURLsFoundIn:url];
+             NSLog(@"The videos found: %@", videos);
+         }
+         else
+         {
+             //check pasteboard
+         }
+     }
                             error:^(NSError * error)
-    {
-        NSLog(@"Encountered an error in context inspection block: %@", error);
-    }];
+     {
+         //update display to indicate no sources found
+         NSLog(@"Encountered an error in context inspection block: %@", error);
+     }];
+    
 }
 
 -(void) inspectExtensionContext:(NSExtensionContext *)context
@@ -110,29 +142,6 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
          }
          
      }];
-
-    
-}
-
-// nib is loaded into viewcontroller
--(void)presentTubularView{
-    NSLog(@"Present Tubular View Did finish");
-    [TubularView presentInViewController:self];
-    
-}
-
-// not actually implemented anymore, self.currentPageURL isn't used
-- (BOOL)isContentValid {
-    NSLog(@"Called content valid");
-//    if (self.currentPageURL) {
-//        NSLog(@"VIDEO URL VALID!");
-//        return YES;
-//    }else{
-//        NSLog(@"URL IS NOT VALID!");
-//        return NO;
-//    }
-    
-    return YES;
 }
 
 
@@ -147,38 +156,50 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
  ***********************************************************************************/
 #pragma mark - LINK PARSING -
 
--(NSArray *)returnVideoURLsFoundIn:(NSURL *)url{
-    
+
+// If the context finds a URL, this will return all valid video links on the page
+-(NSArray *)returnVideoURLsFoundIn:(NSURL *)url
+{
+    // --------- EXTRACT HTML FROM PAGE --------- //
     NSError * urlStringifyError = nil;
     NSString * fullPageHTML = [NSString stringWithContentsOfURL:url
                                                    encoding:NSUTF8StringEncoding
                                                       error:&urlStringifyError];
     
-    NSArray * youtubeVideoIDRanges = [self extractYouTubeLinks:fullPageHTML];
+    // --------- GET YOUTUBE VIDEOS --------- //
+    NSArray * youtubeVideoIDs = [self extractYouTubeLinks:fullPageHTML];
+    
+    
+    // --------- GET VIMEO VIDEOS --------- //
+    NSArray * vimeoVideos = [self extractVimeoLinks:fullPageHTML];
 
-    return youtubeVideoIDRanges;
+    
+    
+    return [youtubeVideoIDs arrayByAddingObjectsFromArray:vimeoVideos];
 }
 
--(NSArray *)extractYouTubeLinks:(NSString *)html{
-    
+
+// Looks for youtube videos by their unique IDs
+-(NSArray *)extractYouTubeLinks:(NSString *)html
+{
     NSMutableSet * uniqueVideoIDs = [[NSMutableSet alloc] init];
     NSError * regexError = nil;
     NSRange htmlRange = NSMakeRange(0, [html length]);
     
-    // ------- PATTERN 1 ------ seems to work the best, returns video ID's ----------- //
+    
+    // ------- REGEX - YOUTUBE ----------- //
     NSString * youtubeRegexString = @"(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)";
     
-    #pragma _ mark all of the following should be re-written with enumerateMatchesInString:
+    #pragma mark * refactor with enumerateMatchesInString: *
     NSRegularExpression * youtubeRegex = [NSRegularExpression regularExpressionWithPattern:youtubeRegexString
                                                                                    options:NSRegularExpressionCaseInsensitive error:&regexError];
-    //an array of NSTextCheckingResults
     NSArray * rangesOfVideoIDs = [youtubeRegex matchesInString:html
                                                     options:NSMatchingWithTransparentBounds
-                                                      range:htmlRange];
+                                                      range:htmlRange]; //an array of NSTextCheckingResults
     
     for (NSTextCheckingResult * checkingResults in rangesOfVideoIDs)
     {
-        NSRange videoIDRange = checkingResults.range;   // gets range from NSTextCheckingResult
+        NSRange videoIDRange = checkingResults.range;                   // gets range from NSTextCheckingResult
         NSString * videoID = [html substringWithRange:videoIDRange];    // gets substring from html
         ([videoID length] < 10) ? : [uniqueVideoIDs addObject:videoID]; // if length > 10, adds to set
     }
@@ -202,9 +223,43 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     return [uniqueVideoIDs allObjects];
 }
 
+// Looks for Vimeo videos
 -(NSArray *)extractVimeoLinks:(NSString *)html{
     
     return nil;
+}
+
+
+#pragma mark -- PASTEBOARD-SPECIFIC --
+-(void) checkPasteBoardForURLs{
+    
+    // containsPasteboardTypes: only checks first element in pasteboad
+    BOOL firstItemInPasteboardIsValid = [self.sharedPasteBoard containsPasteboardTypes:[UIPasteboardTypeListString arrayByAddingObjectsFromArray:UIPasteboardTypeListURL]];
+    
+    if ( firstItemInPasteboardIsValid )
+    {
+        #pragma mark potential issue: string attribute will be nil if !UIPasteboardTypeListString
+        NSString * copiedURL = self.sharedPasteBoard.string;
+        [self isValidURL:copiedURL] ? [self displayPasteBoardURL:copiedURL] : @"URL not valid";
+    }
+    
+}
+
+-(BOOL) isValidURL:(NSString *)url{
+    
+    NSError * detectorError;
+    NSDataDetector * urlDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&detectorError];
+    NSTextCheckingResult * urlTypeCheck = [urlDetector firstMatchInString:url
+                                                                  options:NSMatchingWithTransparentBounds
+                                                                    range:NSMakeRange(0, [url length])];
+    
+    return urlTypeCheck.numberOfRanges; // returns 0 or 1 based on number of URL ranges found (firstMatch:)
+}
+
+-(BOOL) isContentValid{
+    //update to include logic that verifies that at least 1 data source has valid URLs
+    //whether that be the page URl, the pasteboard, or the content of the page itself.
+    return YES;
 }
 
 
@@ -216,11 +271,12 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
  *
  *
  ***********************************************************************************/
-#pragma mark - Tubulr View Delegate Methods -
+#pragma mark - TUBULR DELEGATE METHODS -
 
 -(void)didPressHeartHandler:(void (^)(BOOL))complete{
     
-    if ([self isContentValid]) {
+    if ([self isContentValid])
+    {
         
         [self.sharedTubulrDefaults setURL:self.currentPageURL
                                    forKey:self.currentPageURL.absoluteString];
@@ -234,7 +290,6 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
         complete(NO);
     }
     
-    
 }
 -(void)didPressViewLaterHandler:(void (^)(BOOL))complete{
     [self dismissShareExtension];
@@ -244,10 +299,15 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     [self dismissShareExtension];
     complete();
 }
-
 -(void)dismissShareExtension{
     [self.extensionContext completeRequestReturningItems:nil completionHandler:nil];
 }
 
+-(void)displayPasteBoardURL:(NSString *)url
+{
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        self.shareVideoView.addVideoURLTextField.text = url;
+    }];
+}
 
 @end

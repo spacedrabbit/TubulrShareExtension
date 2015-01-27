@@ -46,7 +46,7 @@
     return self;
 }
 
-+(void)presentInViewController:(UIViewController<TubularViewDelegate> *)viewController{
++(instancetype)presentInViewController:(UIViewController<TubularViewDelegate> *)viewController{
     
     // --------- MAGIC ENCAPSULATING CODE --------- //
     //      for the magic behind this code, see:    //
@@ -92,7 +92,7 @@
     
     [viewController.view addSubview:viewOwner.ownedView];
     
-    
+    return viewOwner.ownedView;
 }
 
 -(void)awakeFromNib{
@@ -110,7 +110,7 @@
     _addVideoURLTextField.backgroundColor =[ UIColor whiteColor];
     _addVideoURLTextField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
     [_addVideoURLTextField.layer setCornerRadius:7.0];
-    [_addVideoURLTextField setClearsOnBeginEditing:YES];
+    [_addVideoURLTextField setClearsOnBeginEditing:NO];
     [_addVideoURLTextField setLayoutMargins:UIEdgeInsetsMake(0, 15.0, 0, 5.0)];
     
     _addVideoURLTextField.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
@@ -125,18 +125,6 @@
     _watchLaterButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
     _watchLaterButton.titleLabel.text = @"Watch Later";
     _watchLaterButton.titleLabel.textColor = [UIColor whiteColor];
-    
-//    Not currently used, but can be if needed
-//    [_watchLaterButton addTarget:self
-//                          action:@selector(watchLaterButtonPressedWithCompletion:)
-//                forControlEvents:UIControlEventTouchUpInside];
-//    [_heartButton addTarget:self
-//                     action:@selector(heartButtonPressedWithCompletion:)
-//           forControlEvents:UIControlEventTouchUpInside];
-//    [_cancelButton addTarget:self
-//                      action:@selector(cancelButtonPressedWithCompletion:)
-//            forControlEvents:UIControlEventTouchUpInside];
-    
 
 }
 
@@ -161,7 +149,12 @@
     }];
 }
 
+-(void) displayPasteBoardURL:(NSString *)url
+{
+    [self.delegateController displayPasteBoardURL:url];
+}
 
+// -- unused -- //
 -(void)heartButtonPressedWithCompletion:(void (^)(BOOL))completion{
     NSLog(@"heartbutton pressed!");
     

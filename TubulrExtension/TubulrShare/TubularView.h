@@ -16,6 +16,10 @@
 -(void)didPressViewLaterHandler:(void(^)(BOOL success))complete;
 -(void)didPressCancel:(void(^)(void))complete;
 
+@optional
+
+-(void) displayPasteBoardURL:(NSString *)url;
+
 @end
 
 @interface TubularView : UIView
@@ -31,12 +35,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *heartButton;
 @property (weak, nonatomic) IBOutlet UIButton *watchLaterButton;
 
-+(void)presentInViewController:(UIViewController *)viewController;
++(instancetype)presentInViewController:(UIViewController *)viewController;
 
 -(IBAction)heartButtonPressed:(UIButton *)sender;
 -(IBAction)watchLaterButtonPressed:(UIButton *)sender;
 -(IBAction)cancelButtonPressed:(UIButton *)sender;
 
+// -- not used. functions currently handled by buttons themselves
 -(void)heartButtonPressedWithCompletion:(void(^)(BOOL))completion;
 -(void)watchLaterButtonPressedWithCompletion:(void(^)(BOOL))completion;
 -(void)cancelButtonPressedWithCompletion:(void(^)(BOOL))completion;
