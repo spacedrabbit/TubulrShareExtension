@@ -256,9 +256,30 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
 }
 
 // Looks for Vimeo videos
--(NSArray *)extractVimeoLinks:(NSString *)html{
+-(NSArray *)extractVimeoLinks:(NSString *)html
+{
+    NSMutableSet * uniqueVideoIDs = [[NSMutableSet alloc] init];
+    NSError * regexError = nil;
+    NSRange htmlRange = NSMakeRange(0, [html length]);
     
-    return nil;
+    // ------- REGEX - VIMEO ----------- //
+    NSString * vimeoRegexString = @"(?:(?<=vimeo.com/)[\\S]+?)([\\d]{1,})[\\w]*";
+    NSRegularExpression * vimeoRegex = [NSRegularExpression regularExpressionWithPattern:vimeoRegexString
+                                                                                 options:NSRegularExpressionCaseInsensitive | NSRegularExpressionDotMatchesLineSeparators | NSRegularExpressionAnchorsMatchLines
+                                                                                   error:&regexError];
+    NSArray * rangesOfVideoIDs = [vimeoRegex matchesInString:html
+                                                     options:NSMatchingWithTransparentBounds
+                                                       range:htmlRange]; //an array of NSTextCheckingResults
+    
+    for (NSTextCheckingResult * checkingResults in rangesOfVideoIDs)
+    {
+        NSRange videoIDRange = checkingResults.range;                   // gets range from NSTextCheckingResult
+        NSString * videoID = [html substringWithRange:videoIDRange];    // gets substring from html
+        //([videoID length] < 10) ? : [uniqueVideoIDs addObject:videoID]; // if length > 10, adds to set
+        [uniqueVideoIDs addObject:videoID];
+    }
+    
+    return [uniqueVideoIDs allObjects];
 }
 
 
