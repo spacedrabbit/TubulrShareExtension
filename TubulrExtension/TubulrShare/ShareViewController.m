@@ -60,6 +60,10 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     
     // --------- INSPECTING AND RETRIEVING VIDEO IDS --------- //
     [self beginLookingForVideoURLs];
+    
+    // --------- TESTING REGEX ONLY --------- //
+    //[self testingYoutubeURLVariations];
+    
 }
 
 -(void)presentTubularView
@@ -69,6 +73,31 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
 }
 
 
+-(void) testingYoutubeURLVariations{
+    
+    NSArray * youtubeURLs = @[  @"http://youtu.be/NLqAF9hrVbY",
+                                @"http://www.youtube.com/embed/NLqAF9hrVbY",
+                                @"https://www.youtube.com/embed/NLqAF9hrVbY",
+                                @"http://www.youtube.com/v/NLqAF9hrVbY?fs=1&hl=en_US",
+                                @"http://www.youtube.com/v/NLqAF9hrVbY?fs=1&hl=en_US",
+                                @"http://www.youtube.com/watch?v=NLqAF9hrVbY",
+                                @"http://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo",
+                                @"http://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I",
+                                @"http://www.youtube.com/sandalsResorts#p/c/54B8C800269D7C1B/2/PPS-8DMrAn4",
+                                @"http://gdata.youtube.com/feeds/api/videos/NLqAF9hrVbY",
+                                @"http://www.youtube.com/watch?v=spDj54kf-vY&feature=g-vrec",
+                                @"http://www.youtube.com/watch?v=spDj54kf-vY&feature=youtu.be",
+                                @"http://www.youtube-nocookie.com"                                  ];
+    
+    NSString * stringOfURLs = [youtubeURLs componentsJoinedByString:@""];
+    NSLog(@"Full html string: %@", stringOfURLs);
+    NSArray * regexTestResults = [self extractYouTubeLinks:stringOfURLs];
+    
+    NSLog(@"The extracted URLs: %@", regexTestResults);
+    
+    
+    
+}
 
 
 /**********************************************************************************
@@ -188,11 +217,13 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     
     
     // ------- REGEX - YOUTUBE ----------- //
-    NSString * youtubeRegexString = @"(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)";
-    
+    //NSString * youtubeRegexString = @"(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)";
+    NSString * youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
+
     #pragma mark * refactor with enumerateMatchesInString: *
     NSRegularExpression * youtubeRegex = [NSRegularExpression regularExpressionWithPattern:youtubeRegexString
-                                                                                   options:NSRegularExpressionCaseInsensitive error:&regexError];
+                                                                                   options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
+                                                                                     error:&regexError];
     NSArray * rangesOfVideoIDs = [youtubeRegex matchesInString:html
                                                     options:NSMatchingWithTransparentBounds
                                                       range:htmlRange]; //an array of NSTextCheckingResults
@@ -201,7 +232,8 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     {
         NSRange videoIDRange = checkingResults.range;                   // gets range from NSTextCheckingResult
         NSString * videoID = [html substringWithRange:videoIDRange];    // gets substring from html
-        ([videoID length] < 10) ? : [uniqueVideoIDs addObject:videoID]; // if length > 10, adds to set
+        //([videoID length] < 10) ? : [uniqueVideoIDs addObject:videoID]; // if length > 10, adds to set
+        [uniqueVideoIDs addObject:videoID];
     }
     /*
     // Uncomment to check regex results
