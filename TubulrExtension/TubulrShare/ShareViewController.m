@@ -22,6 +22,10 @@ static NSString * const kTubulrHeart    = @"submit?heart=";         //POST
 static NSString * const kTubulrWatch    = @"submit?watchlater=";    //POST
 
 static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
+
+static NSString * const vimeoRegexString = @"(?:vimeo.com/(?:[A-Za-z:]*/?)*|clip_{1}|href=\"/?(?:[A-Za-z:]*/)*)([0-9]{1,})";
+static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
+
 // ------------------------------------------------------------------------------------------//
 
 
@@ -61,8 +65,6 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     // --------- INSPECTING AND RETRIEVING VIDEO IDS --------- //
     [self beginLookingForVideoURLs];
     
-    // --------- TESTING REGEX ONLY --------- //
-    //[self testingYoutubeURLVariations];
     
 }
 
@@ -71,34 +73,6 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
     // --------- LOADING NIB --------- //
     self.shareVideoView = [TubularView presentInViewController:self];
 }
-
-
--(void) testingYoutubeURLVariations{
-    
-    NSArray * youtubeURLs = @[  @"http://youtu.be/NLqAF9hrVbY",
-                                @"http://www.youtube.com/embed/NLqAF9hrVbY",
-                                @"https://www.youtube.com/embed/NLqAF9hrVbY",
-                                @"http://www.youtube.com/v/NLqAF9hrVbY?fs=1&hl=en_US",
-                                @"http://www.youtube.com/v/NLqAF9hrVbY?fs=1&hl=en_US",
-                                @"http://www.youtube.com/watch?v=NLqAF9hrVbY",
-                                @"http://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo",
-                                @"http://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I",
-                                @"http://www.youtube.com/sandalsResorts#p/c/54B8C800269D7C1B/2/PPS-8DMrAn4",
-                                @"http://gdata.youtube.com/feeds/api/videos/NLqAF9hrVbY",
-                                @"http://www.youtube.com/watch?v=spDj54kf-vY&feature=g-vrec",
-                                @"http://www.youtube.com/watch?v=spDj54kf-vY&feature=youtu.be",
-                                @"http://www.youtube-nocookie.com"                                  ];
-    
-    NSString * stringOfURLs = [youtubeURLs componentsJoinedByString:@""];
-    NSLog(@"Full html string: %@", stringOfURLs);
-    NSArray * regexTestResults = [self extractYouTubeLinks:stringOfURLs];
-    
-    NSLog(@"The extracted URLs: %@", regexTestResults);
-    
-    
-    
-}
-
 
 /**********************************************************************************
  *
@@ -115,8 +89,9 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
      {
          if (url) // success indicates a URL was found by the extension
          {
-             NSArray * videos = [self returnVideoURLsFoundIn:url];
-             NSLog(@"The videos found: %@", videos);
+#pragma mark this method needs adjustment
+             [self returnVideoURLsFoundIn:url];
+             //NSLog(@"The videos found: %@", videos);
          }
          else
          {
@@ -185,101 +160,68 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
  ***********************************************************************************/
 #pragma mark - LINK PARSING -
 
-
-// If the context finds a URL, this will return all valid video links on the page
--(NSArray *)returnVideoURLsFoundIn:(NSURL *)url
+-(void)returnVideoURLsFoundIn:(NSURL *)url
 {
-    // --------- EXTRACT HTML FROM PAGE --------- //
+    // --------- SPECIFYING UTF8 ENCODING --------- //
     NSError * urlStringifyError = nil;
     NSString * fullPageHTML = [NSString stringWithContentsOfURL:url
-                                                   encoding:NSUTF8StringEncoding
-                                                      error:&urlStringifyError];
-    
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:&urlStringifyError];
+#pragma mark - need to restructure here to handle the addition of blocks
     // --------- GET YOUTUBE VIDEOS --------- //
-    NSArray * youtubeVideoIDs = [self extractYouTubeLinks:fullPageHTML];
-    
-    
-    // --------- GET VIMEO VIDEOS --------- //
-    NSArray * vimeoVideos = [self extractVimeoLinks:fullPageHTML];
+    NSMutableArray * youtubeVideos = [NSMutableArray array];
+    [self returnMatchesforPattern:youtubeRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
+        [youtubeVideos addObjectsFromArray:results];
+    }];
+    // --------- GET VIMEO VIDEOS   --------- //
+    NSMutableArray * vimeoVideos = [NSMutableArray array];
+    [self returnMatchesforPattern:vimeoRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
+        [vimeoVideos addObjectsFromArray:results];
+    }];
 
-    
-    
-    return [youtubeVideoIDs arrayByAddingObjectsFromArray:vimeoVideos];
 }
 
 
-// Looks for youtube videos by their unique IDs
--(NSArray *)extractYouTubeLinks:(NSString *)html
-{
-    NSMutableSet * uniqueVideoIDs = [[NSMutableSet alloc] init];
+-(void)returnMatchesforPattern:(NSString *)regexPattern inPage:(NSString *)htmlPage completetion:(void (^)(NSArray *)) matchedResults{
+    
+    __block NSMutableSet * regexMatchedResults = [[NSMutableSet alloc] init]; // prevent duplicates
+    NSRange htmlRange = NSMakeRange(0, [htmlPage length]);
     NSError * regexError = nil;
-    NSRange htmlRange = NSMakeRange(0, [html length]);
     
+    NSRegularExpression * regexExpression =
+                                    [NSRegularExpression regularExpressionWithPattern:regexPattern
+                                                                              options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
+                                                                                error:&regexError];
     
-    // ------- REGEX - YOUTUBE ----------- //
-    //NSString * youtubeRegexString = @"(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)";
-    NSString * youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
-
-    #pragma mark * refactor with enumerateMatchesInString: *
-    NSRegularExpression * youtubeRegex = [NSRegularExpression regularExpressionWithPattern:youtubeRegexString
-                                                                                   options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
-                                                                                     error:&regexError];
-    NSArray * rangesOfVideoIDs = [youtubeRegex matchesInString:html
-                                                    options:NSMatchingWithTransparentBounds
-                                                      range:htmlRange]; //an array of NSTextCheckingResults
-    
-    for (NSTextCheckingResult * checkingResults in rangesOfVideoIDs)
+    [regexExpression enumerateMatchesInString:htmlPage
+                                      options:NSMatchingReportProgress|NSMatchingReportCompletion
+                                        range:htmlRange
+                                   usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop)
     {
-        NSRange videoIDRange = checkingResults.range;                   // gets range from NSTextCheckingResult
-        NSString * videoID = [html substringWithRange:videoIDRange];    // gets substring from html
-        //([videoID length] < 10) ? : [uniqueVideoIDs addObject:videoID]; // if length > 10, adds to set
-        [uniqueVideoIDs addObject:videoID];
-    }
-    /*
-    // Uncomment to check regex results
-    // ------------------------------------------------------------------------------------------//
-    //    for (NSTextCheckingResult * checkedResult in youtubeVideos)
-    //    {
-    //        NSRange currentResultRange = checkedResult.range;
-    //        NSLog(@"String found: %@", [pageHTML substringWithRange:currentResultRange]);
-    //    }
-    // ------------------------------------------------------------------------------------------//
+        if (stop) {
+            matchedResults((NSArray*)regexMatchedResults);
+        }
+        
+        NSRange rangeOfHTMLMatchingRegex = result.range;
+        NSString * videoURLMatchingRegex = [htmlPage substringWithRange:rangeOfHTMLMatchingRegex];
+
+        [regexMatchedResults addObject:videoURLMatchingRegex];
+    }];
     
-    // ------- PATTERN 2 ----- doesn't work so well, keeping for reference ----------------------//
-    // ------------------------------------------------------------------------------------------//
-    //    NSString *pattern = [NSString stringWithUTF8String:@"(?:(?:\\.be\\/|embed\\/|v\\/|\\?v=|\\&v=|\\/videos\\/)|(?:[\\w+]+#\\w\\/\\w(?:\\/[\\w]+)?\\/\\w\\/))([\\w-_]+)".UTF8String];
-    //
-    // ------------------------------------------------------------------------------------------//
+    /*
+    
+    NSArray * regexCheckingResults =  [regexExpression matchesInString:htmlPage
+                                                               options:NSMatchingWithTransparentBounds
+                                                                 range:htmlRange]; // array of NSTextCheckingResult
+    
+    for (NSTextCheckingResult * checkingResult in regexCheckingResults)
+    {
+        NSRange videoIDRange = checkingResult.range;
+        NSString * videoID = [htmlPage substringWithRange:videoIDRange];
+        [regexMatchedResults addObject:videoID];
+    }
     */
     
-    return [uniqueVideoIDs allObjects];
-}
-
-// Looks for Vimeo videos
--(NSArray *)extractVimeoLinks:(NSString *)html
-{
-    NSMutableSet * uniqueVideoIDs = [[NSMutableSet alloc] init];
-    NSError * regexError = nil;
-    NSRange htmlRange = NSMakeRange(0, [html length]);
-    
-    // ------- REGEX - VIMEO ----------- //
-    NSString * vimeoRegexString = @"(?:(?<=vimeo.com/)[\\S]+?)([\\d]{1,})[\\w]*";
-    NSRegularExpression * vimeoRegex = [NSRegularExpression regularExpressionWithPattern:vimeoRegexString
-                                                                                 options:NSRegularExpressionCaseInsensitive | NSRegularExpressionDotMatchesLineSeparators | NSRegularExpressionAnchorsMatchLines
-                                                                                   error:&regexError];
-    NSArray * rangesOfVideoIDs = [vimeoRegex matchesInString:html
-                                                     options:NSMatchingWithTransparentBounds
-                                                       range:htmlRange]; //an array of NSTextCheckingResults
-    
-    for (NSTextCheckingResult * checkingResults in rangesOfVideoIDs)
-    {
-        NSRange videoIDRange = checkingResults.range;                   // gets range from NSTextCheckingResult
-        NSString * videoID = [html substringWithRange:videoIDRange];    // gets substring from html
-        //([videoID length] < 10) ? : [uniqueVideoIDs addObject:videoID]; // if length > 10, adds to set
-        [uniqueVideoIDs addObject:videoID];
-    }
-    
-    return [uniqueVideoIDs allObjects];
 }
 
 
