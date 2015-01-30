@@ -170,9 +170,9 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
 #pragma mark - need to restructure here to handle the addition of blocks
     // --------- GET YOUTUBE VIDEOS --------- //
     NSMutableArray * youtubeVideos = [NSMutableArray array];
-    //[self returnMatchesforPattern:youtubeRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
-    //    [youtubeVideos addObjectsFromArray:results];
-    //}];
+    [self returnMatchesforPattern:youtubeRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
+        [youtubeVideos addObjectsFromArray:results];
+    }];
     // --------- GET VIMEO VIDEOS   --------- //
     NSMutableArray * vimeoVideos = [NSMutableArray array];
     [self returnMatchesforPattern:vimeoRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
@@ -193,38 +193,29 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
                                                                               options:NSRegularExpressionCaseInsensitive|NSRegularExpressionUseUnixLineSeparators
                                                                                 error:&regexError];
     
-    
-    __block NSInteger counter = 0;
     [regexExpression enumerateMatchesInString:htmlPage
                                       options:NSMatchingReportProgress|NSMatchingReportCompletion
                                         range:htmlRange
                                    usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop)
     {
-        counter++;
         NSRange rangeOfHTMLMatchingRegex = result.range;
         NSString * videoURLMatchingRegex = [htmlPage substringWithRange:rangeOfHTMLMatchingRegex];
 
-        if ( [videoURLMatchingRegex length] ) {
+        if ([videoURLMatchingRegex length])
+        {
             [regexMatchedResults addObject:videoURLMatchingRegex];
-            NSLog(@"Result: %@ at counter: %li with flag: %li", result, counter, flags);
+            //NSLog(@"This splits up ranges based on capture groups!!");
+    #pragma youtube correctly parses out just the ID, so Ill need to do this for vimeo or explicitly state to grab the rangeAtIndex:0
+            //NSLog(@"Cap[0]: %@     Cap[1]:   %@", [htmlPage substringWithRange:[result rangeAtIndex:0]], [htmlPage substringWithRange:[result rangeAtIndex:1]]);
+            //NSLog(@"Found URL: %@ in range (%lu, %lu)", videoURLMatchingRegex, rangeOfHTMLMatchingRegex.location, rangeOfHTMLMatchingRegex.length);
         }
-
         
+        if (flags & NSMatchingCompleted )
+        {
+            //NSLog(@"It picks up completed");
+            matchedResults((NSArray*)regexMatchedResults);
+        }
     }];
-    
-    /*
-    
-    NSArray * regexCheckingResults =  [regexExpression matchesInString:htmlPage
-                                                               options:NSMatchingWithTransparentBounds
-                                                                 range:htmlRange]; // array of NSTextCheckingResult
-    
-    for (NSTextCheckingResult * checkingResult in regexCheckingResults)
-    {
-        NSRange videoIDRange = checkingResult.range;
-        NSString * videoID = [htmlPage substringWithRange:videoIDRange];
-        [regexMatchedResults addObject:videoID];
-    }
-    */
     
 }
 
