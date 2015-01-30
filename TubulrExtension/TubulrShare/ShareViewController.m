@@ -170,9 +170,9 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
 #pragma mark - need to restructure here to handle the addition of blocks
     // --------- GET YOUTUBE VIDEOS --------- //
     NSMutableArray * youtubeVideos = [NSMutableArray array];
-    [self returnMatchesforPattern:youtubeRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
-        [youtubeVideos addObjectsFromArray:results];
-    }];
+    //[self returnMatchesforPattern:youtubeRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
+    //    [youtubeVideos addObjectsFromArray:results];
+    //}];
     // --------- GET VIMEO VIDEOS   --------- //
     NSMutableArray * vimeoVideos = [NSMutableArray array];
     [self returnMatchesforPattern:vimeoRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
@@ -186,26 +186,30 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
     
     __block NSMutableSet * regexMatchedResults = [[NSMutableSet alloc] init]; // prevent duplicates
     NSRange htmlRange = NSMakeRange(0, [htmlPage length]);
-    NSError * regexError = nil;
+    NSError * regexError;
     
     NSRegularExpression * regexExpression =
                                     [NSRegularExpression regularExpressionWithPattern:regexPattern
-                                                                              options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
+                                                                              options:NSRegularExpressionCaseInsensitive|NSRegularExpressionUseUnixLineSeparators
                                                                                 error:&regexError];
     
+    
+    __block NSInteger counter = 0;
     [regexExpression enumerateMatchesInString:htmlPage
                                       options:NSMatchingReportProgress|NSMatchingReportCompletion
                                         range:htmlRange
                                    usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop)
     {
-        if (stop) {
-            matchedResults((NSArray*)regexMatchedResults);
-        }
-        
+        counter++;
         NSRange rangeOfHTMLMatchingRegex = result.range;
         NSString * videoURLMatchingRegex = [htmlPage substringWithRange:rangeOfHTMLMatchingRegex];
 
-        [regexMatchedResults addObject:videoURLMatchingRegex];
+        if ( [videoURLMatchingRegex length] ) {
+            [regexMatchedResults addObject:videoURLMatchingRegex];
+            NSLog(@"Result: %@ at counter: %li with flag: %li", result, counter, flags);
+        }
+
+        
     }];
     
     /*
