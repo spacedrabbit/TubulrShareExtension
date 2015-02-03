@@ -5,6 +5,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'TubulrExtension' do
 
+	pod 'hpple', '~> 0.2'
+
 end
 
 target 'TubulrExtensionTests' do
@@ -15,6 +17,8 @@ target 'TubulrExtensionTests' do
 end
 
 target 'TubulrShare' do
+
+	pod 'hpple', '~> 0.2'
 
 end
 

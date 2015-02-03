@@ -1,687 +1,1646 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		7B3EF8CA8AE35B28ABEDA658 /* libPods-TubulrExtensionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE86017F5B4D359B62977FC /* libPods-TubulrExtensionTests.a */; };
-		B10CA6D51A775997009CB360 /* TubulrShareTestsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B10CA6D41A775997009CB360 /* TubulrShareTestsSpec.m */; };
-		B153E7CC1A70E5DB006CCBCA /* TubularView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B153E7CB1A70E5DB006CCBCA /* TubularView.xib */; };
-		B153E7CF1A70E8FD006CCBCA /* TubularView.m in Sources */ = {isa = PBXBuildFile; fileRef = B153E7CE1A70E8FD006CCBCA /* TubularView.m */; };
-		B19D19FE1A70B1F100563321 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B19D19FD1A70B1F100563321 /* main.m */; };
-		B19D1A011A70B1F100563321 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B19D1A001A70B1F100563321 /* AppDelegate.m */; };
-		B19D1A041A70B1F100563321 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B19D1A031A70B1F100563321 /* ViewController.m */; };
-		B19D1A071A70B1F100563321 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B19D1A051A70B1F100563321 /* Main.storyboard */; };
-		B19D1A091A70B1F100563321 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B19D1A081A70B1F100563321 /* Images.xcassets */; };
-		B19D1A0C1A70B1F100563321 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B19D1A0A1A70B1F100563321 /* LaunchScreen.xib */; };
-		B19D1A2B1A70B24500563321 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B19D1A2A1A70B24500563321 /* ShareViewController.m */; };
-		B19D1A301A70B24500563321 /* TubulrShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B19D1A251A70B24500563321 /* TubulrShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B10CA6D61A775C3A009CB360 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B19D19F01A70B1F100563321 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B19D1A241A70B24500563321;
-			remoteInfo = TubulrShare;
-		};
-		B19D1A121A70B1F100563321 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B19D19F01A70B1F100563321 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B19D19F71A70B1F100563321;
-			remoteInfo = TubulrExtension;
-		};
-		B19D1A2E1A70B24500563321 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B19D19F01A70B1F100563321 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B19D1A241A70B24500563321;
-			remoteInfo = TubulrShare;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B19D1A341A70B24500563321 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				B19D1A301A70B24500563321 /* TubulrShare.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
-/* Begin PBXFileReference section */
-		76EB5CBDBF2E094388ED3AF8 /* Pods-TubulrExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubulrExtensionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TubulrExtensionTests/Pods-TubulrExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
-		85C16E930C562A5ED14084C5 /* Pods-TubulrExtensionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubulrExtensionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TubulrExtensionTests/Pods-TubulrExtensionTests.release.xcconfig"; sourceTree = "<group>"; };
-		B10CA6D41A775997009CB360 /* TubulrShareTestsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TubulrShareTestsSpec.m; sourceTree = "<group>"; };
-		B153E7C91A70E4CD006CCBCA /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
-		B153E7CB1A70E5DB006CCBCA /* TubularView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TubularView.xib; sourceTree = "<group>"; };
-		B153E7CD1A70E8FD006CCBCA /* TubularView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TubularView.h; sourceTree = "<group>"; };
-		B153E7CE1A70E8FD006CCBCA /* TubularView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TubularView.m; sourceTree = "<group>"; };
-		B19D19F81A70B1F100563321 /* TubulrExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TubulrExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B19D19FC1A70B1F100563321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B19D19FD1A70B1F100563321 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		B19D19FF1A70B1F100563321 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		B19D1A001A70B1F100563321 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		B19D1A021A70B1F100563321 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B19D1A031A70B1F100563321 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		B19D1A061A70B1F100563321 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B19D1A081A70B1F100563321 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B19D1A0B1A70B1F100563321 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		B19D1A111A70B1F100563321 /* TubulrExtensionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TubulrExtensionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B19D1A161A70B1F100563321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B19D1A171A70B1F100563321 /* TubulrExtensionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TubulrExtensionTests.m; sourceTree = "<group>"; };
-		B19D1A251A70B24500563321 /* TubulrShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TubulrShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		B19D1A281A70B24500563321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B19D1A291A70B24500563321 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
-		B19D1A2A1A70B24500563321 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
-		B19D1A351A70B26700563321 /* TubulrShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TubulrShare.entitlements; sourceTree = "<group>"; };
-		B19D1A361A70B2C300563321 /* TubulrExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TubulrExtension.entitlements; sourceTree = "<group>"; };
-		FFE86017F5B4D359B62977FC /* libPods-TubulrExtensionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TubulrExtensionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		B19D19F51A70B1F100563321 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B19D1A0E1A70B1F100563321 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7B3EF8CA8AE35B28ABEDA658 /* libPods-TubulrExtensionTests.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B19D1A221A70B24500563321 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		B10CA6D31A7758F1009CB360 /* UI Elements */ = {
-			isa = PBXGroup;
-			children = (
-				B153E7C91A70E4CD006CCBCA /* MainInterface.storyboard */,
-				B153E7CB1A70E5DB006CCBCA /* TubularView.xib */,
-				B153E7CD1A70E8FD006CCBCA /* TubularView.h */,
-				B153E7CE1A70E8FD006CCBCA /* TubularView.m */,
-			);
-			name = "UI Elements";
-			sourceTree = "<group>";
-		};
-		B19D19EF1A70B1F100563321 = {
-			isa = PBXGroup;
-			children = (
-				B19D19FA1A70B1F100563321 /* TubulrExtension */,
-				B19D1A141A70B1F100563321 /* TubulrExtensionTests */,
-				B19D1A261A70B24500563321 /* TubulrShare */,
-				B19D19F91A70B1F100563321 /* Products */,
-				DD7753EA136F675E663D2D76 /* Pods */,
-				C82287EE7FBBF680809390ED /* Frameworks */,
-			);
-			sourceTree = "<group>";
-		};
-		B19D19F91A70B1F100563321 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B19D19F81A70B1F100563321 /* TubulrExtension.app */,
-				B19D1A111A70B1F100563321 /* TubulrExtensionTests.xctest */,
-				B19D1A251A70B24500563321 /* TubulrShare.appex */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		B19D19FA1A70B1F100563321 /* TubulrExtension */ = {
-			isa = PBXGroup;
-			children = (
-				B19D1A361A70B2C300563321 /* TubulrExtension.entitlements */,
-				B19D19FF1A70B1F100563321 /* AppDelegate.h */,
-				B19D1A001A70B1F100563321 /* AppDelegate.m */,
-				B19D1A021A70B1F100563321 /* ViewController.h */,
-				B19D1A031A70B1F100563321 /* ViewController.m */,
-				B19D1A051A70B1F100563321 /* Main.storyboard */,
-				B19D1A081A70B1F100563321 /* Images.xcassets */,
-				B19D1A0A1A70B1F100563321 /* LaunchScreen.xib */,
-				B19D19FB1A70B1F100563321 /* Supporting Files */,
-			);
-			path = TubulrExtension;
-			sourceTree = "<group>";
-		};
-		B19D19FB1A70B1F100563321 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B19D19FC1A70B1F100563321 /* Info.plist */,
-				B19D19FD1A70B1F100563321 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B19D1A141A70B1F100563321 /* TubulrExtensionTests */ = {
-			isa = PBXGroup;
-			children = (
-				B19D1A171A70B1F100563321 /* TubulrExtensionTests.m */,
-				B10CA6D41A775997009CB360 /* TubulrShareTestsSpec.m */,
-				B19D1A151A70B1F100563321 /* Supporting Files */,
-			);
-			path = TubulrExtensionTests;
-			sourceTree = "<group>";
-		};
-		B19D1A151A70B1F100563321 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B19D1A161A70B1F100563321 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B19D1A261A70B24500563321 /* TubulrShare */ = {
-			isa = PBXGroup;
-			children = (
-				B19D1A271A70B24500563321 /* Supporting Files */,
-				B10CA6D31A7758F1009CB360 /* UI Elements */,
-				B19D1A291A70B24500563321 /* ShareViewController.h */,
-				B19D1A2A1A70B24500563321 /* ShareViewController.m */,
-			);
-			path = TubulrShare;
-			sourceTree = "<group>";
-		};
-		B19D1A271A70B24500563321 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B19D1A351A70B26700563321 /* TubulrShare.entitlements */,
-				B19D1A281A70B24500563321 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C82287EE7FBBF680809390ED /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				FFE86017F5B4D359B62977FC /* libPods-TubulrExtensionTests.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		DD7753EA136F675E663D2D76 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				76EB5CBDBF2E094388ED3AF8 /* Pods-TubulrExtensionTests.debug.xcconfig */,
-				85C16E930C562A5ED14084C5 /* Pods-TubulrExtensionTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		B19D19F71A70B1F100563321 /* TubulrExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B19D1A1B1A70B1F100563321 /* Build configuration list for PBXNativeTarget "TubulrExtension" */;
-			buildPhases = (
-				B19D19F41A70B1F100563321 /* Sources */,
-				B19D19F51A70B1F100563321 /* Frameworks */,
-				B19D19F61A70B1F100563321 /* Resources */,
-				B19D1A341A70B24500563321 /* Embed App Extensions */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B19D1A2F1A70B24500563321 /* PBXTargetDependency */,
-			);
-			name = TubulrExtension;
-			productName = TubulrExtension;
-			productReference = B19D19F81A70B1F100563321 /* TubulrExtension.app */;
-			productType = "com.apple.product-type.application";
-		};
-		B19D1A101A70B1F100563321 /* TubulrExtensionTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B19D1A1E1A70B1F100563321 /* Build configuration list for PBXNativeTarget "TubulrExtensionTests" */;
-			buildPhases = (
-				0E13F0B4B9EB86D2941A9DBA /* Check Pods Manifest.lock */,
-				B19D1A0D1A70B1F100563321 /* Sources */,
-				B19D1A0E1A70B1F100563321 /* Frameworks */,
-				B19D1A0F1A70B1F100563321 /* Resources */,
-				FEC1FE20F71EC5DB2DFB180D /* Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B10CA6D71A775C3A009CB360 /* PBXTargetDependency */,
-				B19D1A131A70B1F100563321 /* PBXTargetDependency */,
-			);
-			name = TubulrExtensionTests;
-			productName = TubulrExtensionTests;
-			productReference = B19D1A111A70B1F100563321 /* TubulrExtensionTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		B19D1A241A70B24500563321 /* TubulrShare */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B19D1A311A70B24500563321 /* Build configuration list for PBXNativeTarget "TubulrShare" */;
-			buildPhases = (
-				B19D1A211A70B24500563321 /* Sources */,
-				B19D1A221A70B24500563321 /* Frameworks */,
-				B19D1A231A70B24500563321 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TubulrShare;
-			productName = TubulrShare;
-			productReference = B19D1A251A70B24500563321 /* TubulrShare.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		B19D19F01A70B1F100563321 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0610;
-				ORGANIZATIONNAME = com.SRLabs;
-				TargetAttributes = {
-					B19D19F71A70B1F100563321 = {
-						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 3457AE227Q;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-						};
-					};
-					B19D1A101A70B1F100563321 = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = B19D19F71A70B1F100563321;
-					};
-					B19D1A241A70B24500563321 = {
-						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 3457AE227Q;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-						};
-					};
-				};
-			};
-			buildConfigurationList = B19D19F31A70B1F100563321 /* Build configuration list for PBXProject "TubulrExtension" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = B19D19EF1A70B1F100563321;
-			productRefGroup = B19D19F91A70B1F100563321 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				B19D19F71A70B1F100563321 /* TubulrExtension */,
-				B19D1A101A70B1F100563321 /* TubulrExtensionTests */,
-				B19D1A241A70B24500563321 /* TubulrShare */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		B19D19F61A70B1F100563321 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B19D1A071A70B1F100563321 /* Main.storyboard in Resources */,
-				B19D1A0C1A70B1F100563321 /* LaunchScreen.xib in Resources */,
-				B19D1A091A70B1F100563321 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B19D1A0F1A70B1F100563321 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B19D1A231A70B24500563321 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B153E7CC1A70E5DB006CCBCA /* TubularView.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0E13F0B4B9EB86D2941A9DBA /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		FEC1FE20F71EC5DB2DFB180D /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TubulrExtensionTests/Pods-TubulrExtensionTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		B19D19F41A70B1F100563321 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B19D1A041A70B1F100563321 /* ViewController.m in Sources */,
-				B19D1A011A70B1F100563321 /* AppDelegate.m in Sources */,
-				B19D19FE1A70B1F100563321 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B19D1A0D1A70B1F100563321 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B10CA6D51A775997009CB360 /* TubulrShareTestsSpec.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B19D1A211A70B24500563321 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B153E7CF1A70E8FD006CCBCA /* TubularView.m in Sources */,
-				B19D1A2B1A70B24500563321 /* ShareViewController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B10CA6D71A775C3A009CB360 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B19D1A241A70B24500563321 /* TubulrShare */;
-			targetProxy = B10CA6D61A775C3A009CB360 /* PBXContainerItemProxy */;
-		};
-		B19D1A131A70B1F100563321 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B19D19F71A70B1F100563321 /* TubulrExtension */;
-			targetProxy = B19D1A121A70B1F100563321 /* PBXContainerItemProxy */;
-		};
-		B19D1A2F1A70B24500563321 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B19D1A241A70B24500563321 /* TubulrShare */;
-			targetProxy = B19D1A2E1A70B24500563321 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		B19D1A051A70B1F100563321 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B19D1A061A70B1F100563321 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		B19D1A0A1A70B1F100563321 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B19D1A0B1A70B1F100563321 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
-/* Begin XCBuildConfiguration section */
-		B19D1A191A70B1F100563321 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		B19D1A1A1A70B1F100563321 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		B19D1A1C1A70B1F100563321 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = TubulrExtension/TubulrExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = TubulrExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-			};
-			name = Debug;
-		};
-		B19D1A1D1A70B1F100563321 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = TubulrExtension/TubulrExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = TubulrExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-			};
-			name = Release;
-		};
-		B19D1A1F1A70B1F100563321 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 76EB5CBDBF2E094388ED3AF8 /* Pods-TubulrExtensionTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = TubulrExtensionTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TubulrExtension.app/TubulrExtension";
-			};
-			name = Debug;
-		};
-		B19D1A201A70B1F100563321 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85C16E930C562A5ED14084C5 /* Pods-TubulrExtensionTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = TubulrExtensionTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TubulrExtension.app/TubulrExtension";
-			};
-			name = Release;
-		};
-		B19D1A321A70B24500563321 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = TubulrShare/TubulrShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = TubulrShare/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		B19D1A331A70B24500563321 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = TubulrShare/TubulrShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = TubulrShare/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		B19D19F31A70B1F100563321 /* Build configuration list for PBXProject "TubulrExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B19D1A191A70B1F100563321 /* Debug */,
-				B19D1A1A1A70B1F100563321 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B19D1A1B1A70B1F100563321 /* Build configuration list for PBXNativeTarget "TubulrExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B19D1A1C1A70B1F100563321 /* Debug */,
-				B19D1A1D1A70B1F100563321 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B19D1A1E1A70B1F100563321 /* Build configuration list for PBXNativeTarget "TubulrExtensionTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B19D1A1F1A70B1F100563321 /* Debug */,
-				B19D1A201A70B1F100563321 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B19D1A311A70B24500563321 /* Build configuration list for PBXNativeTarget "TubulrShare" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B19D1A321A70B24500563321 /* Debug */,
-				B19D1A331A70B24500563321 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = B19D19F01A70B1F100563321 /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>0E13F0B4B9EB86D2941A9DBA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>23852FB9CED180D14A077714</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TubulrExtension.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TubulrExtension/Pods-TubulrExtension.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>33A569EF481404B9461237E3</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-TubulrShare/Pods-TubulrShare-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>5642B7EE2231A7DA050FB1DC</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>5A33CD710FD6082258402F5D</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-TubulrExtension.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>76EB5CBDBF2E094388ED3AF8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TubulrExtensionTests.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TubulrExtensionTests/Pods-TubulrExtensionTests.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7B3EF8CA8AE35B28ABEDA658</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FFE86017F5B4D359B62977FC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>7DF468A8AC2BD65F9EB3622C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>AB45B77CFE71807D3B54D026</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>85C16E930C562A5ED14084C5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TubulrExtensionTests.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TubulrExtensionTests/Pods-TubulrExtensionTests.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>85CBB3C24C2E00AE217F1491</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5A33CD710FD6082258402F5D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>8753BB8D11EF5F4093D674C4</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>AB45B77CFE71807D3B54D026</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-TubulrShare.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>B10CA6D31A7758F1009CB360</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B153E7C91A70E4CD006CCBCA</string>
+				<string>B153E7CB1A70E5DB006CCBCA</string>
+				<string>B153E7CD1A70E8FD006CCBCA</string>
+				<string>B153E7CE1A70E8FD006CCBCA</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>UI Elements</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B10CA6D41A775997009CB360</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TubulrShareTestsSpec.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B10CA6D51A775997009CB360</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B10CA6D41A775997009CB360</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B10CA6D61A775C3A009CB360</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>B19D19F01A70B1F100563321</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>B19D1A241A70B24500563321</string>
+			<key>remoteInfo</key>
+			<string>TubulrShare</string>
+		</dict>
+		<key>B10CA6D71A775C3A009CB360</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>B19D1A241A70B24500563321</string>
+			<key>targetProxy</key>
+			<string>B10CA6D61A775C3A009CB360</string>
+		</dict>
+		<key>B153E7C91A70E4CD006CCBCA</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>path</key>
+			<string>MainInterface.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B153E7CB1A70E5DB006CCBCA</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.xib</string>
+			<key>path</key>
+			<string>TubularView.xib</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B153E7CC1A70E5DB006CCBCA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B153E7CB1A70E5DB006CCBCA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B153E7CD1A70E8FD006CCBCA</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TubularView.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B153E7CE1A70E8FD006CCBCA</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TubularView.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B153E7CF1A70E8FD006CCBCA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B153E7CE1A70E8FD006CCBCA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B19D19EF1A70B1F100563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D19FA1A70B1F100563321</string>
+				<string>B19D1A141A70B1F100563321</string>
+				<string>B19D1A261A70B24500563321</string>
+				<string>B19D19F91A70B1F100563321</string>
+				<string>DD7753EA136F675E663D2D76</string>
+				<string>C82287EE7FBBF680809390ED</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D19F01A70B1F100563321</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastUpgradeCheck</key>
+				<string>0610</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>com.SRLabs</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>B19D19F71A70B1F100563321</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>6.1.1</string>
+						<key>DevelopmentTeam</key>
+						<string>3457AE227Q</string>
+						<key>SystemCapabilities</key>
+						<dict>
+							<key>com.apple.ApplicationGroups.iOS</key>
+							<dict>
+								<key>enabled</key>
+								<string>1</string>
+							</dict>
+						</dict>
+					</dict>
+					<key>B19D1A101A70B1F100563321</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>6.1.1</string>
+						<key>TestTargetID</key>
+						<string>B19D19F71A70B1F100563321</string>
+					</dict>
+					<key>B19D1A241A70B24500563321</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>6.1.1</string>
+						<key>DevelopmentTeam</key>
+						<string>3457AE227Q</string>
+						<key>SystemCapabilities</key>
+						<dict>
+							<key>com.apple.ApplicationGroups.iOS</key>
+							<dict>
+								<key>enabled</key>
+								<string>1</string>
+							</dict>
+						</dict>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>B19D19F31A70B1F100563321</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+				<string>Base</string>
+			</array>
+			<key>mainGroup</key>
+			<string>B19D19EF1A70B1F100563321</string>
+			<key>productRefGroup</key>
+			<string>B19D19F91A70B1F100563321</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array/>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>B19D19F71A70B1F100563321</string>
+				<string>B19D1A101A70B1F100563321</string>
+				<string>B19D1A241A70B24500563321</string>
+			</array>
+		</dict>
+		<key>B19D19F31A70B1F100563321</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>B19D1A191A70B1F100563321</string>
+				<string>B19D1A1A1A70B1F100563321</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>B19D19F41A70B1F100563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B19D1A041A70B1F100563321</string>
+				<string>B19D1A011A70B1F100563321</string>
+				<string>B19D19FE1A70B1F100563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D19F51A70B1F100563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>85CBB3C24C2E00AE217F1491</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D19F61A70B1F100563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B19D1A071A70B1F100563321</string>
+				<string>B19D1A0C1A70B1F100563321</string>
+				<string>B19D1A091A70B1F100563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D19F71A70B1F100563321</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>B19D1A1B1A70B1F100563321</string>
+			<key>buildPhases</key>
+			<array>
+				<string>5642B7EE2231A7DA050FB1DC</string>
+				<string>B19D19F41A70B1F100563321</string>
+				<string>B19D19F51A70B1F100563321</string>
+				<string>B19D19F61A70B1F100563321</string>
+				<string>B19D1A341A70B24500563321</string>
+				<string>E2D5EFE97374E4D1E9FA5A10</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>B19D1A2F1A70B24500563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>TubulrExtension</string>
+			<key>productName</key>
+			<string>TubulrExtension</string>
+			<key>productReference</key>
+			<string>B19D19F81A70B1F100563321</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>B19D19F81A70B1F100563321</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>TubulrExtension.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>B19D19F91A70B1F100563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D19F81A70B1F100563321</string>
+				<string>B19D1A111A70B1F100563321</string>
+				<string>B19D1A251A70B24500563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D19FA1A70B1F100563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D1A361A70B2C300563321</string>
+				<string>B19D19FF1A70B1F100563321</string>
+				<string>B19D1A001A70B1F100563321</string>
+				<string>B19D1A021A70B1F100563321</string>
+				<string>B19D1A031A70B1F100563321</string>
+				<string>B19D1A051A70B1F100563321</string>
+				<string>B19D1A081A70B1F100563321</string>
+				<string>B19D1A0A1A70B1F100563321</string>
+				<string>B19D19FB1A70B1F100563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>TubulrExtension</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D19FB1A70B1F100563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D19FC1A70B1F100563321</string>
+				<string>B19D19FD1A70B1F100563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D19FC1A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D19FD1A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>main.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D19FE1A70B1F100563321</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B19D19FD1A70B1F100563321</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B19D19FF1A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>AppDelegate.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A001A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>AppDelegate.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A011A70B1F100563321</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B19D1A001A70B1F100563321</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B19D1A021A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>ViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A031A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>ViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A041A70B1F100563321</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B19D1A031A70B1F100563321</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B19D1A051A70B1F100563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D1A061A70B1F100563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A061A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A071A70B1F100563321</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B19D1A051A70B1F100563321</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B19D1A081A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>path</key>
+			<string>Images.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A091A70B1F100563321</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B19D1A081A70B1F100563321</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B19D1A0A1A70B1F100563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D1A0B1A70B1F100563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>LaunchScreen.xib</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A0B1A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.xib</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/LaunchScreen.xib</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A0C1A70B1F100563321</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B19D1A0A1A70B1F100563321</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B19D1A0D1A70B1F100563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B10CA6D51A775997009CB360</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D1A0E1A70B1F100563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>7B3EF8CA8AE35B28ABEDA658</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D1A0F1A70B1F100563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D1A101A70B1F100563321</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>B19D1A1E1A70B1F100563321</string>
+			<key>buildPhases</key>
+			<array>
+				<string>0E13F0B4B9EB86D2941A9DBA</string>
+				<string>B19D1A0D1A70B1F100563321</string>
+				<string>B19D1A0E1A70B1F100563321</string>
+				<string>B19D1A0F1A70B1F100563321</string>
+				<string>FEC1FE20F71EC5DB2DFB180D</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>B10CA6D71A775C3A009CB360</string>
+				<string>B19D1A131A70B1F100563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>TubulrExtensionTests</string>
+			<key>productName</key>
+			<string>TubulrExtensionTests</string>
+			<key>productReference</key>
+			<string>B19D1A111A70B1F100563321</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>B19D1A111A70B1F100563321</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>TubulrExtensionTests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>B19D1A121A70B1F100563321</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>B19D19F01A70B1F100563321</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>B19D19F71A70B1F100563321</string>
+			<key>remoteInfo</key>
+			<string>TubulrExtension</string>
+		</dict>
+		<key>B19D1A131A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>B19D19F71A70B1F100563321</string>
+			<key>targetProxy</key>
+			<string>B19D1A121A70B1F100563321</string>
+		</dict>
+		<key>B19D1A141A70B1F100563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D1A171A70B1F100563321</string>
+				<string>B10CA6D41A775997009CB360</string>
+				<string>B19D1A151A70B1F100563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>TubulrExtensionTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A151A70B1F100563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D1A161A70B1F100563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A161A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A171A70B1F100563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TubulrExtensionTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A191A70B1F100563321</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>8.1</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>B19D1A1A1A70B1F100563321</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>8.1</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>B19D1A1B1A70B1F100563321</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>B19D1A1C1A70B1F100563321</string>
+				<string>B19D1A1D1A70B1F100563321</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>B19D1A1C1A70B1F100563321</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>23852FB9CED180D14A077714</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_ENTITLEMENTS</key>
+				<string>TubulrExtension/TubulrExtension.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>INFOPLIST_FILE</key>
+				<string>TubulrExtension/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>B19D1A1D1A70B1F100563321</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>CB4FCFAB579FBA7F4476DDBD</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_ENTITLEMENTS</key>
+				<string>TubulrExtension/TubulrExtension.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>INFOPLIST_FILE</key>
+				<string>TubulrExtension/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>B19D1A1E1A70B1F100563321</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>B19D1A1F1A70B1F100563321</string>
+				<string>B19D1A201A70B1F100563321</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>B19D1A1F1A70B1F100563321</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>76EB5CBDBF2E094388ED3AF8</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>TubulrExtensionTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/TubulrExtension.app/TubulrExtension</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>B19D1A201A70B1F100563321</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>85C16E930C562A5ED14084C5</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>TubulrExtensionTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/TubulrExtension.app/TubulrExtension</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>B19D1A211A70B24500563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B153E7CF1A70E8FD006CCBCA</string>
+				<string>B19D1A2B1A70B24500563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D1A221A70B24500563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>7DF468A8AC2BD65F9EB3622C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D1A231A70B24500563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B153E7CC1A70E5DB006CCBCA</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D1A241A70B24500563321</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>B19D1A311A70B24500563321</string>
+			<key>buildPhases</key>
+			<array>
+				<string>8753BB8D11EF5F4093D674C4</string>
+				<string>B19D1A211A70B24500563321</string>
+				<string>B19D1A221A70B24500563321</string>
+				<string>B19D1A231A70B24500563321</string>
+				<string>33A569EF481404B9461237E3</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>TubulrShare</string>
+			<key>productName</key>
+			<string>TubulrShare</string>
+			<key>productReference</key>
+			<string>B19D1A251A70B24500563321</string>
+			<key>productType</key>
+			<string>com.apple.product-type.app-extension</string>
+		</dict>
+		<key>B19D1A251A70B24500563321</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.app-extension</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>TubulrShare.appex</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>B19D1A261A70B24500563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D1A271A70B24500563321</string>
+				<string>B10CA6D31A7758F1009CB360</string>
+				<string>B19D1A291A70B24500563321</string>
+				<string>B19D1A2A1A70B24500563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>TubulrShare</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A271A70B24500563321</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B19D1A351A70B26700563321</string>
+				<string>B19D1A281A70B24500563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A281A70B24500563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A291A70B24500563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>ShareViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A2A1A70B24500563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>ShareViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A2B1A70B24500563321</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B19D1A2A1A70B24500563321</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B19D1A2E1A70B24500563321</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>B19D19F01A70B1F100563321</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>B19D1A241A70B24500563321</string>
+			<key>remoteInfo</key>
+			<string>TubulrShare</string>
+		</dict>
+		<key>B19D1A2F1A70B24500563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>B19D1A241A70B24500563321</string>
+			<key>targetProxy</key>
+			<string>B19D1A2E1A70B24500563321</string>
+		</dict>
+		<key>B19D1A301A70B24500563321</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B19D1A251A70B24500563321</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>RemoveHeadersOnCopy</string>
+				</array>
+			</dict>
+		</dict>
+		<key>B19D1A311A70B24500563321</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>B19D1A321A70B24500563321</string>
+				<string>B19D1A331A70B24500563321</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>B19D1A321A70B24500563321</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>B7DDE6A68CFE6C040F691381</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_ENTITLEMENTS</key>
+				<string>TubulrShare/TubulrShare.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>TubulrShare/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE</key>
+				<string></string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>B19D1A331A70B24500563321</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>D59C80F2329FFFAE8D541413</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_ENTITLEMENTS</key>
+				<string>TubulrShare/TubulrShare.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>INFOPLIST_FILE</key>
+				<string>TubulrShare/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE</key>
+				<string></string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>B19D1A341A70B24500563321</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>dstPath</key>
+			<string></string>
+			<key>dstSubfolderSpec</key>
+			<string>13</string>
+			<key>files</key>
+			<array>
+				<string>B19D1A301A70B24500563321</string>
+			</array>
+			<key>isa</key>
+			<string>PBXCopyFilesBuildPhase</string>
+			<key>name</key>
+			<string>Embed App Extensions</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B19D1A351A70B26700563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xml</string>
+			<key>path</key>
+			<string>TubulrShare.entitlements</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B19D1A361A70B2C300563321</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xml</string>
+			<key>path</key>
+			<string>TubulrExtension.entitlements</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B7DDE6A68CFE6C040F691381</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TubulrShare.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TubulrShare/Pods-TubulrShare.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C82287EE7FBBF680809390ED</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>FFE86017F5B4D359B62977FC</string>
+				<string>5A33CD710FD6082258402F5D</string>
+				<string>AB45B77CFE71807D3B54D026</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CB4FCFAB579FBA7F4476DDBD</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TubulrExtension.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TubulrExtension/Pods-TubulrExtension.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D59C80F2329FFFAE8D541413</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TubulrShare.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TubulrShare/Pods-TubulrShare.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>DD7753EA136F675E663D2D76</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>76EB5CBDBF2E094388ED3AF8</string>
+				<string>85C16E930C562A5ED14084C5</string>
+				<string>23852FB9CED180D14A077714</string>
+				<string>CB4FCFAB579FBA7F4476DDBD</string>
+				<string>B7DDE6A68CFE6C040F691381</string>
+				<string>D59C80F2329FFFAE8D541413</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E2D5EFE97374E4D1E9FA5A10</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-TubulrExtension/Pods-TubulrExtension-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>FEC1FE20F71EC5DB2DFB180D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-TubulrExtensionTests/Pods-TubulrExtensionTests-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>FFE86017F5B4D359B62977FC</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-TubulrExtensionTests.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>B19D19F01A70B1F100563321</string>
+</dict>
+</plist>

@@ -6,10 +6,11 @@
 //  Copyright (c) 2015 com.SRLabs. All rights reserved.
 //
 
+
 #import "TubularView.h"
 #import "ShareViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
-
+#import <TFHpple.h>
 // ------------------------------------------------------------------------------------------//
 // will need to get these from NSUserDefaults
 static NSString * const kTubulrUser     = @"";
@@ -23,7 +24,10 @@ static NSString * const kTubulrWatch    = @"submit?watchlater=";    //POST
 
 static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
 
+// -- REGEX Strings -- //
+
 static NSString * const vimeoRegexString = @"(?:vimeo.com/(?:[A-Za-z:]*/?)*|clip_{1}|href=\"/?(?:[A-Za-z:]*/)*)([0-9]{1,})";
+
 static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
 
 // ------------------------------------------------------------------------------------------//
@@ -90,8 +94,18 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
          if (url) // success indicates a URL was found by the extension
          {
 #pragma mark this method needs adjustment
-             [self returnVideoURLsFoundIn:url];
+             //[self returnVideoURLsFoundIn:url];
              //NSLog(@"The videos found: %@", videos);
+             NSData * urlDataToParse = [NSData dataWithContentsOfURL:url];
+             TFHpple * parser = [TFHpple hppleWithHTMLData:urlDataToParse];
+             NSArray * someStuff = [parser searchWithXPathQuery:@"//a"];
+             NSArray * otherStuff = [parser searchWithXPathQuery:@"//a[@href]"];
+             
+             for (TFHppleElement * element in otherStuff) {
+                 NSLog(@"%@", element);
+                 
+             }
+             
          }
          else
          {
@@ -170,9 +184,10 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
 #pragma mark - need to restructure here to handle the addition of blocks
     // --------- GET YOUTUBE VIDEOS --------- //
     NSMutableArray * youtubeVideos = [NSMutableArray array];
-    [self returnMatchesforPattern:youtubeRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
-        [youtubeVideos addObjectsFromArray:results];
-    }];
+    //[self returnMatchesforPattern:youtubeRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
+    //    [youtubeVideos addObjectsFromArray:results];
+    //}];
+    
     // --------- GET VIMEO VIDEOS   --------- //
     NSMutableArray * vimeoVideos = [NSMutableArray array];
     [self returnMatchesforPattern:vimeoRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
@@ -204,10 +219,11 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
         if ([videoURLMatchingRegex length])
         {
             [regexMatchedResults addObject:videoURLMatchingRegex];
-            //NSLog(@"This splits up ranges based on capture groups!!");
+            
     #pragma youtube correctly parses out just the ID, so Ill need to do this for vimeo or explicitly state to grab the rangeAtIndex:0
-            //NSLog(@"Cap[0]: %@     Cap[1]:   %@", [htmlPage substringWithRange:[result rangeAtIndex:0]], [htmlPage substringWithRange:[result rangeAtIndex:1]]);
-            //NSLog(@"Found URL: %@ in range (%lu, %lu)", videoURLMatchingRegex, rangeOfHTMLMatchingRegex.location, rangeOfHTMLMatchingRegex.length);
+            NSLog(@"Cap[0]: %@     Cap[1]:   %@",
+                  [htmlPage substringWithRange:[result rangeAtIndex:0]], [htmlPage substringWithRange:[result rangeAtIndex:1]]);
+            NSLog(@"Found URL: %@ in range (%lu, %lu)\n", videoURLMatchingRegex, rangeOfHTMLMatchingRegex.location, rangeOfHTMLMatchingRegex.length);
         }
         
         if (flags & NSMatchingCompleted )

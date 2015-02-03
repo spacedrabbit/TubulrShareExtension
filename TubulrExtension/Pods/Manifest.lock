@@ -1,13 +1,16 @@
 PODS:
   - Expecta (0.2.4)
+  - hpple (0.2.0)
   - Specta (0.2.1)
 
 DEPENDENCIES:
   - Expecta (~> 0.2.4)
+  - hpple (~> 0.2)
   - Specta
 
 SPEC CHECKSUMS:
   Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5
+  hpple: f4eb7c21a8db83ec264e5d614ec7509e10e5adec
   Specta: 9141310f46b1f68b676650ff2854e1ed0b74163a
 
 COCOAPODS: 0.34.4
