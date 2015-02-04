@@ -12,6 +12,6 @@
 @interface ServiceAPIManager : NSObject
 
 +(instancetype) sharedVimeoManager;
--(VimeoVideo *) verifyVimeoForID:(NSString *)videoID;
+-(void) verifyVimeoForID:(NSString *)videoID withHandler:(void(^)(VimeoVideo *))complete;
 
 @end

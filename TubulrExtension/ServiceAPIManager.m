@@ -45,7 +45,7 @@ static NSString * const kVimeoBaseVideoQueryURL = @"https://api.vimeo.com/videos
     return self;
 }
 
--(VimeoVideo *) verifyVimeoForID:(NSString *)videoID
+-(void) verifyVimeoForID:(NSString *)videoID withHandler:(void(^)(VimeoVideo *))complete
 {
     
     [self.sessionManager.requestSerializer setValue:kVimeoToken forHTTPHeaderField:@"Authorization"];
@@ -55,17 +55,21 @@ static NSString * const kVimeoBaseVideoQueryURL = @"https://api.vimeo.com/videos
                                                                  parameters:nil
                                                                     success:^(NSURLSessionDataTask *task, id responseObject)
     {
-        NSHTTPURLResponse * videoResponse = (NSHTTPURLResponse *)responseObject;
-        NSLog(@"The response: %@", videoResponse);
+        NSHTTPURLResponse * videoResponse = (NSHTTPURLResponse *)task.response;
+        if (videoResponse.statusCode == 200) {
+            VimeoVideo * locatedVideo = [[VimeoVideo alloc] initWithResponse:responseObject];
+            complete(locatedVideo);
+        }
+        else if (videoResponse.statusCode == 404){
+            
+        }
+        //NSLog(@"The response: %@", videoResponse);
     }
                                                                     failure:^(NSURLSessionDataTask *task, NSError *error)
     {
         NSLog(@"Failure: %@", error);
     }];
-    
     [videoVerificationTask resume];
-                                                    
-    return nil;
 }
 
 @end

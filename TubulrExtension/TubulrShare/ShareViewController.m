@@ -11,7 +11,9 @@
 #import "ShareViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <TFHpple.h>
+#import <AFNetworking/UIButton+AFNetworking.h>
 #import "ServiceAPIManager.h"
+#import "VimeoVideo.h"
 // ------------------------------------------------------------------------------------------//
 // will need to get these from NSUserDefaults
 static NSString * const kTubulrUser     = @"";
@@ -184,7 +186,16 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
     for (NSString * link in self.vimeoLinksSet) {
         NSString * cleanedString = [link stringByTrimmingCharactersInSet:everythingExceptNumbers];
         
-        [[ServiceAPIManager sharedVimeoManager] verifyVimeoForID:cleanedString];
+        [[ServiceAPIManager sharedVimeoManager] verifyVimeoForID:cleanedString withHandler:^(VimeoVideo * locatedVideo) {
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                
+                [self.shareVideoView.heartButton setBackgroundImageForState:UIControlStateNormal
+                                                                    withURL:[NSURL URLWithString:locatedVideo.imgURL_100x75] ];
+                
+            }];
+            
+        }];
         
     }
     
