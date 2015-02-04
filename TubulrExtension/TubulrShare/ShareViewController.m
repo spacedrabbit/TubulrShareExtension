@@ -67,7 +67,7 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
     
     
     // --------- INSPECTING AND RETRIEVING VIDEO IDS --------- //
-    [self beginLookingForVideoURLs];
+    [self scrapeForAllLinks];
     
     
 }
@@ -86,26 +86,19 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
 #pragma mark - INSPECTING EXTENSION CONTEXT -
 
 
--(void) beginLookingForVideoURLs
+-(void) scrapeForAllLinks
 {
     [self inspectExtensionContext:self.extensionContext
                       WithSuccess:^(NSURL * url)
      {
          if (url) // success indicates a URL was found by the extension
          {
-#pragma mark this method needs adjustment
-             //[self returnVideoURLsFoundIn:url];
-             //NSLog(@"The videos found: %@", videos);
+             
              NSData * urlDataToParse = [NSData dataWithContentsOfURL:url];
              TFHpple * parser = [TFHpple hppleWithHTMLData:urlDataToParse];
-             NSArray * someStuff = [parser searchWithXPathQuery:@"//a"];
-             NSArray * otherStuff = [parser searchWithXPathQuery:@"//a[@href]"];
+             NSArray * ahrefNodes = [parser searchWithXPathQuery:@"//a[@href]"]; //array of all <a href>'s
              
-             for (TFHppleElement * element in otherStuff) {
-                 NSLog(@"%@", element);
-                 
-             }
-             
+             [self parseMediaURLsFrom:ahrefNodes];
          }
          else
          {
@@ -120,9 +113,72 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
     
 }
 
--(void) inspectExtensionContext:(NSExtensionContext *)context
-                    WithSuccess:(void(^)(NSURL *))success
-                          error:(void(^)(NSError *))error
+/**********************************************************************************
+ *
+ *                  Updated Video Checks
+ *
+ ***********************************************************************************/
+
+-(void) parseMediaURLsFrom:(NSArray *)ahrefList
+{
+    NSMutableSet * youtubeLinks = [NSMutableSet set];
+    NSMutableSet * vimeoLinks = [NSMutableSet set];
+    
+
+    for (TFHppleElement * linkElement in ahrefList)
+    {
+        NSString * currentLink = [linkElement objectForKey:@"href"];
+        
+        NSString * youtubeResult = [self matchesYoutubeMedia:currentLink];
+        NSString * vimeoResult = [self matchesVimeoMedia:currentLink];
+        
+        !youtubeResult ?    : [youtubeLinks addObject:youtubeResult ];
+        !vimeoResult   ?    : [vimeoLinks   addObject:vimeoResult   ];
+    }
+    
+    
+}
+
+-(NSString *) matchesYoutubeMedia:(NSString *)link{
+    
+    NSString * utf8Link = [link stringByRemovingPercentEncoding];//utf-8 conversion
+    
+    NSError * regexError = nil;
+    NSRegularExpression * youtubeRegex = [NSRegularExpression regularExpressionWithPattern:youtubeRegexString
+                                                                                   options:NSRegularExpressionCaseInsensitive|NSRegularExpressionUseUnixLineSeparators
+                                                                                     error:&regexError];
+    NSTextCheckingResult * regexResults =  [youtubeRegex firstMatchInString:utf8Link
+                                                                    options:0
+                                                                      range:NSMakeRange(0, [utf8Link length])];
+    
+    
+    return [utf8Link substringWithRange:regexResults.range];
+}
+
+-(NSString *) matchesVimeoMedia:(NSString *)link{
+    
+    NSString * utf8Link = [link stringByRemovingPercentEncoding];
+    
+    NSError * regexError = nil;
+    NSRegularExpression * vimeoRegex = [NSRegularExpression regularExpressionWithPattern:vimeoRegexString
+                                                                                 options:NSRegularExpressionUseUnixLineSeparators|NSRegularExpressionCaseInsensitive
+                                                                                   error:&regexError];
+    NSTextCheckingResult * regexResults = [vimeoRegex firstMatchInString:utf8Link
+                                                                 options:0
+                                                                   range:NSMakeRange(0, [utf8Link length])];
+    
+    return [utf8Link substringWithRange:regexResults.range];
+}
+
+/**********************************************************************************
+ *
+ *                  Updated Video Checks
+ *
+ ***********************************************************************************/
+
+
+
+-(void) inspectExtensionContext:(NSExtensionContext *)context WithSuccess:(void(^)(NSURL *))success error:(void(^)(NSError *))error
 {
     
     // --------- CONTEXT COMPLETION BLOCK ---------- //
@@ -151,7 +207,6 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
          NSItemProvider * currentItem = (NSItemProvider *)obj;
          if([currentItem hasItemConformingToTypeIdentifier:(__bridge NSString *)kUTTypeURL])
          {
-             //NSLog(@"Current Item: %@", currentItem);
              
              //if an URL is found, its loaded and passed to the completionHandler
              [currentItem loadItemForTypeIdentifier:(__bridge NSString *)kUTTypeURL
@@ -183,7 +238,7 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
                                                           error:&urlStringifyError];
 #pragma mark - need to restructure here to handle the addition of blocks
     // --------- GET YOUTUBE VIDEOS --------- //
-    NSMutableArray * youtubeVideos = [NSMutableArray array];
+    //NSMutableArray * youtubeVideos = [NSMutableArray array];
     //[self returnMatchesforPattern:youtubeRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
     //    [youtubeVideos addObjectsFromArray:results];
     //}];
