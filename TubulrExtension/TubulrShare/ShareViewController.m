@@ -122,9 +122,14 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
     
 }
 
+
+
+
 /**********************************************************************************
  *
- *                  Updated Video Checks
+ *
+ *      HTML PARSING TO LOCATE VIDEO LINKS
+ *
  *
  ***********************************************************************************/
 
@@ -217,13 +222,6 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
     
 }
 
-/**********************************************************************************
- *
- *                  Updated Video Checks
- *
- ***********************************************************************************/
-
-
 
 -(void) inspectExtensionContext:(NSExtensionContext *)context WithSuccess:(void(^)(NSURL *))success error:(void(^)(NSError *))error
 {
@@ -264,78 +262,6 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
      }];
 }
 
-
-
-
-/**********************************************************************************
- *
- *
- *      HTML PARSING TO LOCATE VIDEO LINKS
- *
- *
- ***********************************************************************************/
-#pragma mark - LINK PARSING -
-
--(void)returnVideoURLsFoundIn:(NSURL *)url
-{
-    // --------- SPECIFYING UTF8 ENCODING --------- //
-    NSError * urlStringifyError = nil;
-    NSString * fullPageHTML = [NSString stringWithContentsOfURL:url
-                                                       encoding:NSUTF8StringEncoding
-                                                          error:&urlStringifyError];
-#pragma mark - need to restructure here to handle the addition of blocks
-    // --------- GET YOUTUBE VIDEOS --------- //
-    //NSMutableArray * youtubeVideos = [NSMutableArray array];
-    //[self returnMatchesforPattern:youtubeRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
-    //    [youtubeVideos addObjectsFromArray:results];
-    //}];
-    
-    // --------- GET VIMEO VIDEOS   --------- //
-    //NSMutableArray * vimeoVideos = [NSMutableArray array];
-    //[self returnMatchesforPattern:vimeoRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
-    //    [vimeoVideos addObjectsFromArray:results];
-    //}];
-
-}
-
-
--(void)returnMatchesforPattern:(NSString *)regexPattern inPage:(NSString *)htmlPage completetion:(void (^)(NSArray *)) matchedResults{
-    
-    __block NSMutableSet * regexMatchedResults = [[NSMutableSet alloc] init]; // prevent duplicates
-    NSRange htmlRange = NSMakeRange(0, [htmlPage length]);
-    NSError * regexError;
-    
-    NSRegularExpression * regexExpression =
-                                    [NSRegularExpression regularExpressionWithPattern:regexPattern
-                                                                              options:NSRegularExpressionCaseInsensitive|NSRegularExpressionUseUnixLineSeparators
-                                                                                error:&regexError];
-    
-    [regexExpression enumerateMatchesInString:htmlPage
-                                      options:NSMatchingReportProgress|NSMatchingReportCompletion
-                                        range:htmlRange
-                                   usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop)
-    {
-        NSRange rangeOfHTMLMatchingRegex = result.range;
-        NSString * videoURLMatchingRegex = [htmlPage substringWithRange:rangeOfHTMLMatchingRegex];
-
-        if ([videoURLMatchingRegex length])
-        {
-            [regexMatchedResults addObject:videoURLMatchingRegex];
-            
-    #pragma youtube correctly parses out just the ID, so Ill need to do this for vimeo or explicitly state to grab the rangeAtIndex:0
-            NSLog(@"Cap[0]: %@     Cap[1]:   %@",
-                  [htmlPage substringWithRange:[result rangeAtIndex:0]], [htmlPage substringWithRange:[result rangeAtIndex:1]]);
-            NSLog(@"Found URL: %@ in range (%lu, %lu)\n", videoURLMatchingRegex, rangeOfHTMLMatchingRegex.location, rangeOfHTMLMatchingRegex.length);
-        }
-        
-        if (flags & NSMatchingCompleted )
-        {
-            //NSLog(@"It picks up completed");
-            matchedResults((NSArray*)regexMatchedResults);
-        }
-    }];
-    
-}
 
 
 #pragma mark -- PASTEBOARD-SPECIFIC --
