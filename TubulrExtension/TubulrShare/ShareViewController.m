@@ -26,7 +26,9 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
 
 // -- REGEX Strings -- //
 
-static NSString * const vimeoRegexString = @"(?:vimeo.com/(?:[A-Za-z:]*/?)*|clip_{1}|href=\"/?(?:[A-Za-z:]*/)*)([0-9]{1,})";
+static NSString * const vimeoRegexString = @"(?:vimeo.com/(?:[A-Za-z:]*/?)*|clip_|href=\\\"/?(?:[A-Za-z:]*/)*)([0-9]{1,})";
+static NSString * const vimeoRegexHailMary = @"(?<=vimeo.com/|clip_|href=\\\"/)(?:[A-Za-z:]*/)*?([0-9]+)|(^|/)([0-9]+)[^\\s\"?\\\\/.*&^%$#@!)(&]*";
+static NSString * const vimeoRegexHailMaryRefined = @"(?<=vimeo.com/(video/)|clip_|href=\\\"/)[A-Za-z:]*/*?([0-9]+)|(^|/)([0-9]+)[^\\s\"?\\\\/.*&^%$#@!)(&]*";
 
 static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
 
@@ -99,7 +101,7 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
              
              NSData * urlDataToParse = [NSData dataWithContentsOfURL:url];
              TFHpple * parser = [TFHpple hppleWithHTMLData:urlDataToParse];
-             NSArray * ahrefNodes = [parser searchWithXPathQuery:@"//a[@href]"]; //array of all <a href>'s
+             NSArray * ahrefNodes = [parser searchWithXPathQuery:@"//a[@href]|//iframe[@src]"]; //array of all <a href>'s
              
              [self parseMediaURLsFrom:ahrefNodes];
          }
@@ -127,67 +129,89 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
     self.youtubeLinksSet = [NSMutableSet set];
     self.vimeoLinksSet = [NSMutableSet set];
     
+    // adds KVO to run link verification as soon as one is found
     [self addObserver:self forKeyPath:@"youtubeLinksSet" options:NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"vimeoLinksSet" options:NSKeyValueObservingOptionNew context:nil];
 
     for (TFHppleElement * linkElement in ahrefList)
     {
-        NSString * currentLink = [linkElement objectForKey:@"href"];
         
-        NSString * youtubeResult = [self matchesYoutubeMedia:currentLink];
-        NSString * vimeoResult = [self matchesVimeoMedia:currentLink];
+        NSString * currentLink;
+        if ( [[linkElement.attributes allKeys] containsObject:@"href"] )
+        {
+            currentLink = [linkElement objectForKey:@"href"]; //  <a href>
+        }
+        else if ( [[linkElement.attributes allKeys] containsObject:@"src"]  )
+        {
+            currentLink = [linkElement objectForKey:@"src"]; //  <iframe src>
+        }
+        else
+        {
+            NSLog(@"Some other weird shit: %@", linkElement);
+        }
+
+        //NSString * youtubeResult = [self extractMediaLink:currentLink withRegex:youtubeRegexString];
+        NSString * vimeoResult = [self extractMediaLink:currentLink withRegex:vimeoRegexHailMary];
         
-        
+        /*
+        // -- KVO Update of Youtube Links -- //
         [self willChangeValueForKey:@"youtubeLinksSet"
                     withSetMutation:NSKeyValueUnionSetMutation
                        usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
-        !youtubeResult ?    : [self.youtubeLinksSet addObject:youtubeResult ];
+        
+        
         [self didChangeValueForKey:@"youtubeLinksSet"
                    withSetMutation:NSKeyValueUnionSetMutation
                       usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
+        // -- KVO Update of Youtube Links -- //
+        */
+        //!youtubeResult ? : [self.youtubeLinksSet addObject:youtubeResult];
         
+        
+        // -- KVO Update of Vimeo Links -- //
+        [self willChangeValueForKey:@"vimeoLinksSet"
+                    withSetMutation:NSKeyValueUnionSetMutation
+                       usingObjects:[NSSet setWithObjects:vimeoResult, nil ]];
         !vimeoResult   ?    : [self.vimeoLinksSet   addObject:vimeoResult   ];
+        [self didChangeValueForKey:@"vimeoLinksSet"
+                   withSetMutation:NSKeyValueUnionSetMutation
+                      usingObjects:[NSSet setWithObjects:vimeoResult, nil ]];
+        // -- KVO Update of Vimeo Links -- //
+        
     }
     
+    
+    
 }
 
--(NSString *) matchesYoutubeMedia:(NSString *)link{
-    
-    NSString * utf8Link = [link stringByRemovingPercentEncoding];//utf-8 conversion
-    
+-(NSString *) extractMediaLink:(NSString *)link withRegex:(NSString *)regex
+{
+    NSString * utf8Link = [link stringByRemovingPercentEncoding];
     NSError * regexError = nil;
-    NSRegularExpression * youtubeRegex = [NSRegularExpression regularExpressionWithPattern:youtubeRegexString
+    
+    NSRegularExpression * regexParser = [NSRegularExpression regularExpressionWithPattern:regex
                                                                                    options:NSRegularExpressionCaseInsensitive|NSRegularExpressionUseUnixLineSeparators
                                                                                      error:&regexError];
-    NSTextCheckingResult * regexResults =  [youtubeRegex firstMatchInString:utf8Link
-                                                                    options:0
-                                                                      range:NSMakeRange(0, [utf8Link length])];
+    // finds 0 or 1 results in link node
     
+    NSTextCheckingResult * regexResults =  [regexParser firstMatchInString:utf8Link
+                                                                   options:0
+                                                                     range:NSMakeRange(0, [utf8Link length])];
+
+    NSString * matchedResults = [utf8Link substringWithRange:regexResults.range]; // nil or non-nil
+
+    return matchedResults.length ? matchedResults : nil;
     
-    return [utf8Link substringWithRange:regexResults.range];
 }
 
--(NSString *) matchesVimeoMedia:(NSString *)link{
-    
-    NSString * utf8Link = [link stringByRemovingPercentEncoding];
-    
-    NSError * regexError = nil;
-    NSRegularExpression * vimeoRegex = [NSRegularExpression regularExpressionWithPattern:vimeoRegexString
-                                                                                 options:NSRegularExpressionUseUnixLineSeparators|NSRegularExpressionCaseInsensitive
-                                                                                   error:&regexError];
-    NSTextCheckingResult * regexResults = [vimeoRegex firstMatchInString:utf8Link
-                                                                 options:0
-                                                                   range:NSMakeRange(0, [utf8Link length])];
-    
-    return [utf8Link substringWithRange:regexResults.range];
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    //return to run code as a result of the KVO
     if ([keyPath isEqualToString:@"youtubeLinksSet"]) {
        // NSLog(@"Found equal");
     }
     
-    NSLog(@"%@", change);
+    //NSLog(@"%@", change);
     
 }
 
@@ -265,10 +289,10 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
     //}];
     
     // --------- GET VIMEO VIDEOS   --------- //
-    NSMutableArray * vimeoVideos = [NSMutableArray array];
-    [self returnMatchesforPattern:vimeoRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
-        [vimeoVideos addObjectsFromArray:results];
-    }];
+    //NSMutableArray * vimeoVideos = [NSMutableArray array];
+    //[self returnMatchesforPattern:vimeoRegexString inPage:fullPageHTML completetion:^(NSArray * results) {
+    //    [vimeoVideos addObjectsFromArray:results];
+    //}];
 
 }
 
