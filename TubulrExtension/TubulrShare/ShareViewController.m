@@ -46,6 +46,9 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
 
 @property (strong, nonatomic) TubularView       * shareVideoView;
 
+@property (strong, nonatomic) NSMutableSet      * youtubeLinksSet;
+@property (strong, nonatomic) NSMutableSet      * vimeoLinksSet;
+
 @end
 
 
@@ -121,9 +124,10 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
 
 -(void) parseMediaURLsFrom:(NSArray *)ahrefList
 {
-    NSMutableSet * youtubeLinks = [NSMutableSet set];
-    NSMutableSet * vimeoLinks = [NSMutableSet set];
+    self.youtubeLinksSet = [NSMutableSet set];
+    self.vimeoLinksSet = [NSMutableSet set];
     
+    [self addObserver:self forKeyPath:@"youtubeLinksSet" options:NSKeyValueObservingOptionNew context:nil];
 
     for (TFHppleElement * linkElement in ahrefList)
     {
@@ -132,10 +136,17 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
         NSString * youtubeResult = [self matchesYoutubeMedia:currentLink];
         NSString * vimeoResult = [self matchesVimeoMedia:currentLink];
         
-        !youtubeResult ?    : [youtubeLinks addObject:youtubeResult ];
-        !vimeoResult   ?    : [vimeoLinks   addObject:vimeoResult   ];
+        
+        [self willChangeValueForKey:@"youtubeLinksSet"
+                    withSetMutation:NSKeyValueUnionSetMutation
+                       usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
+        !youtubeResult ?    : [self.youtubeLinksSet addObject:youtubeResult ];
+        [self didChangeValueForKey:@"youtubeLinksSet"
+                   withSetMutation:NSKeyValueUnionSetMutation
+                      usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
+        
+        !vimeoResult   ?    : [self.vimeoLinksSet   addObject:vimeoResult   ];
     }
-    
     
 }
 
@@ -168,6 +179,16 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
                                                                    range:NSMakeRange(0, [utf8Link length])];
     
     return [utf8Link substringWithRange:regexResults.range];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    
+    if ([keyPath isEqualToString:@"youtubeLinksSet"]) {
+       // NSLog(@"Found equal");
+    }
+    
+    NSLog(@"%@", change);
+    
 }
 
 /**********************************************************************************
