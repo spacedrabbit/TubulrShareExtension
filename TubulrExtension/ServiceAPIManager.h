@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class VimeoVideo;
 @interface ServiceAPIManager : NSObject
+
++(instancetype) sharedVimeoManager;
+-(VimeoVideo *) verifyVimeoForID:(NSString *)videoID;
 
 @end
