@@ -20,7 +20,7 @@
     self = [super init];
     if (self) {
         _fullURI = json[@"link"];
-        _videoName = json[@"name"];
+        _videoTitle = json[@"name"];
         _imgURL_100x75 = json[@"pictures"][@"sizes"][0][@"link"]; //there's other options
         _videoOwner = json[@"user"][@"name"];
     }

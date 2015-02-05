@@ -12,8 +12,11 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <TFHpple.h>
 #import <AFNetworking/UIButton+AFNetworking.h>
+
 #import "ServiceAPIManager.h"
+
 #import "VimeoVideo.h"
+#import "YoutubeVideo.h"
 // ------------------------------------------------------------------------------------------//
 // will need to get these from NSUserDefaults
 static NSString * const kTubulrUser     = @"";
@@ -28,15 +31,12 @@ static NSString * const kTubulrWatch    = @"submit?watchlater=";    //POST
 static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
 
 // -- REGEX Strings -- //
-
-static NSString * const vimeoRegexString = @"(?:vimeo.com/(?:[A-Za-z:]*/?)*|clip_|href=\\\"/?(?:[A-Za-z:]*/)*)([0-9]{1,})";
-static NSString * const vimeoRegexHailMary = @"(?<=vimeo.com/|clip_|href=\\\"/)(?:[A-Za-z:]*/)*?([0-9]+)|(^|/)([0-9]+)[^\\s\"?\\\\/.*&^%$#@!)(&]*";
-static NSString * const vimeoRegexHailMaryRefined = @"(?<=vimeo.com/(video/)|clip_|href=\\\"/)[A-Za-z:]*/*?([0-9]+)|(^|/)([0-9]+)[^\\s\"?\\\\/.*&^%$#@!)(&]*";
-
 static NSString * const vimeoRegexRaw = @"(?:vimeo.com/(?:video/|[A-Za-z:]+/)*)([0-9]*)[^\"\\S\\W]*"; //works on non-vimeo sites...fml
 static NSString * const vimeoRegexForVimeoSite = @"[href=\"]?/([0-9]*)\"";
 
-static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
+static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)";
+
+//|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
 
 // ------------------------------------------------------------------------------------------//
 
@@ -58,7 +58,6 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
 @property (strong, nonatomic) NSMutableSet      * vimeoLinksSet;
 
 @end
-
 
 
 // --------------------------------IMPLEMENTATION---------------------------------------------//
@@ -146,14 +145,27 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
 
     for (TFHppleElement * linkElement in ahrefList)
     {
+        NSString * currentLink;
+        if ( [[linkElement.attributes allKeys] containsObject:@"href"] )
+        {
+            currentLink = [linkElement objectForKey:@"href"]; //  <a href>
+        }
+        else if ( [[linkElement.attributes allKeys] containsObject:@"src"]  )
+        {
+            currentLink = [linkElement objectForKey:@"src"]; //  <iframe src>
+        }
+        else
+        {
+            NSLog(@"Some other weird shit: %@", linkElement);
+        }
         
-        NSString * currentLink = linkElement.raw; //raw html following <a> tag
-        //NSLog(@"THe raw: %@", currentLink);
+        //NSString * currentLink = linkElement.raw; //raw html following <a> tag
+        NSLog(@"THe raw: %@", currentLink);
 
         NSString * youtubeResult = [self extractMediaLink:currentLink withRegex:youtubeRegexString];
         NSString * vimeoResult = [self extractMediaLink:currentLink withRegex:vimeoRegexRaw];
         
-        /*
+        
         // -- KVO Update of Youtube Links -- //
         [self willChangeValueForKey:@"youtubeLinksSet"
                     withSetMutation:NSKeyValueUnionSetMutation
@@ -164,7 +176,6 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
                    withSetMutation:NSKeyValueUnionSetMutation
                       usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
         // -- KVO Update of Youtube Links -- //
-        */
        
         
         
@@ -180,13 +191,28 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
         
     }
     
+    NSLog(@"The final: %@", self.youtubeLinksSet);
+    
+    for (NSString * link in self.youtubeLinksSet) {
+        [[ServiceAPIManager sharedAPIManager] verifyYouTubeForID:link withHandler:^(YoutubeVideo * locatedVideo) {
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                
+                [self.shareVideoView.watchLaterButton setBackgroundImageForState:UIControlStateNormal
+                                                                         withURL:[NSURL URLWithString:locatedVideo.imgURL_120x90]];
+                
+            }];
+            
+        }];
+    }
+    
     NSLog(@"The final: %@", self.vimeoLinksSet);
     
     NSCharacterSet * everythingExceptNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     for (NSString * link in self.vimeoLinksSet) {
         NSString * cleanedString = [link stringByTrimmingCharactersInSet:everythingExceptNumbers];
         
-        [[ServiceAPIManager sharedVimeoManager] verifyVimeoForID:cleanedString withHandler:^(VimeoVideo * locatedVideo) {
+        [[ServiceAPIManager sharedAPIManager] verifyVimeoForID:cleanedString withHandler:^(VimeoVideo * locatedVideo) {
             
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 
