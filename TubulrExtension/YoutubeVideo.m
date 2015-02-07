@@ -36,6 +36,7 @@
         _imgURL_120x90 = json[@"snippet"][@"thumbnails"][@"default"][@"url"];
         _channelID = json[@"snippet"][@"channelId"];
         _channelTitle = json[@"snippet"][@"channelTitle"];
+        
     }
     return self;
 }

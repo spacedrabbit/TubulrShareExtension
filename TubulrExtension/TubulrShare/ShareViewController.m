@@ -34,9 +34,11 @@ static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
 static NSString * const vimeoRegexRaw = @"(?:vimeo.com/(?:video/|[A-Za-z:]+/)*)([0-9]*)[^\"\\S\\W]*"; //works on non-vimeo sites...fml
 static NSString * const vimeoRegexForVimeoSite = @"[href=\"]?/([0-9]*)\"";
 
-static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)";
+static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
 
-//|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
+// https://regex101.com/r/gB0hM2/3
+static NSString * const youtubeRegexStringImproved = @"(?:https?://)?(?:[0-9A-Za-z-]+\\.)?(?:youtu\\.be\\/|youtube(?:-nocookie)?\\.com)(?:\\/\\S*(?:\\/|\\?v=))?([\\w-]{11})|(?<=/watch\\?v=)[\\w-]{11}";
+
 
 // ------------------------------------------------------------------------------------------//
 
@@ -162,8 +164,8 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
         //NSString * currentLink = linkElement.raw; //raw html following <a> tag
         NSLog(@"THe raw: %@", currentLink);
 
-        NSString * youtubeResult = [self extractMediaLink:currentLink withRegex:youtubeRegexString];
-        NSString * vimeoResult = [self extractMediaLink:currentLink withRegex:vimeoRegexRaw];
+        NSString * youtubeResult = [self extractMediaLink:currentLink withRegex:youtubeRegexStringImproved];
+        //NSString * vimeoResult = [self extractMediaLink:currentLink withRegex:vimeoRegexRaw];
         
         
         // -- KVO Update of Youtube Links -- //
@@ -178,7 +180,7 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
         // -- KVO Update of Youtube Links -- //
        
         
-        
+        /*
         // -- KVO Update of Vimeo Links -- //
         [self willChangeValueForKey:@"vimeoLinksSet"
                     withSetMutation:NSKeyValueUnionSetMutation
@@ -188,7 +190,7 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
                    withSetMutation:NSKeyValueUnionSetMutation
                       usingObjects:[NSSet setWithObjects:vimeoResult, nil ]];
         // -- KVO Update of Vimeo Links -- //
-        
+        */
     }
     
     NSLog(@"The final: %@", self.youtubeLinksSet);
@@ -211,7 +213,7 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
     NSCharacterSet * everythingExceptNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     for (NSString * link in self.vimeoLinksSet) {
         NSString * cleanedString = [link stringByTrimmingCharactersInSet:everythingExceptNumbers];
-        
+        NSLog(@"The link vimeo is checking: %@", cleanedString);
         [[ServiceAPIManager sharedAPIManager] verifyVimeoForID:cleanedString withHandler:^(VimeoVideo * locatedVideo) {
             
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -237,13 +239,17 @@ static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:you
                                                                                    options:NSRegularExpressionCaseInsensitive|NSRegularExpressionUseUnixLineSeparators
                                                                                      error:&regexError];
     // finds 0 or 1 results in link node
-    
     NSTextCheckingResult * regexResults =  [regexParser firstMatchInString:utf8Link
                                                                    options:0
                                                                      range:NSMakeRange(0, [utf8Link length])];
-
+    // may just set it to automagically pass the 2nd range if found and the length is 11
+    //if([regexResults numberOfRanges] > 1){
+    //    NSLog(@"Found %li ranges", [regexResults numberOfRanges]);
+    //}
+    
     NSString * matchedResults = [utf8Link substringWithRange:regexResults.range]; // nil or non-nil
-
+    NSLog(@"Passing back the matched results of: %@", matchedResults);
+    
     return matchedResults.length ? matchedResults : nil;
     
 }

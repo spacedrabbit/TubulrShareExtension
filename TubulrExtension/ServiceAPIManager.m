@@ -60,7 +60,7 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
 {
     
     [self.vimeoSessionManager.requestSerializer setValue:kVimeoToken forHTTPHeaderField:@"Authorization"];
-    [self.vimeoSessionManager.responseSerializer setAcceptableContentTypes:[NSSet setWithObjects:@"application/vnd.vimeo.video+json", @"application/vnd.vimeo.*+json;version=3.2",nil]];
+    [self.vimeoSessionManager.responseSerializer setAcceptableContentTypes:[NSSet setWithObjects:@"application/vnd.vimeo.video+json", @"application/vnd.vimeo.*+json;version=3.2", @"application/vnd.vimeo.error+json", nil]];
     
     NSURLSessionDataTask * videoVerificationTask = [self.vimeoSessionManager GET:videoID
                                                                  parameters:nil
@@ -72,7 +72,7 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
             complete(locatedVideo);
         }
         else if (videoResponse.statusCode == 404){
-            
+            NSLog(@"404'd on Vimeo");
         }
         //NSLog(@"The response: %@", videoResponse);
     }
@@ -86,6 +86,7 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
 -(void) verifyYouTubeForID:(NSString *)videoID withHandler:(void(^)(YoutubeVideo *)) complete{
     [self.youtubeSessionsManager.responseSerializer setAcceptableContentTypes:[NSSet setWithArray:@[@"application/json"]]];
     
+    __block NSInteger numberOfResults = 0;
     NSURLSessionDataTask * videoVerificationTask = [self.youtubeSessionsManager GET:@""
                                                                          parameters:@{ @"key"   : kYoutubeKey,
                                                                                        @"part"  : @"snippet,id,contentDetails,player",
@@ -94,13 +95,13 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
     {
         NSHTTPURLResponse * videoResponse = (NSHTTPURLResponse *)task.response;
         NSDictionary * jsonResponse = (NSDictionary *)responseObject;
-        NSUInteger numberOfResults = (NSInteger)jsonResponse[@"pageInfo"][@"totalResults"];
+        numberOfResults = (long)jsonResponse[@"pageInfo"][@"totalResults"];
+       
         
-        
-        if (videoResponse.statusCode == 200 && numberOfResults > 0) // you can have a 200 with 0 results
+        if ( (videoResponse.statusCode == 200) ) // you can have a 200 with 0 results
         {
             NSLog(@"200 code");
-            YoutubeVideo * locatedVideo = [[YoutubeVideo alloc] initWithResponse:responseObject];
+            YoutubeVideo * locatedVideo = [[YoutubeVideo alloc] initWithResponse:jsonResponse];
             complete(locatedVideo);
         }
         else if (videoResponse.statusCode == 404)
