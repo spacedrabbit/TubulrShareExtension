@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1453C3AB1A870BC4002A28A4 /* TubulrVideoURL_TableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1453C3A91A870BC4002A28A4 /* TubulrVideoURL_TableVC.m */; };
+		1453C3AC1A870BC4002A28A4 /* TubulrVideoURL_TableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1453C3AA1A870BC4002A28A4 /* TubulrVideoURL_TableVC.xib */; };
 		146649C21A86BAE80089E048 /* YoutubeTest_mainpage.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C11A86BAE80089E048 /* YoutubeTest_mainpage.html */; };
 		146649C41A86BCD60089E048 /* YoutubeTest_buzzfeed.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C31A86BCD60089E048 /* YoutubeTest_buzzfeed.html */; };
 		146649C71A86BCE00089E048 /* VimeoTest_mainpage.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C51A86BCE00089E048 /* VimeoTest_mainpage.html */; };
@@ -72,6 +74,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1453C3A81A870BC4002A28A4 /* TubulrVideoURL_TableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TubulrVideoURL_TableVC.h; sourceTree = "<group>"; };
+		1453C3A91A870BC4002A28A4 /* TubulrVideoURL_TableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TubulrVideoURL_TableVC.m; sourceTree = "<group>"; };
+		1453C3AA1A870BC4002A28A4 /* TubulrVideoURL_TableVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TubulrVideoURL_TableVC.xib; sourceTree = "<group>"; };
 		146649C11A86BAE80089E048 /* YoutubeTest_mainpage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YoutubeTest_mainpage.html; sourceTree = "<group>"; };
 		146649C31A86BCD60089E048 /* YoutubeTest_buzzfeed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YoutubeTest_buzzfeed.html; sourceTree = "<group>"; };
 		146649C51A86BCE00089E048 /* VimeoTest_mainpage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = VimeoTest_mainpage.html; sourceTree = "<group>"; };
@@ -145,13 +150,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1453C3AD1A870BCC002A28A4 /* Tubulr View */ = {
+			isa = PBXGroup;
+			children = (
+				B153E7CB1A70E5DB006CCBCA /* TubularView.xib */,
+				B153E7CD1A70E8FD006CCBCA /* TubularView.h */,
+				B153E7CE1A70E8FD006CCBCA /* TubularView.m */,
+			);
+			name = "Tubulr View";
+			sourceTree = "<group>";
+		};
+		1453C3AE1A870BD8002A28A4 /* Tubulr URL View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1453C3A81A870BC4002A28A4 /* TubulrVideoURL_TableVC.h */,
+				1453C3A91A870BC4002A28A4 /* TubulrVideoURL_TableVC.m */,
+				1453C3AA1A870BC4002A28A4 /* TubulrVideoURL_TableVC.xib */,
+			);
+			name = "Tubulr URL View Controller";
+			sourceTree = "<group>";
+		};
 		B10CA6D31A7758F1009CB360 /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
 				B153E7C91A70E4CD006CCBCA /* MainInterface.storyboard */,
-				B153E7CB1A70E5DB006CCBCA /* TubularView.xib */,
-				B153E7CD1A70E8FD006CCBCA /* TubularView.h */,
-				B153E7CE1A70E8FD006CCBCA /* TubularView.m */,
+				1453C3AD1A870BCC002A28A4 /* Tubulr View */,
+				1453C3AE1A870BD8002A28A4 /* Tubulr URL View Controller */,
 			);
 			name = "UI Elements";
 			sourceTree = "<group>";
@@ -418,6 +442,7 @@
 				146649C81A86BCE00089E048 /* VimeoTest_catthoughts.html in Resources */,
 				146649C21A86BAE80089E048 /* YoutubeTest_mainpage.html in Resources */,
 				B153E7CC1A70E5DB006CCBCA /* TubularView.xib in Resources */,
+				1453C3AC1A870BC4002A28A4 /* TubulrVideoURL_TableVC.xib in Resources */,
 				146649C41A86BCD60089E048 /* YoutubeTest_buzzfeed.html in Resources */,
 				146649C71A86BCE00089E048 /* VimeoTest_mainpage.html in Resources */,
 			);
@@ -547,6 +572,7 @@
 				B153E7CF1A70E8FD006CCBCA /* TubularView.m in Sources */,
 				B19D1A2B1A70B24500563321 /* ShareViewController.m in Sources */,
 				B1639AE71A81E48700D0722E /* VimeoVideo.m in Sources */,
+				1453C3AB1A870BC4002A28A4 /* TubulrVideoURL_TableVC.m in Sources */,
 				B1639AE31A81E37D00D0722E /* ServiceAPIManager.m in Sources */,
 				B19388241A83589500771FC4 /* YoutubeVideo.m in Sources */,
 			);
