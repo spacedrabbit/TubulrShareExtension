@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		146649C21A86BAE80089E048 /* YoutubeTest_mainpage.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C11A86BAE80089E048 /* YoutubeTest_mainpage.html */; };
+		146649C41A86BCD60089E048 /* YoutubeTest_buzzfeed.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C31A86BCD60089E048 /* YoutubeTest_buzzfeed.html */; };
+		146649C71A86BCE00089E048 /* VimeoTest_mainpage.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C51A86BCE00089E048 /* VimeoTest_mainpage.html */; };
+		146649C81A86BCE00089E048 /* VimeoTest_catthoughts.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C61A86BCE00089E048 /* VimeoTest_catthoughts.html */; };
 		7B3EF8CA8AE35B28ABEDA658 /* libPods-TubulrExtensionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE86017F5B4D359B62977FC /* libPods-TubulrExtensionTests.a */; };
 		7DF468A8AC2BD65F9EB3622C /* libPods-TubulrShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB45B77CFE71807D3B54D026 /* libPods-TubulrShare.a */; };
 		85CBB3C24C2E00AE217F1491 /* libPods-TubulrExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A33CD710FD6082258402F5D /* libPods-TubulrExtension.a */; };
@@ -68,6 +72,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		146649C11A86BAE80089E048 /* YoutubeTest_mainpage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YoutubeTest_mainpage.html; sourceTree = "<group>"; };
+		146649C31A86BCD60089E048 /* YoutubeTest_buzzfeed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YoutubeTest_buzzfeed.html; sourceTree = "<group>"; };
+		146649C51A86BCE00089E048 /* VimeoTest_mainpage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = VimeoTest_mainpage.html; sourceTree = "<group>"; };
+		146649C61A86BCE00089E048 /* VimeoTest_catthoughts.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = VimeoTest_catthoughts.html; sourceTree = "<group>"; };
 		23852FB9CED180D14A077714 /* Pods-TubulrExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubulrExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TubulrExtension/Pods-TubulrExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		5A33CD710FD6082258402F5D /* libPods-TubulrExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TubulrExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		76EB5CBDBF2E094388ED3AF8 /* Pods-TubulrExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubulrExtensionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TubulrExtensionTests/Pods-TubulrExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -157,9 +165,8 @@
 				B1639AE51A81E48700D0722E /* VimeoVideo.m */,
 				B19388211A83589500771FC4 /* YoutubeVideo.h */,
 				B19388221A83589500771FC4 /* YoutubeVideo.m */,
-				B19D19FA1A70B1F100563321 /* TubulrExtension */,
-				B19D1A141A70B1F100563321 /* TubulrExtensionTests */,
-				B19D1A261A70B24500563321 /* TubulrShare */,
+				B19D19FA1A70B1F100563321 /* Containing App */,
+				B19D1A261A70B24500563321 /* Tubulr Share Extension */,
 				B19D19F91A70B1F100563321 /* Products */,
 				DD7753EA136F675E663D2D76 /* Pods */,
 				C82287EE7FBBF680809390ED /* Frameworks */,
@@ -176,9 +183,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B19D19FA1A70B1F100563321 /* TubulrExtension */ = {
+		B19D19FA1A70B1F100563321 /* Containing App */ = {
 			isa = PBXGroup;
 			children = (
+				B19D1A141A70B1F100563321 /* TubulrExtensionTests */,
 				B19D1A361A70B2C300563321 /* TubulrExtension.entitlements */,
 				B19D19FF1A70B1F100563321 /* AppDelegate.h */,
 				B19D1A001A70B1F100563321 /* AppDelegate.m */,
@@ -189,6 +197,7 @@
 				B19D1A0A1A70B1F100563321 /* LaunchScreen.xib */,
 				B19D19FB1A70B1F100563321 /* Supporting Files */,
 			);
+			name = "Containing App";
 			path = TubulrExtension;
 			sourceTree = "<group>";
 		};
@@ -209,7 +218,7 @@
 				B19D1A151A70B1F100563321 /* Supporting Files */,
 			);
 			path = TubulrExtensionTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		B19D1A151A70B1F100563321 /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -219,7 +228,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B19D1A261A70B24500563321 /* TubulrShare */ = {
+		B19D1A261A70B24500563321 /* Tubulr Share Extension */ = {
 			isa = PBXGroup;
 			children = (
 				B19D1A271A70B24500563321 /* Supporting Files */,
@@ -227,12 +236,17 @@
 				B19D1A291A70B24500563321 /* ShareViewController.h */,
 				B19D1A2A1A70B24500563321 /* ShareViewController.m */,
 			);
+			name = "Tubulr Share Extension";
 			path = TubulrShare;
 			sourceTree = "<group>";
 		};
 		B19D1A271A70B24500563321 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				146649C51A86BCE00089E048 /* VimeoTest_mainpage.html */,
+				146649C61A86BCE00089E048 /* VimeoTest_catthoughts.html */,
+				146649C11A86BAE80089E048 /* YoutubeTest_mainpage.html */,
+				146649C31A86BCD60089E048 /* YoutubeTest_buzzfeed.html */,
 				B19D1A351A70B26700563321 /* TubulrShare.entitlements */,
 				B19D1A281A70B24500563321 /* Info.plist */,
 			);
@@ -401,7 +415,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				146649C81A86BCE00089E048 /* VimeoTest_catthoughts.html in Resources */,
+				146649C21A86BAE80089E048 /* YoutubeTest_mainpage.html in Resources */,
 				B153E7CC1A70E5DB006CCBCA /* TubularView.xib in Resources */,
+				146649C41A86BCD60089E048 /* YoutubeTest_buzzfeed.html in Resources */,
+				146649C71A86BCE00089E048 /* VimeoTest_mainpage.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

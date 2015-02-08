@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Code. Mostly rambling code. 
+
+Lastly, spiritual successor to &gt;catThoughts. ">
+<meta name="author" content="&gt;catThoughts">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="">
+<meta name="twitter:title" content="Extensions in iOS8: Shared Storage">
+<meta name="twitter:description" content="The fibonacci sequence is a pretty neat sequence of numbers. You may know them as the string of numbers were the next number is obtained by adding the previous two. This ends up looking like: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55] ...(and so on) and">
+<meta name="twitter:creator" content="Louis Tur">
+<meta name="twitter:image:src" content="">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="&gt;catThoughts">
+<meta property="og:description" content="The fibonacci sequence is a pretty neat sequence of numbers. You may know them as the string of numbers were the next number is obtained by adding the previous two. This ends up looking like: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55] ...(and so on) and">
+<meta property="og:image" content="">
+<meta property="og:site_name" content="&gt;catThoughts">
+
+<link href='https://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css?v=02945bb408" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/styles/solarized_light.css?v=02945bb408" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/assets/css/screen.css?v=02945bb408" />
+<link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico?v=02945bb408">
+
+<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<title>Extensions in iOS8: Shared Storage | &gt;catThoughts</title>
+
+<link rel="canonical" href="http://catthoughts.ghost.io/sharing-is-caring-extensions-in-ios8/" />
+    
+    <meta property="og:site_name" content="&gt;catThoughts" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="iOS 8 Extension: Sharing Data" />
+    <meta property="og:description" content="App extensions allows you to extend the reach of your app to other apps. But there&#x27;s a critical step in order to save and share data...." />
+    <meta property="og:url" content="http://catthoughts.ghost.io/sharing-is-caring-extensions-in-ios8/" />
+    <meta property="og:image" content="http://catthoughts.ghost.io/content/images/2015/01/share_example2.png" />
+    <meta property="article:published_time" content="2015-01-23T23:37:02.000Z" />
+    <meta property="article:modified_time" content="2015-01-25T07:17:23.000Z" />
+    <meta property="article:tag" content="iOS8" />
+    <meta property="article:tag" content="nibs" />
+    <meta property="article:tag" content="autolayout" />
+    <meta property="article:tag" content="share" />
+    <meta property="article:tag" content="extensions" />
+    <meta property="article:tag" content="SLComposeServiceViewController" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="iOS 8 Extension: Sharing Data" />
+    <meta name="twitter:description" content="App extensions allows you to extend the reach of your app to other apps. But there&#x27;s a critical step in order to save and share data...." />
+    <meta name="twitter:url" content="http://catthoughts.ghost.io/sharing-is-caring-extensions-in-ios8/" />
+    <meta name="twitter:image:src" content="http://catthoughts.ghost.io/content/images/2015/01/share_example2.png" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "&gt;catThoughts",
+    "author": {
+        "@type": "Person",
+        "name": "Louis Tur",
+        "image": "//www.gravatar.com/avatar/f6d44cf110c1bb71ed7a3e22ee2c9860?d=404&s=250",
+        "url": "http://catthoughts.ghost.io/author/louis",
+        "sameAs": "https://medium.com/@louistur/"
+    },
+    "headline": "iOS 8 Extension: Sharing Data",
+    "url": "http://catthoughts.ghost.io/sharing-is-caring-extensions-in-ios8/",
+    "datePublished": "2015-01-23T23:37:02.000Z",
+    "dateModified": "2015-01-25T07:17:23.000Z",
+    "image": "http://catthoughts.ghost.io/content/images/2015/01/share_example2.png",
+    "keywords": "iOS8, nibs, autolayout, share, extensions, SLComposeServiceViewController",
+    "description": "App extensions allows you to extend the reach of your app to other apps. But there&#x27;s a critical step in order to save and share data...."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.5" />
+    <link rel="alternate" type="application/rss+xml" title="&gt;catThoughts" href="http://catthoughts.ghost.io/rss/" />
+</head>
+
+<body class="post-template tag-ios8 tag-nibs tag-autolayout tag-share tag-extensions tag-slcomposeserviceviewcontroller">
+<div class="wrapper">
+
+<nav class="nav fixed">
+    <a id="logo" href="http://catthoughts.ghost.io"><h1>&gt;catThoughts</h1></a>
+    <ul class="nav-primary">
+        <li><a href="http://catthoughts.ghost.io/author/cassie">Cassie</a></li>
+        <li><a href="http://catthoughts.ghost.io/author/louis">Louis</a></li>
+    </ul>
+</nav>
+
+<article class="art simple post tag-ios8 tag-nibs tag-autolayout tag-share tag-extensions tag-slcomposeserviceviewcontroller">
+    
+    <header class="art-header">
+        <div class="art-header-inner" style="margin-top: 0px; opacity: 1;">
+            <time class="art-time">January 23rd, 2015</time>
+            <h2 class="art-title">Extensions in iOS8: Shared Storage</h2>
+            <p class="art-subtitle">by Louis Tur</p>
+        </div>
+    </header>
+
+    <div class="art-body">
+        <div class="art-body-inner">
+
+            <p>The <a href="http://en.wikipedia.org/wiki/Fibonacci_number">fibonacci sequence</a> is a pretty neat sequence of numbers. You may know them as the string of numbers were the next number is obtained by adding the previous two. This ends up looking like: <code>[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55] ...(and so on)</code> and being expressed as Fib<sub>n</sub> = Fib<sub>(n-2)</sub>+Fib<sub>(n-1)</sub>. Nothing too jazzy, but a classic hurdle on the way to learning the basics of algorithms and, usually, recursion. But the fibonacci sequence exists in <a href="http://en.wikipedia.org/wiki/Fibonacci_number#In_nature">nature</a>, <a href="http://en.wikipedia.org/wiki/Fibonacci_numbers_in_popular_culture#Music">music</a>, and <a href="http://en.wikipedia.org/wiki/Fibonacci_numbers_in_popular_culture">pop culture</a>. </p>
+
+<p>Very recently, it's been making its rounds in the form of <a href="http://vimeo.com/116582567">3D printed sculptures that appear "alive"</a> when rotated and recorded at a very low shutter speed. And it really is pretty amazing to watch and then subsequently read about. If you haven't watched it already, it's worth your time (via <a href="http://vimeo.com/116582567">Vimeo</a>): <iframe src="//player.vimeo.com/video/116582567" width="500" height="281" frameborder="0" style="display:block;margin-left:auto;margin-right:auto;" webkitallowfullscreen mozallowfullscreen allowfullscreen>Fibonacci</iframe></p>
+
+<p>Though, as it turns out, what isn't interesting about the fibonacci sequence is anything related to trying to create a <em>cute</em> application that does it in some novel way. But maybe that's just me. So, after two weeks of it giving me coder's block, I decided to table it altogether, and instead I have something far more interesting and equally frustrating...</p>
+
+<hr />
+
+<h5 id="shareextensionsios8xcode6">Share Extensions (iOS8/Xcode6)</h5>
+
+<p>What are Share extensions? They're what allows you to quickly post to social media sites (or do other things, socially) from iOS apps. Any app can define if it wants to use a Share extension, and if its declared to handle the appropriate attachment types, the option appears from your sharing options. Below I show two examples of where they can be found and what they look like.</p>
+
+<p><img src="http://i.imgur.com/Ik5WbDM.png" style="display:block; margin-left:auto; margin-right:auto" width="400"></img></p>
+
+<p>Pressing the share button brings up a <code>UIPopoverController</code>(?) that gives you a number of ways to share the content from the page/app your in. That content may be links, images, twitter posts, etc... </p>
+
+<p>Selecting one of the social media options, results in either a <code>SLComposeServiceViewController</code> (if you're creating a custom share option for your app) or a <code>SLComposeViewController</code> (if you go with a built-in 3rd party app, i.e Facebook, Twitter, Weibo).</p>
+
+<p><img src="http://i.imgur.com/5AcYGv9.png" style="display:block; margin-left:auto; margin-right:auto" width="400"></img></p>
+
+<p>And truly, out of the box, the <code>SLComposeViewController</code> and it's sibling, <code>SLComposeServiceViewController</code> (both are subclassed from <code>UIViewController</code>, but they aren't subclassed from one another) provide a really easy way to share content exactly like Apple does. The tricky part is if you want to do some customization and use a shared data store. </p>
+
+<hr />
+
+<h5 id="beginning">Beginning</h5>
+
+<p>The <a href="https://developer.apple.com/library/prerelease/ios/documentation/General/Conceptual/ExtensibilityPG/index.html#//apple_ref/doc/uid/TP40014214-CH20-SW1">Apple documentation</a> on <a href="https://developer.apple.com/library/prerelease/ios/documentation/General/Conceptual/ExtensibilityPG/ShareSheet.html#//apple_ref/doc/uid/TP40014214-CH12-SW1">Share</a> extensions, and extensions in general, are actually pretty decent. But as I'm finding out, its the subtext of the documentation that requires actual analysis (see <a href="https://developer.apple.com/library/prerelease/ios/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW19">App Groups</a>, <a href="https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AddingCapabilities/AddingCapabilities.html">Entitlements</a>, <a href="https://developer.apple.com/library/mac/documentation/General/Conceptual/DevPedia-CocoaCore/UniformTypeIdentifier.html">Uniform Type Identifiers</a>, <sub><em>and why the hell not?</em></sub> some <a href="https://developer.apple.com/library/ios/documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html#//apple_ref/doc/uid/TP40010677-SW2">Toll-Free Bridging</a>). I used a <a href="http://www.raywenderlich.com/83809/ios-8-today-extension-tutorial">Ray Wenderlich</a> tutorial to get as far as adding the extension as a new target... but then it got really wordy and I decided I'd rather just do it myself. But if you like tutorials, Ray has some of the best. Though to follow along, you'll need the following:</p>
+
+<ol>
+<li>An existing, or completely new Xcode project  </li>
+<li>Add a new target to the project, of type Share Extension  </li>
+<li>A data type to share (URL is easy, so I used that). </li>
+</ol>
+
+<hr />
+
+<h5 id="pivoting">Pivoting</h5>
+
+<p>Creating the extension in Xcode nets you a few things: a new <code>extension</code> target, a boilerplate copy of the <code>SLComposeServiceViewController</code>, and a nib that can represent the <code>SLComposeServiceViewController</code>'s view. The header file for the view controller is just this:  </p>
+
+<pre><code class="language-objc">#import &lt;UIKit/UIKit.h&gt;
+#import &lt;Social/Social.h&gt;
+@interface ShareViewController : SLComposeServiceViewController;
+@end
+</code></pre>
+
+<p>And although it doesn't say this explicitly anywhere (that I saw), if you want to start using the nib or your own views/controllers, you can just change the interface such that it inherits from <code>UIViewController</code> instead of <code>SLComposeServiceViewController</code>. Which is exactly what I did.  The image below shows what the default implementation looks like vs. what the custom one I've just started will look like (in this case, using the nib). </p>
+
+<p><img src="http://i.imgur.com/N1nk6U4.png" style="display:block; margin-left:auto; margin-right:auto" width=400"></img></p>
+
+<hr />
+
+<h5 id="sharingdatabetweenextensionandapp">Sharing Data between Extension and App</h5>
+
+<p>This part isn't that difficult, really. But the annoying part of this is that the Apple extensions guide links to a page on how to set up <a href="https://developer.apple.com/library/prerelease/ios/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW19">app groups</a> but the link is a quick blurb that more closely related to OSX set up. In fact, the guide itself is a bit nebulous on how to do this entire set up, but fortunately I came across the <a href="http://www.atomicbird.com/blog/sharing-with-app-extensions">perfect resource</a> to get this going. </p>
+
+<p>So, what you'll do is: <br />
+<img src="http://i.imgur.com/yanWJLF.png" style="float:right; padding-left:1em" width="250"></img></p>
+
+<ol>
+<li>Log into <a href="https://developer.apple.com">https://developer.apple.com</a>  </li>
+<li>Go into <em>Certificates, Identifiers &amp; Profiles</em>  </li>
+<li>Select <em>App Groups</em> on the left menu.  </li>
+<li>Then click on the <strong>+</strong> symbol <br />
+<ul><li>Give the app group a <em>description</em> (for your benefit) and an <em>identifier</em> to use in your app. </li>
+<li>The <em>identifier</em> is written in reverse domain notation and should include the name of your company and app (ie. com.apple.FaceTime)</li>
+<li>The "<strong>group</strong>" identifier will prefix any thing you write (ie. group.apple.FaceTime)</li></ul></li>
+<li>Go into XCode, into your project settings  </li>
+<li>Enable <strong>App Groups</strong> from the <em>Capabilities</em> tab  </li>
+<li>The app group you've just registered should appear on the list presented, so just make sure its selected  </li>
+<li>Do this for both the main app target and the extension target! <br />
+<img src="http://i.imgur.com/iuYKSBE.png" style="display:block; margin-left:auto; margin-right:auto"></img></li>
+</ol>
+
+<p>As a result of the above, Xcode will generate two entitlements plists that contain information that will allow your extension and app to communicate and share data between them. All it really is (in this implementation) is a single key/value store with a key of <code>com.apple.security.application-groups</code> and a value of an array of your registered app groups. Though this will also let you do neat things like starting an <code>NSURLConnection</code> task from your extension that gets placed on a background queue and picked up by your main app. </p>
+
+<hr />
+
+<h5 id="sharednsuserdefaults">Shared <code>NSUserDefaults</code></h5>
+
+<p>The app group set up allows for shared data between extenstion and its container app, and as you might imagine this includes a few data store options: <code>NSUserDefaults</code>, <code>CoreData</code>, and <code>Keychain</code> services. </p>
+
+<p>For <code>NSUserDefaults</code>, it's as simple as instatiating an <code>NSUserDefaults</code> object that specifies a app group identifier. The following sample illustrates this point: </p>
+
+<pre><code>//... defining a constant for later use
+static NSString * const kSharedAppDomain = @"group.SRLabs.sharedData";
+
+//... later in code
+NSUserDefaults * sharedAppDefaults = [[NSUserDefaults alloc] initWithSuiteName:kSharedAppDomain];
+[sharedAppDefaults setURL:self.videoURLToSave        
+                   forKey:self.videoURLToSave.absoluteString];
+
+//... when you're ready to save
+if ([sharedAppDefaults synchronize]) {
+    NSLog(@"Bookmark syncronized to NSUser");
+}
+</code></pre>
+
+<p>And you would instantiate this <code>NSUserDefaults</code> instance in both your extension and container app. Simple as that!</p>
+
+<hr />
+
+<h5 id="nextupcustomviewsanddataextraction">Next Up: Custom Views and Data Extraction</h5>
+
+<p>Now that we can save information between our extension and container app, the next steps will be to extract relevant, "shareable" data from the host application. </p>
+
+<p>Part of this will involve custom implementation of the extension view itself, as we're going to define how to handle that data in a way that makes sense for my design. </p>
+
+<p>Lastly, full code will be posted at a slightly later time. </p>
+
+<p>>catthoughts</p>
+            <div class="author-card" style="background-image: url(/assets/img/noisestrip.png?v=02945bb408)">
+                <img id="author-image" src="//www.gravatar.com/avatar/f6d44cf110c1bb71ed7a3e22ee2c9860?d=404&amp;s=250">
+                <h3>Louis Tur</h3>
+                <p>&quot;How&quot; has been the single most used word in my literary arsenal for as long as I can remember. I&#x27;ve never really been satisfied knowing that something works, but only by knowing how it works.</p>
+                <a class="fa fa-linkedin-square social-icon" href="https://www.linkedin.com/in/louistur/"></a>
+                <a class="fa fa-github social-icon" href="https://github.com/spacedrabbit"></a>
+                <a class="fa fa-code social-icon" href="http://people.flatironschool.com/profiles/louis-tur"></a>
+                <a href="http://catthoughts.ghost.io/author/louis" id="read-more">Read more from this author <span class="fa fa-long-arrow-right"></span></a>
+            </div>     
+        </div>
+    </div>
+
+</article>
+
+
+
+<footer class="footer">
+    <div class="back-to-top"><a href="">Back to top</a></div>
+    <!-- <div class="footer-nav"><p></p></div> -->
+    <div class="psi">&Psi;</div>
+    <aside class="offsite-links">
+        <a class="rss-link" href="http://catthoughts.ghost.io/rss">RSS</a>
+        
+    </aside>
+</footer>
+
+</div> 
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.min.js?v=02945bb408"></script>
+<script type="text/javascript" src="/assets/js/fittext.js?v=02945bb408"></script>
+<script type="text/javascript" src="/assets/js/app.js?v=02945bb408"></script>
+<script type="text/javascript" src="/assets/js/respond.min.js?v=02945bb408"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  var ga_ua = '';
+
+  (function(g,h,o,s,t,z){g.GoogleAnalyticsObject=s;g[s]||(g[s]=
+      function(){(g[s].q=g[s].q||[]).push(arguments)});g[s].s=+new Date;
+      t=h.createElement(o);z=h.getElementsByTagName(o)[0];
+      t.src='//www.google-analytics.com/analytics.js';
+      z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
+      ga('create',ga_ua);ga('send','pageview');
+</script>
+
+<script src="/public/jquery.min.js?v=02945bb408"></script>
+
+<img src="/view.gif?page=/sharing-is-caring-extensions-in-ios8/" alt="" style="display:none" hidden />
+</body>
+</html>

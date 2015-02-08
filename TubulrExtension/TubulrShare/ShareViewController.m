@@ -31,14 +31,50 @@ static NSString * const kTubulrWatch    = @"submit?watchlater=";    //POST
 static NSString * const kYoutubeBaseURL = @"https://www.youtube.com/watch?v=";
 
 // -- REGEX Strings -- //
-static NSString * const vimeoRegexRaw = @"(?:vimeo.com/(?:video/|[A-Za-z:]+/)*)([0-9]*)[^\"\\S\\W]*"; //works on non-vimeo sites...fml
-static NSString * const vimeoRegexForVimeoSite = @"[href=\"]?/([0-9]*)\"";
-
-static NSString * const youtubeRegexString = @"https?://(?:[0-9A-Z-]+\\.)?(?:youtu\\.be/|youtube(?:-nocookie)?\\.com\\S*[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:[\\'\"][^<>]*>| </a>))|(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)|(?<=embed/)([-a-zA-Z0-9_]+)|\\n(?<=videos/)([-a-zA-Z0-9_]+)";
-
-// https://regex101.com/r/gB0hM2/3
-static NSString * const youtubeRegexStringImproved = @"(?:https?://)?(?:[0-9A-Za-z-]+\\.)?(?:youtu\\.be\\/|youtube(?:-nocookie)?\\.com)(?:\\/\\S*(?:\\/|\\?v=))?([\\w-]{11})|(?<=/watch\\?v=)[\\w-]{11}";
-
+/*  
+ *  After some significant difficulty, I've been able to standardize how the regex is being performed on both
+ *  Vimeo and Youtube URLs. At a very broad level, it splits the regex search into two parts: 1)the videoID and
+ *  2) everything that comes before it (somewhat).
+ 
+ *  Because I'm using the Hpple pod, I'm only pulling out "a" and "iframe" tags (using XPath convention)
+ *  and looking at their "href" and "src" properties. Which makes sense, since I'm interested in links that
+ *  are presumably live on a web page.
+ *
+ *  The significant problem was getting the ID's to line up in the same capture group (to make coding simpler)
+ *  Compounding this was the fact that the official Youtube and Vimeo webpages use relative URLs rather than absolute
+ *  (example, www.vimeo.com/channels/staffpicks/<VideoID> vs. /<VideoID> or clip_<VideoID> or /random/words/<VideoID>)
+ *  And not only that, but there are over a dozen ways that youtube formats its URL's, depending on a number of factors.
+ *
+ *  But because obviously this is going to be easy to forget the intricacies of these expressions, here is a brief explanation:
+ *
+ *
+ *              YOUTUBE
+ *  (?:youtu\\.be|                              -- First non-capture group, matches youtu.be OR will match next expression
+ *      (?:youtube[-nocookie]?\\.com)           -- Nested non-capture, matches youtube(-nocookie) if it exists, either way it will end in .com
+ *      |/watch                                 -- Or will match just /watch
+ *  )                                           -- Closes non-capture group
+ *      \\S*                                    -- Matches any number of non-white space characters (for long strings of random words)
+ *      [^\\w\\s-]                              -- This potentially long string is always ended by a NON-white space, NON-word character or '-'
+ *      ([\\w-]{11})                            -- This change in the pattern signals that the video ID is next, and it is always 11 characters
+ *                                              -- and/or a dash
+ *
+ *              VIMEO
+ *  (?:                                         -- Start nested, non-capture group
+ *      (?:vimeo.com/|                          -- Next non-capture group indicates that either vimeo.com/ or
+ *          clip_|                              -- clip_ or
+ *          href=\\\"|                          -- href=\\" or
+ *          ^/                                  -- a single / at the start of a string will be encountered
+ *      )                                       -- Closes innermost nested group
+ *      (?:[A-Za-z:/]*)?                        -- After, you will expect to see any number of characters inclusive of a-z:/ .. but the
+ *  )                                           -- ? at the end indicates this might not be here at all (in the case of /<VideoID). Closes group.
+ *  ([\\d]+)                                    -- This is the second group that is looked for. Indicating that any number of numbers will be present
+ *                                              -- There is one slight bug in this, in that this is a bit too loose a definition and sometimes random
+ *                                              -- groupings of numbers are matched up. But there are other mechanisms in place to not make this an issue
+*/
+//https://regex101.com/r/gB0hM2/7   <-- version controlled
+static NSString * const youtubeRegexTwoCaptures = @"(?:youtu\\.be|(?:youtube[-nocookie]?\\.com)|/watch)\\S*[^\\w\\s-]([\\w-]{11})";
+//https://regex101.com/r/fB1eE7/2   <-- version controlled
+static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/)(?:[A-Za-z:/]*)?)([\\d]+)";
 
 // ------------------------------------------------------------------------------------------//
 
@@ -58,6 +94,9 @@ static NSString * const youtubeRegexStringImproved = @"(?:https?://)?(?:[0-9A-Za
 
 @property (strong, nonatomic) NSMutableSet      * youtubeLinksSet;
 @property (strong, nonatomic) NSMutableSet      * vimeoLinksSet;
+
+@property (strong, nonatomic) NSURL * youtubeHTML;
+@property (strong, nonatomic) NSString * youtubeMainHTML;
 
 @end
 
@@ -79,8 +118,25 @@ static NSString * const youtubeRegexStringImproved = @"(?:https?://)?(?:[0-9A-Za
     
     
     // --------- INSPECTING AND RETRIEVING VIDEO IDS --------- //
-    [self scrapeForAllLinks];
+    //[self scrapeForAllLinks];
     
+    // --------- REGEX FULL TESTING --------- //
+    NSURL * youtubeBuzzFeed = [[NSBundle mainBundle] URLForResource:@"YoutubeTest_buzzfeed" withExtension:@"html"];
+    NSURL * youtubeMain = [[NSBundle mainBundle] URLForResource:@"YoutubeTest_mainpage" withExtension:@"html"];
+    NSURL * vimeoMain = [[NSBundle mainBundle] URLForResource:@"VimeoTest_mainpage" withExtension:@"html"];
+    NSURL * vimeoCat = [[NSBundle mainBundle] URLForResource:@"VimeoTest_catthoughts" withExtension:@"html"];
+    
+    NSLog(@"\n\n\n  -------------- YOUTUBE MAIN --------------  \n\n\n");
+    [self testParsingForURL:youtubeMain withRegex:youtubeRegexTwoCaptures];
+    
+    NSLog(@"\n\n\n  -------------- YOUTUBE BUZZFEED --------------  \n\n\n");
+    [self testParsingForURL:youtubeBuzzFeed withRegex:youtubeRegexTwoCaptures];
+    
+     NSLog(@"\n\n\n  -------------- VIMEO MAIN --------------  \n\n\n");
+    [self testParsingForURL:vimeoMain withRegex:vimeoTwoCaptures];
+    
+    NSLog(@"\n\n\n  -------------- VIMEO CATS --------------  \n\n\n");
+    [self testParsingForURL:vimeoCat withRegex:vimeoTwoCaptures];
     
 }
 
@@ -88,6 +144,45 @@ static NSString * const youtubeRegexStringImproved = @"(?:https?://)?(?:[0-9A-Za
 {
     // --------- LOADING NIB --------- //
     self.shareVideoView = [TubularView presentInViewController:self];
+}
+
+-(void)testParsingForURL:(NSURL *)url withRegex:(NSString *)regex
+{
+    NSData * urlDataToParse = [NSData dataWithContentsOfURL:url];
+    TFHpple * parser = [TFHpple hppleWithHTMLData:urlDataToParse];
+    NSArray * ahrefNodes = [parser searchWithXPathQuery:@"//a[@href]|//iframe[@src]"]; //array of all <a href>'s
+    
+    NSArray * results = [self testParseMediaFrom:ahrefNodes withRegex:regex];
+    
+    NSLog(@"\n\n\n -------- RESULTS FOUND ------- \n\n\n%@",results);
+    
+}
+-(NSArray *)testParseMediaFrom:(NSArray*)ahrefList withRegex:(NSString *)regex{
+    
+    NSMutableSet * setOfMatches = [[NSMutableSet alloc] init];
+    NSString * currentLink;
+    for (TFHppleElement * linkElement in ahrefList)
+    {
+        if ( [[linkElement.attributes allKeys] containsObject:@"href"] )
+        {
+            currentLink = [linkElement objectForKey:@"href"]; //  <a href>
+        }
+        else if ( [[linkElement.attributes allKeys] containsObject:@"src"]  )
+        {
+            currentLink = [linkElement objectForKey:@"src"]; //  <iframe src>
+        }
+        else
+        {
+            NSLog(@"Some other weird shit: %@", linkElement);
+        }
+    
+        NSString * results = [self extractMediaLink:currentLink withRegex:regex];
+        if ( results.length ) {
+            [setOfMatches addObject:results];
+        }
+
+    }
+    return [setOfMatches allObjects];
 }
 
 /**********************************************************************************
@@ -105,7 +200,6 @@ static NSString * const youtubeRegexStringImproved = @"(?:https?://)?(?:[0-9A-Za
      {
          if (url) // success indicates a URL was found by the extension
          {
-             
              NSData * urlDataToParse = [NSData dataWithContentsOfURL:url];
              TFHpple * parser = [TFHpple hppleWithHTMLData:urlDataToParse];
              NSArray * ahrefNodes = [parser searchWithXPathQuery:@"//a[@href]|//iframe[@src]"]; //array of all <a href>'s
@@ -164,21 +258,21 @@ static NSString * const youtubeRegexStringImproved = @"(?:https?://)?(?:[0-9A-Za
         //NSString * currentLink = linkElement.raw; //raw html following <a> tag
         NSLog(@"THe raw: %@", currentLink);
 
-        NSString * youtubeResult = [self extractMediaLink:currentLink withRegex:youtubeRegexStringImproved];
+        //NSString * youtubeResult = [self extractMediaLink:currentLink withRegex:youtubeRegexStringImproved];
         //NSString * vimeoResult = [self extractMediaLink:currentLink withRegex:vimeoRegexRaw];
         
-        
+        /*
         // -- KVO Update of Youtube Links -- //
         [self willChangeValueForKey:@"youtubeLinksSet"
                     withSetMutation:NSKeyValueUnionSetMutation
                        usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
         
-        !youtubeResult ? : [self.youtubeLinksSet addObject:youtubeResult];
+        //!youtubeResult ? : [self.youtubeLinksSet addObject:youtubeResult];
         [self didChangeValueForKey:@"youtubeLinksSet"
                    withSetMutation:NSKeyValueUnionSetMutation
                       usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
         // -- KVO Update of Youtube Links -- //
-       
+       */
         
         /*
         // -- KVO Update of Vimeo Links -- //
@@ -242,15 +336,11 @@ static NSString * const youtubeRegexStringImproved = @"(?:https?://)?(?:[0-9A-Za
     NSTextCheckingResult * regexResults =  [regexParser firstMatchInString:utf8Link
                                                                    options:0
                                                                      range:NSMakeRange(0, [utf8Link length])];
-    // may just set it to automagically pass the 2nd range if found and the length is 11
-    //if([regexResults numberOfRanges] > 1){
-    //    NSLog(@"Found %li ranges", [regexResults numberOfRanges]);
-    //}
     
-    NSString * matchedResults = [utf8Link substringWithRange:regexResults.range]; // nil or non-nil
-    NSLog(@"Passing back the matched results of: %@", matchedResults);
+    NSString * matchedResults = [utf8Link substringWithRange:[regexResults rangeAtIndex:1]];
+    //NSString * matchedResults = [utf8Link substringWithRange:regexResults.range]; // nil or non-nil
     
-    return matchedResults.length ? matchedResults : nil;
+    return matchedResults.length ? matchedResults : @"";
     
 }
 
