@@ -8,6 +8,8 @@
 
 
 #import "TubularView.h"
+#import "TubulrVideoURL_TableVC.h"
+#import "TubulrVideoTableView.h"
 #import "ShareViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <TFHpple.h>
@@ -116,7 +118,7 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
     
     
     // --------- INSPECTING AND RETRIEVING VIDEO IDS --------- //
-    [self scrapeForAllLinks];
+    //[self scrapeForAllLinks];
     
     // --------- REGEX FULL TESTING --------- //
     //[self testRegexPatternsForYoutubeAndVimeo];
@@ -126,7 +128,11 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 -(void)presentTubularView
 {
     // --------- LOADING NIB --------- //
-    self.shareVideoView = [TubularView presentInViewController:self];
+    //self.shareVideoView = [TubularView presentInViewController:self];
+    
+    TubulrVideoTableView * tableView = [[TubulrVideoTableView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:tableView];
+    
 }
 
 
@@ -456,7 +462,7 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
     
     NSArray * results = [self testParseMediaFrom:ahrefNodes withRegex:regex];
     
-    NSLog(@"\n\n\n -------- RESULTS FOUND ------- \n\n\n%@",results);
+    NSLog(@" -------- RESULTS FOUND ------- \n\n\n%@",results);
     
 }
 -(NSArray *)testParseMediaFrom:(NSArray*)ahrefList withRegex:(NSString *)regex

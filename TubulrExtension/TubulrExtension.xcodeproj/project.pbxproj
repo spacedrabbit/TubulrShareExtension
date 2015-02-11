@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		141F6A601A889D8E00D64D12 /* TubulrVideoTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 141F6A5F1A889D8E00D64D12 /* TubulrVideoTableView.m */; };
 		1453C3AB1A870BC4002A28A4 /* TubulrVideoURL_TableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1453C3A91A870BC4002A28A4 /* TubulrVideoURL_TableVC.m */; };
 		1453C3AC1A870BC4002A28A4 /* TubulrVideoURL_TableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1453C3AA1A870BC4002A28A4 /* TubulrVideoURL_TableVC.xib */; };
 		146649C21A86BAE80089E048 /* YoutubeTest_mainpage.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C11A86BAE80089E048 /* YoutubeTest_mainpage.html */; };
@@ -74,6 +75,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		141F6A5E1A889D8E00D64D12 /* TubulrVideoTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TubulrVideoTableView.h; sourceTree = "<group>"; };
+		141F6A5F1A889D8E00D64D12 /* TubulrVideoTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TubulrVideoTableView.m; sourceTree = "<group>"; };
 		1453C3A81A870BC4002A28A4 /* TubulrVideoURL_TableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TubulrVideoURL_TableVC.h; sourceTree = "<group>"; };
 		1453C3A91A870BC4002A28A4 /* TubulrVideoURL_TableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TubulrVideoURL_TableVC.m; sourceTree = "<group>"; };
 		1453C3AA1A870BC4002A28A4 /* TubulrVideoURL_TableVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TubulrVideoURL_TableVC.xib; sourceTree = "<group>"; };
@@ -156,6 +159,8 @@
 				B153E7CB1A70E5DB006CCBCA /* TubularView.xib */,
 				B153E7CD1A70E8FD006CCBCA /* TubularView.h */,
 				B153E7CE1A70E8FD006CCBCA /* TubularView.m */,
+				141F6A5E1A889D8E00D64D12 /* TubulrVideoTableView.h */,
+				141F6A5F1A889D8E00D64D12 /* TubulrVideoTableView.m */,
 			);
 			name = "Tubulr View";
 			sourceTree = "<group>";
@@ -569,6 +574,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				141F6A601A889D8E00D64D12 /* TubulrVideoTableView.m in Sources */,
 				B153E7CF1A70E8FD006CCBCA /* TubularView.m in Sources */,
 				B19D1A2B1A70B24500563321 /* ShareViewController.m in Sources */,
 				B1639AE71A81E48700D0722E /* VimeoVideo.m in Sources */,

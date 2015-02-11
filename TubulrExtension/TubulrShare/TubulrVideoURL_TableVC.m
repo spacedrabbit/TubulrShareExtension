@@ -21,6 +21,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
+    NSLog(@"Initi with coder:");
     self = [super initWithCoder:coder];
     if (self) {
         
@@ -28,14 +29,31 @@
     return self;
 }
 
+-(void)loadView{
+    
+    self.view = [[UIView alloc] init];
+    
+}
+
 -(void)awakeFromNib{
+    NSLog(@"AwakeFromNib");
+    [_containerView setBackgroundColor:[UIColor redColor]];
+    [_containerView setAlpha:.50];
     
+    UITableViewCell * videoCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                                         reuseIdentifier:@"videoCell"];
+    [videoCell.contentView.layer setCornerRadius:8.0];
+    [videoCell.contentView setBackgroundColor:[UIColor yellowColor]];
     
+    [_videoTableView registerClass:[videoCell class] forCellReuseIdentifier:@"videoCell"];
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"view did load");
+    
+    
     
 }
 
@@ -58,8 +76,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
     
     
     return cell;

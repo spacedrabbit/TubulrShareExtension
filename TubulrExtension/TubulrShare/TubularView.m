@@ -29,6 +29,7 @@
     }
     return self;
 }
+/*
 -(instancetype)initWithFrame:(CGRect)frame{
     NSLog(@"InitWithFrame");
     self = [super initWithFrame:frame];
@@ -44,7 +45,7 @@
         
     }
     return self;
-}
+}*/
 
 +(instancetype)presentInViewController:(UIViewController<TubularViewDelegate> *)viewController{
     
@@ -129,7 +130,7 @@
 
 }
 
-
+// buttons all just dismiss the view for now
 -(void)heartButtonPressed:(UIButton *)sender{
     [self.delegateController didPressHeartHandler:^(BOOL success) {
         if (success) {
