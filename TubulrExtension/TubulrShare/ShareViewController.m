@@ -130,8 +130,7 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
     // --------- LOADING NIB --------- //
     //self.shareVideoView = [TubularView presentInViewController:self];
     
-    TubulrVideoTableView * tableView = [[TubulrVideoTableView alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:tableView];
+    TubulrVideoTableView * tableView = [TubulrVideoTableView presentTableViewIn:self.view];
     
 }
 
@@ -146,6 +145,7 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 
 -(void) scrapeForAllLinks
 {
+    // TODO: Check Pasteboard
     [self inspectExtensionContext:self.extensionContext WithSuccess:^(NSURL * url)
      {
          if (url) // success means a URL was found by the share extension
@@ -158,7 +158,7 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
          }
          else
          {
-             //check pasteboard
+             // pasteboard
          }
      }
                             error:^(NSError * error)
@@ -168,8 +168,6 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
      }];
     
 }
-
-
 
 /**********************************************************************************
  *

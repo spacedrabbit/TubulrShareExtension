@@ -14,6 +14,7 @@
 @property (strong, nonatomic) UIView * containerView;
 @property (strong, nonatomic) UITableView * videoTableView;
 
-+(void) presentTableViewIn:(UIView *)view;
++(instancetype) presentTableViewIn:(UIView *)view;
+-(instancetype)initWithFrame:(CGRect)frame inView:(UIView *)view;
 
 @end
