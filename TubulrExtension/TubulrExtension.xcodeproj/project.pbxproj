@@ -14,6 +14,8 @@
 		146649C41A86BCD60089E048 /* YoutubeTest_buzzfeed.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C31A86BCD60089E048 /* YoutubeTest_buzzfeed.html */; };
 		146649C71A86BCE00089E048 /* VimeoTest_mainpage.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C51A86BCE00089E048 /* VimeoTest_mainpage.html */; };
 		146649C81A86BCE00089E048 /* VimeoTest_catthoughts.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C61A86BCE00089E048 /* VimeoTest_catthoughts.html */; };
+		25CF1B8B1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */; };
+		25CF1B8C1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */; };
 		7B3EF8CA8AE35B28ABEDA658 /* libPods-TubulrExtensionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE86017F5B4D359B62977FC /* libPods-TubulrExtensionTests.a */; };
 		7DF468A8AC2BD65F9EB3622C /* libPods-TubulrShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB45B77CFE71807D3B54D026 /* libPods-TubulrShare.a */; };
 		85CBB3C24C2E00AE217F1491 /* libPods-TubulrExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A33CD710FD6082258402F5D /* libPods-TubulrExtension.a */; };
@@ -84,6 +86,8 @@
 		146649C51A86BCE00089E048 /* VimeoTest_mainpage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = VimeoTest_mainpage.html; sourceTree = "<group>"; };
 		146649C61A86BCE00089E048 /* VimeoTest_catthoughts.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = VimeoTest_catthoughts.html; sourceTree = "<group>"; };
 		23852FB9CED180D14A077714 /* Pods-TubulrExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubulrExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TubulrExtension/Pods-TubulrExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		25CF1B891A97C24E00EB380A /* UIColor+TubulrColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TubulrColors.h"; sourceTree = "<group>"; };
+		25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TubulrColors.m"; sourceTree = "<group>"; };
 		5A33CD710FD6082258402F5D /* libPods-TubulrExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TubulrExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		76EB5CBDBF2E094388ED3AF8 /* Pods-TubulrExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubulrExtensionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TubulrExtensionTests/Pods-TubulrExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		85C16E930C562A5ED14084C5 /* Pods-TubulrExtensionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubulrExtensionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TubulrExtensionTests/Pods-TubulrExtensionTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -201,6 +205,17 @@
 			name = "Tubulr View";
 			sourceTree = "<group>";
 		};
+		25CF1B841A97BF6000EB380A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B1639AE01A81E37D00D0722E /* ServiceAPIManager.h */,
+				B1639AE11A81E37D00D0722E /* ServiceAPIManager.m */,
+				25CF1B891A97C24E00EB380A /* UIColor+TubulrColors.h */,
+				25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		B10CA6D31A7758F1009CB360 /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,8 +228,7 @@
 		B19D19EF1A70B1F100563321 = {
 			isa = PBXGroup;
 			children = (
-				B1639AE01A81E37D00D0722E /* ServiceAPIManager.h */,
-				B1639AE11A81E37D00D0722E /* ServiceAPIManager.m */,
+				25CF1B841A97BF6000EB380A /* Common */,
 				B19D19FA1A70B1F100563321 /* Main App */,
 				B19D1A261A70B24500563321 /* Extension */,
 				B19D19F91A70B1F100563321 /* Products */,
@@ -573,6 +587,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1639AE21A81E37D00D0722E /* ServiceAPIManager.m in Sources */,
+				25CF1B8B1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */,
 				B19D1A041A70B1F100563321 /* ViewController.m in Sources */,
 				B19D1A011A70B1F100563321 /* AppDelegate.m in Sources */,
 				B19D19FE1A70B1F100563321 /* main.m in Sources */,
@@ -595,6 +610,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				141F6A601A889D8E00D64D12 /* TubulrVideoTableView.m in Sources */,
+				25CF1B8C1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */,
 				B153E7CF1A70E8FD006CCBCA /* TubularView.m in Sources */,
 				B19D1A2B1A70B24500563321 /* ShareViewController.m in Sources */,
 				B1639AE71A81E48700D0722E /* VimeoVideo.m in Sources */,
