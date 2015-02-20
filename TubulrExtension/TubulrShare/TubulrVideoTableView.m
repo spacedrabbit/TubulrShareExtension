@@ -7,8 +7,11 @@
 //
 
 #import "TubulrVideoTableView.h"
+#import "TubulrTableViewCell.h"
 
-@interface TubulrVideoTableView()
+static NSString * const kCellIdentifier = @"cell";
+
+@interface TubulrVideoTableView() <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) UIView * parentView;
 
@@ -23,7 +26,7 @@
  **********************************************************************************/
 
  /**     Something `Something`.
-  *      @p presentTableViewI:
+  *      @p presentTableViewIn:
   *      @brief Creates instance of TubulrVideoTableView
   *      @copyright Louis Tur 2015
   *
@@ -44,11 +47,18 @@
         _containerView  = [[UIView alloc] init];
         _videoTableView = [[UITableView alloc] initWithFrame:CGRectZero
                                                        style:UITableViewStylePlain];
+        
+        [_videoTableView registerClass:[TubulrTableViewCell class] forCellReuseIdentifier:kCellIdentifier];
+        [_videoTableView setDataSource:self];
+        [_videoTableView setDelegate:self];
+        [_videoTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 5)];
+        [_videoTableView setSeparatorColor:[UIColor colorWithRed:97.0/255.0 green:97.0/255.0 blue:97.0/255.0 alpha:1.0]];
+        
         if (view) {
             _parentView = view;
             [_parentView addSubview:self];
         }
-        
+        [self setUpAllConstraints];
         [self registerForNotifications];
     }
     return self;
@@ -59,7 +69,7 @@
 
 
 #pragma mark - OVERRIDDEN UIVIEW CLASSES
--(void)updateConstraints{
+-(void)setUpAllConstraints{
     
     [_alignmentView     setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_containerView     setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -69,9 +79,11 @@
     [_alignmentView addSubview:_containerView];
     [_containerView addSubview:_videoTableView];
     
-    [_alignmentView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.35]];
-    [_containerView setBackgroundColor:[UIColor colorWithRed:42.0/255.00 green:42.0/255.00 blue:42.0/255.00 alpha:1.0]];
-    [_containerView.layer setCornerRadius:10.0];
+    [_alignmentView  setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.35]];
+    [_containerView  setBackgroundColor:[UIColor colorWithRed:42.0/255.00 green:42.0/255.00 blue:42.0/255.00 alpha:1.0]];
+    [_videoTableView setBackgroundColor:[UIColor blackColor]];
+    
+    [_containerView.layer  setCornerRadius:10.0];
     [_videoTableView.layer setCornerRadius:10.0];
     
     [self setUpConstraintsForAlignmentView];
@@ -85,6 +97,27 @@
 #pragma mark - NOTIFICATIONS
 -(void) registerForNotifications{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustConstraintsForKeyboard:) name:UIKeyboardDidShowNotification object:nil];
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    TubulrTableViewCell * cell;
+    if (!cell) {
+        cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+    }
+    cell.textLabel.text = @"Add a video:";
+    
+    return cell;
+}
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 10;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 120.0;
 }
 
 /*---------------------------------------------------------------------------------------
@@ -140,7 +173,6 @@
                                                                        constant:-(applicationFrame.size.height * .30)]                              ];
     [self addConstraints:contentConstraints];
 }
-
 -(void)setUpConstraintsForTableView{
     
     NSArray * tableViewConstraints = @[ [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[table]-|" options:0 metrics:nil views:@{@"table":_videoTableView}],
