@@ -48,6 +48,18 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 4
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// FontAwesomeKit/Core
+#define COCOAPODS_POD_AVAILABLE_FontAwesomeKit_Core
+#define COCOAPODS_VERSION_MAJOR_FontAwesomeKit_Core 2
+#define COCOAPODS_VERSION_MINOR_FontAwesomeKit_Core 2
+#define COCOAPODS_VERSION_PATCH_FontAwesomeKit_Core 0
+
+// FontAwesomeKit/FontAwesome
+#define COCOAPODS_POD_AVAILABLE_FontAwesomeKit_FontAwesome
+#define COCOAPODS_VERSION_MAJOR_FontAwesomeKit_FontAwesome 2
+#define COCOAPODS_VERSION_MINOR_FontAwesomeKit_FontAwesome 2
+#define COCOAPODS_VERSION_PATCH_FontAwesomeKit_FontAwesome 0
+
 // MCSwipeTableViewCell
 #define COCOAPODS_POD_AVAILABLE_MCSwipeTableViewCell
 #define COCOAPODS_VERSION_MAJOR_MCSwipeTableViewCell 2

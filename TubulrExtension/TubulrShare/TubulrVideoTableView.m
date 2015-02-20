@@ -107,6 +107,7 @@ static NSString * const kCellIdentifier = @"cell";
         cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
     }
     cell.textLabel.text = @"Add a video:";
+
     
     return cell;
 }

@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 com.SRLabs. All rights reserved.
 //
 
+#import <MCSwipeTableViewCell/MCSwipeTableViewCell.h>
 #import <UIKit/UIKit.h>
 
-@interface TubulrTableViewCell : UITableViewCell
+@interface TubulrTableViewCell : MCSwipeTableViewCell
 
 @end
