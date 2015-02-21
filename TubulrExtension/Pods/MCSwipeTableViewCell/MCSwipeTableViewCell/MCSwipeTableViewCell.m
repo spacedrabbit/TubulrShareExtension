@@ -448,6 +448,7 @@ typedef NS_ENUM(NSUInteger, MCSwipeTableViewCellDirection) {
     color = self.defaultColor ? self.defaultColor : [UIColor clearColor];
     
     if (percentage > _firstTrigger && _modeForState1) {
+        NSLog(@"Color percent: %f for left->right", percentage);
         color = _color1;
     }
     
@@ -585,6 +586,8 @@ typedef NS_ENUM(NSUInteger, MCSwipeTableViewCellDirection) {
     // Color
     UIColor *color = [self colorWithPercentage:_currentPercentage];
     if (color) {
+        
+        NSLog(@"Current percentage for background color: %f", percentage);
         [_colorIndicatorView setBackgroundColor:color];
     }
     

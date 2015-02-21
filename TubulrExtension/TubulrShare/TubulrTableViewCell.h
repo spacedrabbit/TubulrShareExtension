@@ -8,6 +8,7 @@
 
 #import <MCSwipeTableViewCell/MCSwipeTableViewCell.h>
 #import <UIKit/UIKit.h>
+#import <RMSwipeTableViewCell/RMSwipeTableViewCell.h>
 
 @interface TubulrTableViewCell : MCSwipeTableViewCell
 
