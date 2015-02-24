@@ -7,6 +7,9 @@ target 'TubulrExtension' do
 
 	pod 'hpple', '~> 0.2'
 	pod 'AFNetworking', '~> 2.4.1'
+	pod 'MCSwipeTableViewCell', '~> 2.1'
+	pod 'FontAwesomeKit/FontAwesome'
+	pod 'RMSwipeTableViewCell'
 
 end
 
@@ -21,6 +24,9 @@ target 'TubulrShare' do
 
 	pod 'hpple', '~> 0.2'
 	pod 'AFNetworking', '~> 2.4.1'
+	pod 'MCSwipeTableViewCell', '~> 2.1'
+	pod 'FontAwesomeKit/FontAwesome'
+	pod 'RMSwipeTableViewCell'
 
 end
 

@@ -8,7 +8,6 @@
 
 
 #import "TubularView.h"
-#import "TubulrVideoURL_TableVC.h"
 #import "TubulrVideoTableView.h"
 #import "ShareViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
