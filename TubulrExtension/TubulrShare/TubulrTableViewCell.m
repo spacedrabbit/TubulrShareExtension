@@ -29,7 +29,6 @@ CGFloat const kIconSizes = 40.0;
 }
 
 -(void)setUpCellContentFormat{
-    // TODO: Create UIColor Category
     
     [self setSelectionStyle     : UITableViewCellSelectionStyleNone              ];
     [self setBackgroundColor    :[UIColor srl_mainBackgroundDarkGrayColor        ]];
