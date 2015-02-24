@@ -1,11 +1,11 @@
 PODS:
   - AFNetworking (2.4.1):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-    - AFNetworking/UIKit
+    - AFNetworking/NSURLConnection (= 2.4.1)
+    - AFNetworking/NSURLSession (= 2.4.1)
+    - AFNetworking/Reachability (= 2.4.1)
+    - AFNetworking/Security (= 2.4.1)
+    - AFNetworking/Serialization (= 2.4.1)
+    - AFNetworking/UIKit (= 2.4.1)
   - AFNetworking/NSURLConnection (2.4.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
@@ -21,19 +21,30 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - Expecta (0.2.4)
+  - FontAwesomeKit/Core (2.2.0)
+  - FontAwesomeKit/FontAwesome (2.2.0):
+    - FontAwesomeKit/Core
   - hpple (0.2.0)
-  - Specta (0.2.1)
+  - MCSwipeTableViewCell (2.1.2)
+  - RMSwipeTableViewCell (0.6)
+  - Specta (0.3.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.4.1)
   - Expecta (~> 0.2.4)
+  - FontAwesomeKit/FontAwesome
   - hpple (~> 0.2)
+  - MCSwipeTableViewCell (~> 2.1)
+  - RMSwipeTableViewCell
   - Specta
 
 SPEC CHECKSUMS:
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5
+  FontAwesomeKit: 61f0b4f12f1b11b7489bc7d1507a8692547f3857
   hpple: f4eb7c21a8db83ec264e5d614ec7509e10e5adec
-  Specta: 9141310f46b1f68b676650ff2854e1ed0b74163a
+  MCSwipeTableViewCell: 8e78ff197ab06ba7bfd5c938a00149de8a33afa9
+  RMSwipeTableViewCell: 150021ada2d86b21db04556f08351462bd58919b
+  Specta: 698a58ffa5ec948327d3b92eab50ca58d7f4fbe8
 
-COCOAPODS: 0.34.4
+COCOAPODS: 0.35.0
