@@ -90,7 +90,8 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 
 @property (strong, nonatomic) NSUserDefaults    * sharedTubulrDefaults;
 
-@property (strong, nonatomic) TubularView       * shareVideoView;
+@property (strong, nonatomic) TubularView           * shareVideoView;
+@property (strong, nonatomic) TubulrVideoTableView  * videoTableView;
 
 @property (strong, nonatomic) NSMutableSet      * youtubeLinksSet;
 @property (strong, nonatomic) NSMutableSet      * vimeoLinksSet;
@@ -118,7 +119,7 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
     
     
     // --------- INSPECTING AND RETRIEVING VIDEO IDS --------- //
-    //[self scrapeForAllLinks];
+    [self scrapeForAllLinks];
     
     // --------- REGEX FULL TESTING --------- //
     //[self testRegexPatternsForYoutubeAndVimeo];
@@ -128,10 +129,8 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 -(void)presentTubularView
 {
     // --------- LOADING NIB --------- //
-    //self.shareVideoView = [TubularView presentInViewController:self];
-    
-    TubulrVideoTableView * tableView = [TubulrVideoTableView presentTableViewIn:self.view];
-    
+    //self.shareVideoView = [TubularView presentInViewController:self]; //single item
+    self.videoTableView = [TubulrVideoTableView presentTableViewIn:self.view]; //multi item
 }
 
 
@@ -205,37 +204,38 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
         NSString * youtubeResult    = [self extractMediaLink:currentLink withRegex: youtubeRegexTwoCaptures ];
         NSString * vimeoResult      = [self extractMediaLink:currentLink withRegex: vimeoTwoCaptures        ];
         
-        
-        // -- KVO Update of Youtube Links -- //
-        [self willChangeValueForKey:@"youtubeLinksSet"
-                    withSetMutation:NSKeyValueUnionSetMutation
-                       usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
-        
         if ( youtubeResult.length )
         {
-             [self.youtubeLinksSet addObject:youtubeResult];
-        }
-        
-        [self didChangeValueForKey:@"youtubeLinksSet"
-                   withSetMutation:NSKeyValueUnionSetMutation
-                      usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
         // -- KVO Update of Youtube Links -- //
-       
-        
-        
-        // -- KVO Update of Vimeo Links -- //
-        [self willChangeValueForKey:@"vimeoLinksSet"
-                    withSetMutation:NSKeyValueUnionSetMutation
-                       usingObjects:[NSSet setWithObjects:vimeoResult, nil ]];
+            [self willChangeValueForKey:@"youtubeLinksSet"
+                        withSetMutation:NSKeyValueUnionSetMutation
+                           usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
+            
+            
+                 [self.youtubeLinksSet addObject:youtubeResult];
+            
+            
+            [self didChangeValueForKey:@"youtubeLinksSet"
+                       withSetMutation:NSKeyValueUnionSetMutation
+                          usingObjects:[NSSet setWithObjects:youtubeResult, nil ]];
+            // -- KVO Update of Youtube Links -- //
+        }
         
         if ( vimeoResult.length ) {
-            [self.vimeoLinksSet addObject:vimeoResult];
-        }
-        
-        [self didChangeValueForKey:@"vimeoLinksSet"
-                   withSetMutation:NSKeyValueUnionSetMutation
-                      usingObjects:[NSSet setWithObjects:vimeoResult, nil ]];
-        // -- KVO Update of Vimeo Links -- //
+            // -- KVO Update of Vimeo Links -- //
+            [self willChangeValueForKey:@"vimeoLinksSet"
+                        withSetMutation:NSKeyValueUnionSetMutation
+                           usingObjects:[NSSet setWithObjects:vimeoResult, nil ]];
+            
+            
+                [self.vimeoLinksSet addObject:vimeoResult];
+            
+            
+            [self didChangeValueForKey:@"vimeoLinksSet"
+                       withSetMutation:NSKeyValueUnionSetMutation
+                          usingObjects:[NSSet setWithObjects:vimeoResult, nil ]];
+            // -- KVO Update of Vimeo Links -- //
+            }
         
     }
     
@@ -298,10 +298,12 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 {
     //return to run code as a result of the KVO
     if ([keyPath isEqualToString:@"youtubeLinksSet"]) {
-       // NSLog(@"Found equal");
+        NSLog(@"Youtube linkSet change found");
+    }else if( [keyPath isEqualToString:@"vimeoLinksSet"]){
+        NSLog(@"Vimeo links set found");
+    }else{
+        NSLog(@"Some other keypath: %@", change);
     }
-    
-    //NSLog(@"%@", change);
     
 }
 
@@ -419,9 +421,9 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 
 -(void)displayPasteBoardURL:(NSString *)url
 {
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        self.shareVideoView.addVideoURLTextField.text = url;
-    }];
+    //[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+      //  self.shareVideoView.addVideoURLTextField.text = url;
+    //}];
 }
 
 /**********************************************************************************
