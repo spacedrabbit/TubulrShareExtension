@@ -145,8 +145,9 @@ typedef NS_ENUM(NSUInteger, MCSwipeTableViewCellDirection) {
 - (void)prepareForReuse {
     [super prepareForReuse];
     
-    [self uninstallSwipingView];
-    [self initDefaults];
+    // TODO: Investigate further the need for these calls. Ends up breaking the cells
+    //[self uninstallSwipingView];
+    //[self initDefaults];
 }
 
 #pragma mark - View Manipulation
@@ -448,7 +449,6 @@ typedef NS_ENUM(NSUInteger, MCSwipeTableViewCellDirection) {
     color = self.defaultColor ? self.defaultColor : [UIColor clearColor];
     
     if (percentage > _firstTrigger && _modeForState1) {
-        NSLog(@"Color percent: %f for left->right", percentage);
         color = _color1;
     }
     

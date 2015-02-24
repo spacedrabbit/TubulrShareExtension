@@ -8,6 +8,7 @@
 
 #import "TubulrVideoTableView.h"
 #import "TubulrTableViewCell.h"
+#import "UIColor+TubulrColors.h"
 
 static NSString * const kCellIdentifier = @"cell";
 
@@ -52,12 +53,14 @@ static NSString * const kCellIdentifier = @"cell";
         [_videoTableView setDataSource:self];
         [_videoTableView setDelegate:self];
         [_videoTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 5)];
-        [_videoTableView setSeparatorColor:[UIColor colorWithRed:97.0/255.0 green:97.0/255.0 blue:97.0/255.0 alpha:1.0]];
+        [_videoTableView setSeparatorColor:[UIColor srl_closeButtonGrayColor]];
         
+        // if a view is passed, we will use this to setup constraints
         if (view) {
             _parentView = view;
             [_parentView addSubview:self];
         }
+        
         [self setUpAllConstraints];
         [self registerForNotifications];
     }
@@ -68,9 +71,10 @@ static NSString * const kCellIdentifier = @"cell";
 }
 
 
-#pragma mark - OVERRIDDEN UIVIEW CLASSES
+#pragma mark - SETUP CONSTRAINTS
 -(void)setUpAllConstraints{
     
+    // basic setup
     [_alignmentView     setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_containerView     setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_videoTableView    setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -80,10 +84,10 @@ static NSString * const kCellIdentifier = @"cell";
     [_containerView addSubview:_videoTableView];
     
     [_alignmentView  setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.35]];
-    [_containerView  setBackgroundColor:[UIColor colorWithRed:42.0/255.00 green:42.0/255.00 blue:42.0/255.00 alpha:1.0]];
-    [_videoTableView setBackgroundColor:[UIColor blackColor]];
+    [_containerView  setBackgroundColor:[UIColor srl_mainBackgroundDarkGrayColor]];
+    [_videoTableView setBackgroundColor:[UIColor srl_textFieldLightGrayColor]];
     
-    [_containerView.layer  setCornerRadius:10.0];
+    [_containerView.layer  setCornerRadius:15.0];
     [_videoTableView.layer setCornerRadius:10.0];
     
     [self setUpConstraintsForAlignmentView];
@@ -185,6 +189,7 @@ static NSString * const kCellIdentifier = @"cell";
     
 }
 
+// TODO: Adjust for kb
 #pragma mark Adjusting for KB
 -(void)adjustConstraintsForKeyboard:(NSNotification *)notification{
     
