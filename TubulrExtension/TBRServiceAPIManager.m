@@ -8,7 +8,7 @@
 
 
 #import <AFNetworking/AFNetworking.h>
-#import "ServiceAPIManager.h"
+#import "TBRServiceAPIManager.h"
 #import "VimeoVideo.h"
 #import "YoutubeVideo.h"
 
@@ -21,7 +21,7 @@ static NSString * const kYoutubeKey = @"AIzaSyDJ_x5uyoKi_D7mEOpTlj_iHiFznXrwbZk"
 static NSString * const kYoutubeiOSKey = @"AIzaSyBlLSmK672BOmM1IlCamiD27R-RNRjuV_k"; // ios-specific
 static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.com/youtube/v3/videos";
 
-@interface ServiceAPIManager ()
+@interface TBRServiceAPIManager ()
 
 @property (strong, nonatomic) AFHTTPSessionManager * vimeoSessionManager;
 @property (strong, nonatomic) AFHTTPSessionManager * youtubeSessionsManager;
@@ -29,14 +29,14 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
 @end
 
 
-@implementation ServiceAPIManager
+@implementation TBRServiceAPIManager
 
 +(instancetype) sharedAPIManager{
 
-    static ServiceAPIManager * _sharedAPIManager = nil;
+    static TBRServiceAPIManager * _sharedAPIManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedAPIManager = [[ServiceAPIManager alloc] init];
+        _sharedAPIManager = [[TBRServiceAPIManager alloc] init];
     });
     
     return _sharedAPIManager;

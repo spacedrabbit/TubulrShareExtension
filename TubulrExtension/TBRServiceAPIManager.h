@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class VimeoVideo, YoutubeVideo;
-@interface ServiceAPIManager : NSObject
+@interface TBRServiceAPIManager : NSObject
 
 +(instancetype) sharedAPIManager;
 -(void) verifyVimeoForID:(NSString *)videoID withHandler:(void(^)(VimeoVideo *))complete;

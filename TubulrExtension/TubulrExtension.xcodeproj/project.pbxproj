@@ -14,6 +14,8 @@
 		146649C41A86BCD60089E048 /* YoutubeTest_buzzfeed.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C31A86BCD60089E048 /* YoutubeTest_buzzfeed.html */; };
 		146649C71A86BCE00089E048 /* VimeoTest_mainpage.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C51A86BCE00089E048 /* VimeoTest_mainpage.html */; };
 		146649C81A86BCE00089E048 /* VimeoTest_catthoughts.html in Resources */ = {isa = PBXBuildFile; fileRef = 146649C61A86BCE00089E048 /* VimeoTest_catthoughts.html */; };
+		14A83CDA1AA81A14009094F7 /* TBRDeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A83CD91AA81A14009094F7 /* TBRDeviceManager.m */; };
+		14A83CDB1AA81A14009094F7 /* TBRDeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A83CD91AA81A14009094F7 /* TBRDeviceManager.m */; };
 		25CF1B8B1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */; };
 		25CF1B8C1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */; };
 		7B3EF8CA8AE35B28ABEDA658 /* libPods-TubulrExtensionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE86017F5B4D359B62977FC /* libPods-TubulrExtensionTests.a */; };
@@ -22,8 +24,8 @@
 		B10CA6D51A775997009CB360 /* TubulrShareTestsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = B10CA6D41A775997009CB360 /* TubulrShareTestsSpec.m */; };
 		B153E7CC1A70E5DB006CCBCA /* TubularView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B153E7CB1A70E5DB006CCBCA /* TubularView.xib */; };
 		B153E7CF1A70E8FD006CCBCA /* TubularView.m in Sources */ = {isa = PBXBuildFile; fileRef = B153E7CE1A70E8FD006CCBCA /* TubularView.m */; };
-		B1639AE21A81E37D00D0722E /* ServiceAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1639AE11A81E37D00D0722E /* ServiceAPIManager.m */; };
-		B1639AE31A81E37D00D0722E /* ServiceAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1639AE11A81E37D00D0722E /* ServiceAPIManager.m */; };
+		B1639AE21A81E37D00D0722E /* TBRServiceAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1639AE11A81E37D00D0722E /* TBRServiceAPIManager.m */; };
+		B1639AE31A81E37D00D0722E /* TBRServiceAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1639AE11A81E37D00D0722E /* TBRServiceAPIManager.m */; };
 		B1639AE61A81E48700D0722E /* VimeoVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B1639AE51A81E48700D0722E /* VimeoVideo.m */; };
 		B1639AE71A81E48700D0722E /* VimeoVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B1639AE51A81E48700D0722E /* VimeoVideo.m */; };
 		B19388231A83589500771FC4 /* YoutubeVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B19388221A83589500771FC4 /* YoutubeVideo.m */; };
@@ -85,6 +87,8 @@
 		146649C31A86BCD60089E048 /* YoutubeTest_buzzfeed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YoutubeTest_buzzfeed.html; sourceTree = "<group>"; };
 		146649C51A86BCE00089E048 /* VimeoTest_mainpage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = VimeoTest_mainpage.html; sourceTree = "<group>"; };
 		146649C61A86BCE00089E048 /* VimeoTest_catthoughts.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = VimeoTest_catthoughts.html; sourceTree = "<group>"; };
+		14A83CD81AA81A14009094F7 /* TBRDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBRDeviceManager.h; sourceTree = "<group>"; };
+		14A83CD91AA81A14009094F7 /* TBRDeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBRDeviceManager.m; sourceTree = "<group>"; };
 		23852FB9CED180D14A077714 /* Pods-TubulrExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubulrExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TubulrExtension/Pods-TubulrExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		25CF1B891A97C24E00EB380A /* UIColor+TubulrColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TubulrColors.h"; sourceTree = "<group>"; };
 		25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TubulrColors.m"; sourceTree = "<group>"; };
@@ -96,8 +100,8 @@
 		B153E7CB1A70E5DB006CCBCA /* TubularView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TubularView.xib; sourceTree = "<group>"; };
 		B153E7CD1A70E8FD006CCBCA /* TubularView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TubularView.h; sourceTree = "<group>"; };
 		B153E7CE1A70E8FD006CCBCA /* TubularView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TubularView.m; sourceTree = "<group>"; };
-		B1639AE01A81E37D00D0722E /* ServiceAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceAPIManager.h; sourceTree = "<group>"; };
-		B1639AE11A81E37D00D0722E /* ServiceAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceAPIManager.m; sourceTree = "<group>"; };
+		B1639AE01A81E37D00D0722E /* TBRServiceAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBRServiceAPIManager.h; sourceTree = "<group>"; };
+		B1639AE11A81E37D00D0722E /* TBRServiceAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBRServiceAPIManager.m; sourceTree = "<group>"; };
 		B1639AE41A81E48700D0722E /* VimeoVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VimeoVideo.h; path = ../VimeoVideo.h; sourceTree = "<group>"; };
 		B1639AE51A81E48700D0722E /* VimeoVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VimeoVideo.m; path = ../VimeoVideo.m; sourceTree = "<group>"; };
 		B19388211A83589500771FC4 /* YoutubeVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoutubeVideo.h; path = ../YoutubeVideo.h; sourceTree = "<group>"; };
@@ -205,13 +209,23 @@
 			name = "Tubulr View";
 			sourceTree = "<group>";
 		};
+		14A83CDC1AA81A53009094F7 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				25CF1B891A97C24E00EB380A /* UIColor+TubulrColors.h */,
+				25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		25CF1B841A97BF6000EB380A /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				B1639AE01A81E37D00D0722E /* ServiceAPIManager.h */,
-				B1639AE11A81E37D00D0722E /* ServiceAPIManager.m */,
-				25CF1B891A97C24E00EB380A /* UIColor+TubulrColors.h */,
-				25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */,
+				14A83CDC1AA81A53009094F7 /* Categories */,
+				B1639AE01A81E37D00D0722E /* TBRServiceAPIManager.h */,
+				B1639AE11A81E37D00D0722E /* TBRServiceAPIManager.m */,
+				14A83CD81AA81A14009094F7 /* TBRDeviceManager.h */,
+				14A83CD91AA81A14009094F7 /* TBRDeviceManager.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -586,7 +600,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1639AE21A81E37D00D0722E /* ServiceAPIManager.m in Sources */,
+				B1639AE21A81E37D00D0722E /* TBRServiceAPIManager.m in Sources */,
+				14A83CDA1AA81A14009094F7 /* TBRDeviceManager.m in Sources */,
 				25CF1B8B1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */,
 				B19D1A041A70B1F100563321 /* ViewController.m in Sources */,
 				B19D1A011A70B1F100563321 /* AppDelegate.m in Sources */,
@@ -610,11 +625,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				141F6A601A889D8E00D64D12 /* TubulrVideoTableView.m in Sources */,
+				14A83CDB1AA81A14009094F7 /* TBRDeviceManager.m in Sources */,
 				25CF1B8C1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */,
 				B153E7CF1A70E8FD006CCBCA /* TubularView.m in Sources */,
 				B19D1A2B1A70B24500563321 /* ShareViewController.m in Sources */,
 				B1639AE71A81E48700D0722E /* VimeoVideo.m in Sources */,
-				B1639AE31A81E37D00D0722E /* ServiceAPIManager.m in Sources */,
+				B1639AE31A81E37D00D0722E /* TBRServiceAPIManager.m in Sources */,
 				14530AAB1A97023700470262 /* TubulrTableViewCell.m in Sources */,
 				B19388241A83589500771FC4 /* YoutubeVideo.m in Sources */,
 			);

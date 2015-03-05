@@ -54,7 +54,7 @@ NSString * const kTubulrHelveticaNeue = @"Helvetica-Neue";
     // -- MCSwipeTableViewCell subclassing setup -- //
     [self setShouldDrag         :YES    ];
     [self setShouldAnimateIcons :YES    ];
-    [self setDamping            :20.0   ];  // how much "spring" effect
+    [self setDamping            :0.0    ];  // how much "spring" effect
     [self setDelegate           :self   ];
     
     /*  bit of a hack to get this to work as I wanted
@@ -102,7 +102,7 @@ NSString * const kTubulrHelveticaNeue = @"Helvetica-Neue";
     [self setBackgroundColor    :[UIColor srl_mainBackgroundDarkGrayColor        ]];
     [self.textLabel setTextColor:[UIColor srl_closeButtonGrayColor               ]];
     [self.textLabel setFont     :[UIFont fontWithName:kTubulrHelveticaNeue size:kFontSizes]];
-    [self.layer setCornerRadius :kCornerRadius];
+    //[self.layer setCornerRadius :kCornerRadius];
     [self.layer setMasksToBounds:YES]; //clips the highlighted state to bounds of the cell
     
     
