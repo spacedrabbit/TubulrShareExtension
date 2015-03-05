@@ -15,6 +15,8 @@
 @property (strong, nonatomic) UITableView * videoTableView;
 
 +(instancetype) presentTableViewIn:(UIView *)view;
++(instancetype) presentTableViewIn:(UIView*)view animated:(BOOL)animated;
+
 -(instancetype)initWithFrame:(CGRect)frame inView:(UIView *)view;
 
 @end

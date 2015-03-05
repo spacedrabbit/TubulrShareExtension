@@ -15,6 +15,7 @@ static NSString * const kCellIdentifier = @"cell";
 @interface TubulrVideoTableView() <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) UIView * parentView;
+@property (nonatomic) BOOL shouldAnimate;
 
 @end
 
@@ -32,18 +33,24 @@ static NSString * const kCellIdentifier = @"cell";
   *      @copyright Louis Tur 2015
   *
   */
-+(instancetype)presentTableViewIn:(UIView *)view{
-    TubulrVideoTableView * classObject = [[[TubulrVideoTableView class] alloc] initWithFrame:view.frame inView:view];
++(instancetype)presentTableViewIn:(UIView*)view animated:(BOOL)animated{
+    TubulrVideoTableView * classObject = [[[TubulrVideoTableView class] alloc] initWithFrame:view.frame inView:view animated:animated];
     return classObject;
+}
++(instancetype)presentTableViewIn:(UIView *)view{
+    return [TubulrVideoTableView presentTableViewIn:view animated:NO];
 }
 
 /**     initWithFrame:inView: is the designated initializer
  *
  *      this will add an instance of TubulrTableView in the view passed
  */
--(instancetype)initWithFrame:(CGRect)frame inView:(UIView *)view{
+-(instancetype)initWithFrame:(CGRect)frame inView:(UIView *)view animated:(BOOL)animated{
     self = [super initWithFrame:frame];
     if (self) {
+        
+        _shouldAnimate = animated ? YES : NO;
+        
         _alignmentView  = [[UIView alloc] init];
         _containerView  = [[UIView alloc] init];
         _videoTableView = [[UITableView alloc] initWithFrame:CGRectZero
@@ -53,7 +60,7 @@ static NSString * const kCellIdentifier = @"cell";
         [_videoTableView setDataSource:self];
         [_videoTableView setDelegate:self];
         [_videoTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 5)];
-        [_videoTableView setSeparatorColor:[UIColor srl_closeButtonGrayColor]];
+        [_videoTableView setSeparatorColor:[UIColor clearColor]];
         
         // if a view is passed, we will use this to setup constraints
         if (view) {
@@ -63,6 +70,13 @@ static NSString * const kCellIdentifier = @"cell";
         
         [self setUpAllConstraints];
         [self registerForNotifications];
+        
+        if (_shouldAnimate) {
+            [UIView animateWithDuration:.6 animations:^{
+                [_alignmentView setAlpha:1.0];
+            }];
+        }
+        
     }
     return self;
 }
@@ -73,6 +87,10 @@ static NSString * const kCellIdentifier = @"cell";
 
 #pragma mark - SETUP CONSTRAINTS
 -(void)setUpAllConstraints{
+    
+    if (self.shouldAnimate) {
+       [_alignmentView setAlpha:0.0];
+    }
     
     // basic setup
     [_alignmentView     setTranslatesAutoresizingMaskIntoConstraints:NO];

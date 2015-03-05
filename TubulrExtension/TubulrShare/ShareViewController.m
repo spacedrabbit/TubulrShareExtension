@@ -10,14 +10,15 @@
 #import "TubularView.h"
 #import "TubulrVideoTableView.h"
 #import "ShareViewController.h"
-#import <MobileCoreServices/MobileCoreServices.h>
-#import <TFHpple.h>
-#import <AFNetworking/UIButton+AFNetworking.h>
 
 #import "ServiceAPIManager.h"
-
 #import "VimeoVideo.h"
 #import "YoutubeVideo.h"
+
+#import <TFHpple.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <AFNetworking/UIButton+AFNetworking.h>
+
 // ------------------------------------------------------------------------------------------//
 // will need to get these from NSUserDefaults
 static NSString * const kTubulrUser     = @"";
@@ -127,9 +128,8 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 
 -(void)presentTubularView
 {
-    // --------- LOADING NIB --------- //
-    //self.shareVideoView = [TubularView presentInViewController:self]; //single item
-    self.videoTableView = [TubulrVideoTableView presentTableViewIn:self.view]; //multi item
+    // --------- LOADING Views --------- //
+    self.videoTableView = [TubulrVideoTableView presentTableViewIn:self.view animated:YES];
 }
 
 
