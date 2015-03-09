@@ -8,15 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TubulrVideoTableView : UIView
+@interface TBRMultipleVideosTableView : UIView
 
 @property (strong, nonatomic) UIView * alignmentView;
 @property (strong, nonatomic) UIView * containerView;
 @property (strong, nonatomic) UITableView * videoTableView;
 
-+(instancetype) presentTableViewIn:(UIView *)view;
 +(instancetype) presentTableViewIn:(UIView*)view animated:(BOOL)animated;
-
--(instancetype)initWithFrame:(CGRect)frame inView:(UIView *)view;
+-(instancetype)initWithFrame:(CGRect)frame inView:(UIView *)view animated:(BOOL)animated;
 
 @end

@@ -6,20 +6,20 @@
 //  Copyright (c) 2015 com.SRLabs. All rights reserved.
 //
 
-#import "TubulrVideoTableView.h"
-#import "TubulrTableViewCell.h"
+#import "TBRMultipleVideosTableView.h"
+#import "TBRTableViewCell.h"
 #import "UIColor+TubulrColors.h"
 
 static NSString * const kCellIdentifier = @"cell";
 
-@interface TubulrVideoTableView() <UITableViewDataSource, UITableViewDelegate>
+@interface TBRMultipleVideosTableView() <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) UIView * parentView;
 @property (nonatomic) BOOL shouldAnimate;
 
 @end
 
-@implementation TubulrVideoTableView
+@implementation TBRMultipleVideosTableView
 
 /**********************************************************************************
  *
@@ -34,14 +34,10 @@ static NSString * const kCellIdentifier = @"cell";
   *
   */
 +(instancetype)presentTableViewIn:(UIView*)view animated:(BOOL)animated{
-    TubulrVideoTableView * classObject = [[[TubulrVideoTableView class] alloc] initWithFrame:view.frame inView:view animated:animated];
+    TBRMultipleVideosTableView * classObject = [[[TBRMultipleVideosTableView class] alloc] initWithFrame:view.frame inView:view animated:animated];
     return classObject;
 }
-+(instancetype)presentTableViewIn:(UIView *)view{
-    return [TubulrVideoTableView presentTableViewIn:view animated:NO];
-}
-
-/**     initWithFrame:inView: is the designated initializer
+/**     SEL initWithFrame:inView:animated: is the designated initializer
  *
  *      this will add an instance of TubulrTableView in the view passed
  */
@@ -56,7 +52,7 @@ static NSString * const kCellIdentifier = @"cell";
         _videoTableView = [[UITableView alloc] initWithFrame:CGRectZero
                                                        style:UITableViewStylePlain];
         
-        [_videoTableView registerClass:[TubulrTableViewCell class] forCellReuseIdentifier:kCellIdentifier];
+        [_videoTableView registerClass:[TBRTableViewCell class] forCellReuseIdentifier:kCellIdentifier];
         [_videoTableView setDataSource:self];
         [_videoTableView setDelegate:self];
         [_videoTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 5)];
@@ -81,7 +77,7 @@ static NSString * const kCellIdentifier = @"cell";
     return self;
 }
 -(instancetype)initWithFrame:(CGRect)frame{
-    return [self initWithFrame:frame inView:nil];
+    return [self initWithFrame:frame inView:nil animated:NO];
 }
 
 
@@ -124,7 +120,7 @@ static NSString * const kCellIdentifier = @"cell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    TubulrTableViewCell * cell;
+    TBRTableViewCell * cell;
     if (!cell) {
         cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
     }

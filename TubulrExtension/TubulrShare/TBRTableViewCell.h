@@ -10,6 +10,6 @@
 #import <UIKit/UIKit.h>
 #import <RMSwipeTableViewCell/RMSwipeTableViewCell.h>
 
-@interface TubulrTableViewCell : MCSwipeTableViewCell
+@interface TBRTableViewCell : MCSwipeTableViewCell
 
 @end

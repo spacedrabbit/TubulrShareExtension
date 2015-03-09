@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 com.SRLabs. All rights reserved.
 //
 
-#import "TubulrTableViewCell.h"
+#import "TBRTableViewCell.h"
 #import "UIColor+TubulrColors.h"
 
 #import <FontAwesomeKit/FAKFontAwesome.h>
@@ -17,11 +17,11 @@ CGFloat const kCornerRadius = 10.0;
 
 NSString * const kTubulrHelveticaNeue = @"Helvetica-Neue";
 
-@interface TubulrTableViewCell () <MCSwipeTableViewCellDelegate>
+@interface TBRTableViewCell () <MCSwipeTableViewCellDelegate>
 
 @end
 
-@implementation TubulrTableViewCell
+@implementation TBRTableViewCell
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
