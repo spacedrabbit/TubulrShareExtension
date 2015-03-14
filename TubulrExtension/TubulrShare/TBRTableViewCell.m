@@ -36,7 +36,7 @@ NSString * const kTubulrHelveticaNeue = @"Helvetica-Neue";
 
 -(void) addSwipeIcons{
     
-    // | heart ---- watch | //
+    // | heart <----> watch | //
     FAKFontAwesome * heartIcon      = [FAKFontAwesome heartIconWithSize :kIconSizes];
     FAKFontAwesome * watchLaterIcon = [FAKFontAwesome clockOIconWithSize:kIconSizes];
     [heartIcon      addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
@@ -54,7 +54,7 @@ NSString * const kTubulrHelveticaNeue = @"Helvetica-Neue";
     // -- MCSwipeTableViewCell subclassing setup -- //
     [self setShouldDrag         :YES    ];
     [self setShouldAnimateIcons :YES    ];
-    [self setDamping            :0.0    ];  // how much "spring" effect
+    [self setDamping            :1.0    ];  // how much "spring" effect.. not really working
     [self setDelegate           :self   ];
     
     /*  bit of a hack to get this to work as I wanted

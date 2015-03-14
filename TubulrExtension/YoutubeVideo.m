@@ -7,6 +7,7 @@
 //
 
 #import "YoutubeVideo.h"
+#import "TBRQueueManager.h"
 
 @interface YoutubeVideo ()
 
@@ -38,7 +39,12 @@
         _channelTitle = json[@"snippet"][@"channelTitle"];
         
     }
+    
     return self;
+}
+
+-(NSString *) videoURL{
+    return [NSString stringWithFormat:@"http://youtube.com/%@", self.videoID];
 }
 
 @end

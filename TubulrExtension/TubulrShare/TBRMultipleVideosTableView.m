@@ -9,6 +9,10 @@
 #import "TBRMultipleVideosTableView.h"
 #import "TBRTableViewCell.h"
 #import "UIColor+TubulrColors.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
+
+#import "YoutubeVideo.h"
+#import "VimeoVideo.h"
 
 static NSString * const kCellIdentifier = @"cell";
 
@@ -16,6 +20,8 @@ static NSString * const kCellIdentifier = @"cell";
 
 @property (weak, nonatomic) UIView * parentView;
 @property (nonatomic) BOOL shouldAnimate;
+
+@property (strong, nonatomic) NSMutableArray * videosArray;
 
 @end
 
@@ -46,6 +52,7 @@ static NSString * const kCellIdentifier = @"cell";
     if (self) {
         
         _shouldAnimate = animated ? YES : NO;
+        _videosArray = [[NSMutableArray alloc] init];
         
         _alignmentView  = [[UIView alloc] init];
         _containerView  = [[UIView alloc] init];
@@ -68,7 +75,7 @@ static NSString * const kCellIdentifier = @"cell";
         [self registerForNotifications];
         
         if (_shouldAnimate) {
-            [UIView animateWithDuration:.6 animations:^{
+            [UIView animateWithDuration:.3 animations:^{
                 [_alignmentView setAlpha:1.0];
             }];
         }
@@ -117,6 +124,20 @@ static NSString * const kCellIdentifier = @"cell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustConstraintsForKeyboard:) name:UIKeyboardDidShowNotification object:nil];
 }
 
+-(void)addYoutubeVideoToTable:(YoutubeVideo *)video{
+    [self addVideoToArray:video];
+}
+-(void)addVimeoVideoToTable:(VimeoVideo *)video{
+    [self addVideoToArray:video];
+}
+-(void) addVideoToArray:(id)video{
+    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self.videosArray addObject:video];
+        [self.videoTableView reloadData];
+    }];
+    
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -124,16 +145,41 @@ static NSString * const kCellIdentifier = @"cell";
     if (!cell) {
         cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
     }
-    cell.textLabel.text = @"Add a video:";
-
     
+    
+    if ([self.videosArray count]) {
+        
+        UIImageView * videoThumbnailView;
+        id currentVideo = [self.videosArray objectAtIndex:indexPath.row];
+        
+        if ([currentVideo isKindOfClass:[YoutubeVideo class]]) {
+            YoutubeVideo * youtubeVideo = (YoutubeVideo *)currentVideo;
+            NSURL * videoThumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", youtubeVideo.imgURL_120x90]];
+            videoThumbnailView = [[UIImageView alloc] initWithFrame:cell.bounds];
+            [videoThumbnailView setImageWithURL:videoThumbURL];
+            
+            [cell.contentView addSubview:videoThumbnailView];
+            
+        }else if ([currentVideo isKindOfClass:[VimeoVideo class]]){
+            VimeoVideo * vimeoVideo = (VimeoVideo *)currentVideo;
+            NSURL * videoThumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", vimeoVideo.imgURL_100x75]];
+            videoThumbnailView = [[UIImageView alloc] initWithFrame:cell.bounds];
+            
+            [videoThumbnailView setImageWithURL:videoThumbURL];
+            
+            [cell.contentView addSubview:videoThumbnailView];
+        }
+    }else{
+        cell.textLabel.text = @"Video should have img";
+    }
+ 
     return cell;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return [self.videosArray count] > 0 ? self.videosArray.count : 1;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 120.0;
@@ -217,8 +263,6 @@ static NSString * const kCellIdentifier = @"cell";
     
 }
 +(BOOL)requiresConstraintBasedLayout{
-    return YES;
-    // Custom views should override this to return YES if they
-    // can not layout correctly using autoresizing.
+    return YES;// custom views that use Autolayout return YES
 }
 @end

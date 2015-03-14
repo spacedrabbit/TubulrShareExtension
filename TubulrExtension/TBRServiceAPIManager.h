@@ -12,6 +12,7 @@
 @interface TBRServiceAPIManager : NSObject
 
 +(instancetype) sharedAPIManager;
+
 -(void) verifyVimeoForID:(NSString *)videoID withHandler:(void(^)(VimeoVideo *))complete;
 -(void) verifyYouTubeForID:(NSString *)videoID withHandler:(void(^)(YoutubeVideo *)) complete;
 @end

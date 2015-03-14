@@ -18,5 +18,6 @@
 @property (strong, nonatomic) NSString * channelID;
 
 -(instancetype)initWithResponse:(NSDictionary *)json;
+-(NSString *)videoURL; //convinience
 
 @end

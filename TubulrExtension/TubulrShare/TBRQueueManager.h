@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kTBRYoutubeQueue;
+extern NSString * const kTBRVimeoQueue;
+extern NSString * const kTBRMainQueue;
+extern NSString * const kTBRBackgroundQueue;
+
+extern NSString * const kTBRYoutubeObserver;
+extern NSString * const kTBRVimeoObserver;
+
 @interface TBRQueueManager : NSObject
 
 +(instancetype)sharedQueueManager;

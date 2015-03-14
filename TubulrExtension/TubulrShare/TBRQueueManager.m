@@ -8,10 +8,13 @@
 
 #import "TBRQueueManager.h"
 
-static NSString * const kTBRYoutubeQueue = @"com.TBRQueue.youtube";
-static NSString * const kTBRVimeoQueue = @"com.TBRQueue.vimeo";
-static NSString * const kTBRMainQueue = @"com.TBRQueue.main";
-static NSString * const kTBRBackgroundQueue = @"com.TBRQueue.background";
+NSString * const kTBRYoutubeQueue = @"com.TBRQueue.youtube";
+NSString * const kTBRVimeoQueue = @"com.TBRQueue.vimeo";
+NSString * const kTBRMainQueue = @"com.TBRQueue.main";
+NSString * const kTBRBackgroundQueue = @"com.TBRQueue.background";
+
+NSString * const kTBRYoutubeObserver = @"youtube";
+NSString * const kTBRVimeoObserver = @"vimeo";
 
 @interface TBRQueueManager ()
 

@@ -74,11 +74,10 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
         else if (videoResponse.statusCode == 404){
             NSLog(@"404'd on Vimeo");
         }
-        //NSLog(@"The response: %@", videoResponse);
     }
                                                                     failure:^(NSURLSessionDataTask *task, NSError *error)
     {
-        NSLog(@"Failure: %@", error);
+        NSLog(@"Failure on Vimeo Query: %@", error);
     }];
     [videoVerificationTask resume];
 }
@@ -86,7 +85,7 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
 -(void) verifyYouTubeForID:(NSString *)videoID withHandler:(void(^)(YoutubeVideo *)) complete{
     [self.youtubeSessionsManager.responseSerializer setAcceptableContentTypes:[NSSet setWithArray:@[@"application/json"]]];
     
-    __block NSInteger numberOfResults = 0;
+    //__block NSInteger numberOfResults = 0;
     NSURLSessionDataTask * videoVerificationTask = [self.youtubeSessionsManager GET:@""
                                                                          parameters:@{ @"key"   : kYoutubeKey,
                                                                                        @"part"  : @"snippet,id,contentDetails,player",
@@ -95,28 +94,31 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
     {
         NSHTTPURLResponse * videoResponse = (NSHTTPURLResponse *)task.response;
         NSDictionary * jsonResponse = (NSDictionary *)responseObject;
-        numberOfResults = (long)jsonResponse[@"pageInfo"][@"totalResults"];
-       
+        NSNumber * numberOfResults = jsonResponse[@"pageInfo"][@"totalResults"];
+        NSLog(@"FICK");
         
-        if ( (videoResponse.statusCode == 200) ) // you can have a 200 with 0 results
+        if ( (videoResponse.statusCode == 200) && [numberOfResults integerValue] ) // you can have a 200 with 0 results
         {
-            NSLog(@"200 code");
-            YoutubeVideo * locatedVideo = [[YoutubeVideo alloc] initWithResponse:jsonResponse];
+            NSLog(@"YouTube 200 code");
+            YoutubeVideo * locatedVideo = [[YoutubeVideo alloc] initWithResponse:jsonResponse[@"items"][0]];
             complete(locatedVideo);
         }
         else if (videoResponse.statusCode == 404)
         {
-            NSLog(@"404: Video not found");
+            NSLog(@"Youtube 404: Video not found");
         }
         else
         {
             NSLog(@"Status code: %lu", videoResponse.statusCode);
-            NSLog(@"Number of results: %li", numberOfResults);
+            NSLog(@"Number of results: %li", [numberOfResults integerValue]);
         }
+        
+        complete(nil);
     }
                                                                             failure:^(NSURLSessionDataTask *task, NSError *error)
     {
-        NSLog(@"Failure: %@", error);
+        NSLog(@"Failure in Youtube Query: %@", error);
+        complete(nil);
     }];
     
     [videoVerificationTask resume];
