@@ -8,6 +8,7 @@
 
 #import "TBRMultipleVideosTableView.h"
 #import "TBRTableViewCell.h"
+#import "TBRQueueManager.h"
 #import "UIColor+TubulrColors.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
@@ -16,9 +17,15 @@
 
 static NSString * const kCellIdentifier = @"cell";
 
+// we base the overall size on how wide the cells will be
 static CGFloat const kHorizontalMarginPercent = 0.10;
-static CGFloat const kVerticalMarginPercent = 0.20;
+
+// we want 2.5 cells to be visible
 static CGFloat const kNumberOfCellsToDisplay = 2.50;
+
+// 16:9 ratio for cells
+static CGFloat const kScalingWidth = 16.0;
+static CGFloat const kScalingHeight = 9.0;
 
 @interface TBRMultipleVideosTableView() <UITableViewDataSource, UITableViewDelegate>
 
@@ -63,6 +70,7 @@ static CGFloat const kNumberOfCellsToDisplay = 2.50;
         _containerView  = [[UIView alloc] init];
         _videoTableView = [[UITableView alloc] initWithFrame:CGRectZero
                                                        style:UITableViewStylePlain];
+        [_videoTableView setAllowsMultipleSelection:YES];
         
         [_videoTableView registerClass:[TBRTableViewCell class] forCellReuseIdentifier:kCellIdentifier];
         [_videoTableView setDataSource:self];
@@ -137,48 +145,34 @@ static CGFloat const kNumberOfCellsToDisplay = 2.50;
 }
 -(void) addVideoToArray:(id)video{
     
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self.videosArray addObject:video];
+    [self.videosArray addObject:video];
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    dispatch_async(mainQueue, ^{
         [self.videoTableView reloadData];
-    }];
+    });
     
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    TBRTableViewCell * cell;
+    TBRTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     if (!cell) {
-        cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+        cell = [[TBRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
     }
     
-    
     if ([self.videosArray count]) {
-        
-        UIImageView * videoThumbnailView;
+
         id currentVideo = [self.videosArray objectAtIndex:indexPath.row];
-        
         if ([currentVideo isKindOfClass:[YoutubeVideo class]]) {
             
             YoutubeVideo * youtubeVideo = (YoutubeVideo *)currentVideo;
-            NSURL * videoThumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", youtubeVideo.imgURL_480x360]];
-            videoThumbnailView = [[UIImageView alloc] initWithFrame:cell.bounds];
-            [videoThumbnailView setContentMode:UIViewContentModeScaleAspectFill];
-            [cell.contentView addSubview:videoThumbnailView];
-            
-            [videoThumbnailView setImageWithURL:videoThumbURL];
-            
+            [cell updateCellContentsForYoutubeVideo:youtubeVideo];
+
         }else if ([currentVideo isKindOfClass:[VimeoVideo class]]){
             
             VimeoVideo * vimeoVideo = (VimeoVideo *)currentVideo;
-            NSURL * videoThumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", vimeoVideo.imgURL_295x166]];
-            videoThumbnailView = [[UIImageView alloc] initWithFrame:cell.bounds];
-            [videoThumbnailView setContentMode:UIViewContentModeScaleAspectFill];
-            [cell.contentView addSubview:videoThumbnailView];
-            
-            [videoThumbnailView setImageWithURL:videoThumbURL];
+            [cell updateCellContentsForVimeoVideo:vimeoVideo];
         }
-    }else{
-        cell.textLabel.text = @"Video should have img";
     }
  
     return cell;
@@ -187,7 +181,7 @@ static CGFloat const kNumberOfCellsToDisplay = 2.50;
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.videosArray count] > 0 ? self.videosArray.count : 1;
+    return [self.videosArray count] > 0 ? self.videosArray.count : 3;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return [TBRMultipleVideosTableView maxCellHeightFor16x9Ratio];
@@ -236,14 +230,14 @@ static CGFloat const kNumberOfCellsToDisplay = 2.50;
                                                                          toItem:self
                                                                       attribute:NSLayoutAttributeTop
                                                                      multiplier:1
-                                                                       constant:applicationFrame.size.height * kVerticalMarginPercent],
+                                                                       constant:applicationFrame.size.height * [TBRMultipleVideosTableView percentMarginForTopAndBottom]],
                                          [NSLayoutConstraint constraintWithItem:_containerView
                                                                       attribute:NSLayoutAttributeBottom
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:self
                                                                       attribute:NSLayoutAttributeBottom
                                                                      multiplier:1
-                                                                       constant:-(applicationFrame.size.height * kVerticalMarginPercent)]                              ];
+                                                                       constant:-(applicationFrame.size.height * [TBRMultipleVideosTableView percentMarginForTopAndBottom])]                              ];
     [self addConstraints:contentConstraints];
 }
 -(void)setUpConstraintsForTableView{
@@ -272,15 +266,36 @@ static CGFloat const kNumberOfCellsToDisplay = 2.50;
 }
 
 // -- Convinience Methods -- //
-
 +(CGFloat) maxCellHeightFor16x9Ratio{
     
-    CGRect displaySize = [UIScreen mainScreen].applicationFrame;
-    CGFloat tableHeight = displaySize.size.height - (displaySize.size.height * kVerticalMarginPercent * 2);
-    
-    return roundf(tableHeight / kNumberOfCellsToDisplay );
-
+    return [TBRMultipleVideosTableView scalingUnitForSize] * kScalingHeight;
 }
+
++(CGFloat) maxCellWidthFor16x9Ratio{
+    
+    CGRect displaySize = [UIScreen mainScreen].applicationFrame;
+    CGFloat tableWidth = displaySize.size.width - (displaySize.size.width * kHorizontalMarginPercent * 2);
+    
+    return tableWidth;
+}
+
++(CGFloat) scalingUnitForSize{
+    
+    CGFloat cellWidth = [TBRMultipleVideosTableView maxCellWidthFor16x9Ratio];
+    return ( cellWidth / kScalingWidth );
+}
+
++(CGFloat) fullHeightOfVideoTable{
+    return [TBRMultipleVideosTableView maxCellHeightFor16x9Ratio] * kNumberOfCellsToDisplay;
+}
+
++(CGFloat) percentMarginForTopAndBottom{
+    CGFloat screenHeight = [UIScreen mainScreen].applicationFrame.size.height;
+    CGFloat unusedVerticalSpace = screenHeight - [TBRMultipleVideosTableView fullHeightOfVideoTable];
+    
+    return ( unusedVerticalSpace / screenHeight ) / 2.0;
+}
+
 +(BOOL)requiresConstraintBasedLayout{
     return YES; // custom views that use Autolayout return YES
 }
