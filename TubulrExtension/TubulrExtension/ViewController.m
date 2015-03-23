@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "ShareViewController.h"
+#import "TBRExtensionViewController.h"
 
 @interface ViewController ()
 

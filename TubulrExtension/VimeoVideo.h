@@ -14,6 +14,9 @@
 @property (strong, nonatomic) NSString * videoTitle;
 @property (strong, nonatomic) NSString * modifiedTime; // "modified_time" = "2015-02-04T11:05:53+00:00";
 @property (strong, nonatomic) NSString * imgURL_100x75;
+@property (strong, nonatomic) NSString * imgURL_200x150;
+@property (strong, nonatomic) NSString * imgURL_295x166;
+@property (strong, nonatomic) NSString * imgURL_640x359;
 @property (strong, nonatomic) NSString * videoID; // need to add this in
 @property (strong, nonatomic) NSString * videoOwner;
 

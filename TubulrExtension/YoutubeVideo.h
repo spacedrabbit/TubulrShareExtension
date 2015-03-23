@@ -10,13 +10,16 @@
 
 @interface YoutubeVideo : NSObject
 
-@property (strong, nonatomic) NSString * videoID;
-@property (strong, nonatomic) NSString * videoTitle;
-@property (strong, nonatomic) NSString * publishedTime; // "publishedAt": "2015-01-31T23:58:29.000Z",
-@property (strong, nonatomic) NSString * imgURL_120x90;
-@property (strong, nonatomic) NSString * channelTitle;
-@property (strong, nonatomic) NSString * channelID;
+@property (strong, nonatomic, readonly) NSString * videoID;
+@property (strong, nonatomic, readonly) NSString * videoTitle;
+@property (strong, nonatomic, readonly) NSString * publishedTime; // "publishedAt": "2015-01-31T23:58:29.000Z",
+@property (strong, nonatomic, readonly) NSString * imgURL_120x90;
+@property (strong, nonatomic, readonly) NSString * channelTitle;
+@property (strong, nonatomic, readonly) NSString * channelID;
+@property (strong, nonatomic, readonly) NSString * imgURL_320x180;
+@property (strong, nonatomic, readonly) NSString * imgURL_480x360;
 
 -(instancetype)initWithResponse:(NSDictionary *)json;
+-(NSString *)videoURL; //convinience
 
 @end
