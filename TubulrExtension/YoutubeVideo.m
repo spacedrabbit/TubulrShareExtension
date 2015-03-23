@@ -13,8 +13,6 @@
 
 @property (strong, nonatomic) NSString * etag;
 @property (strong, nonatomic) NSString * videoDescription;
-@property (strong, nonatomic) NSString * imgURL_320x180;
-@property (strong, nonatomic) NSString * imgURL_480x360;
 
 @end
 
@@ -27,8 +25,6 @@
         //private
         _etag = json[@"etag"];
         _videoDescription = json[@"snippet"][@"description"];
-        _imgURL_320x180 = json[@"snippet"][@"thumbnails"][@"medium"][@"url"];
-        _imgURL_480x360 = json[@"snippet"][@"thumbnails"][@"high"][@"url"];
         
         //public
         _videoID = json[@"id"];
@@ -37,6 +33,8 @@
         _imgURL_120x90 = json[@"snippet"][@"thumbnails"][@"default"][@"url"];
         _channelID = json[@"snippet"][@"channelId"];
         _channelTitle = json[@"snippet"][@"channelTitle"];
+        _imgURL_320x180 = json[@"snippet"][@"thumbnails"][@"medium"][@"url"];
+        _imgURL_480x360 = json[@"snippet"][@"thumbnails"][@"high"][@"url"];
         
     }
     

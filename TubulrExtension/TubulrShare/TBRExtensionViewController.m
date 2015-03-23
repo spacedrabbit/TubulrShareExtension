@@ -13,6 +13,9 @@
 
 #import "TBRQueueManager.h"
 #import "TBRServiceAPIManager.h"
+
+#import "TBRContextParsingHelper.h"
+
 #import "VimeoVideo.h"
 #import "YoutubeVideo.h"
 
@@ -88,11 +91,8 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 
 @interface TBRExtensionViewController ()<TubularViewDelegate>
 
-@property (strong, nonatomic) UIPasteboard      * sharedPasteBoard;
-
-@property (strong, nonatomic) __block NSURL     * currentPageURL;
-
 @property (strong, nonatomic) NSUserDefaults    * sharedTubulrDefaults;
+@property (strong, nonatomic) UIPasteboard      * sharedPasteBoard;
 
 @property (strong, nonatomic) TubularView           * shareVideoView;
 @property (strong, nonatomic) TBRMultipleVideosTableView  * videoTableView;
@@ -101,8 +101,9 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 @property (strong, nonatomic) NSMutableSet      * vimeoLinksSet;
 @property (strong, nonatomic) NSMutableSet      * videoLinksSet;
 
-@property (strong, nonatomic) NSURL * youtubeHTML;
-@property (strong, nonatomic) NSString * youtubeMainHTML;
+@property (strong, nonatomic) __block NSURL     * currentPageURL;
+@property (strong, nonatomic)         NSURL     * youtubeHTML;
+@property (strong, nonatomic)         NSString  * youtubeMainHTML;
 
 @end
 
@@ -114,8 +115,8 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 -(void)viewDidLoad{
     
     // adds KVO to run link verification as soon as one is found
-    self.videoLinksSet = [[NSMutableSet alloc] init];
-    self.youtubeLinksSet = [[NSMutableSet alloc] init];
+    self.videoLinksSet      = [[NSMutableSet alloc] init];
+    self.youtubeLinksSet    = [[NSMutableSet alloc] init];
     
     [self addObserver:self forKeyPath:kYoutubeObserverKey options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:kVimeoObserverKey  options:NSKeyValueObservingOptionNew context:nil];
@@ -133,8 +134,6 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
     // --------- INSPECTING AND RETRIEVING VIDEO IDS --------- //
     [self scrapeForAllLinks];
     
-    // --------- REGEX FULL TESTING --------- //
-    //[self testRegexPatternsForYoutubeAndVimeo];
 }
 
 -(void)dealloc{
@@ -189,72 +188,12 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
  *
  *
  ***********************************************************************************/
-// checks if the page is official Youtube
--(BOOL)onYouTube:(NSURL *)url{
-    NSString * urlToTest = [url absoluteString];
-    NSRange range1 = [urlToTest rangeOfString:@"youtube" options:NSCaseInsensitiveSearch];
-    NSRange range2 = [urlToTest rangeOfString:@"youtu.be" options:NSCaseInsensitiveSearch];
-    
-    if ( (range1.location == NSNotFound)  &&  (range2.location == NSNotFound)) {
-        return NO;
-    }
-    return YES;
-}
-// checks if the page is official Vimeo
--(BOOL)onVimeo:(NSURL *)url{
-    
-    NSString * urlToTest = [url absoluteString];
-    NSRange range1 = [urlToTest rangeOfString:@"vimeo" options:NSCaseInsensitiveSearch];
-    
-    if (range1.location == NSNotFound) {
-        return NO;
-    }
-    return YES;
-}
 
-/** Adds a video ID URL to self.youtubeLinkSet
- And calls on the KVO notification for the set
- @param The video ID of a valid youtube URL
- */
--(void) addLocatedYoutubeURLToList:(NSString *)youtubeURL{
-    
-    // -- KVO Update of Youtube Links -- //
-    [self willChangeValueForKey:kYoutubeObserverKey
-                withSetMutation:NSKeyValueUnionSetMutation
-                   usingObjects:[NSSet setWithObject:youtubeURL]];
-    
-    [self.youtubeLinksSet addObject:youtubeURL];
-    
-    [self didChangeValueForKey:kYoutubeObserverKey
-               withSetMutation:NSKeyValueUnionSetMutation
-                  usingObjects:[NSSet setWithObject:youtubeURL]];
-    
-}
-/** Adds a video ID URL to self.vimeoLinksSet
-    And calls on the KVO notification for the set
-    @param The video ID of a valid vimeo URL
- */
--(void) addLocatedVimeoURLToList:(NSString *)vimeoURL{
-    
-    // -- KVO Update of Vimeo Links -- //
-    [self willChangeValueForKey:kVimeoObserverKey
-                withSetMutation:NSKeyValueUnionSetMutation
-                   usingObjects:[NSSet setWithObjects:vimeoURL, nil ]];
-    
-    
-    [self.vimeoLinksSet addObject:vimeoURL];
-    
-    
-    [self didChangeValueForKey:kVimeoObserverKey
-               withSetMutation:NSKeyValueUnionSetMutation
-                  usingObjects:[NSSet setWithObjects:vimeoURL, nil ]];
-    // -- KVO Update of Vimeo Links -- //
-}
-/** parseVideoOnYouTubeForHTMLTag runs if
-    1. user is on youtube
-    2. user is not on youtube, but also not on vimeo
- 
-    @param The ahref or iframe tag to check for a valid Youtube URL
+/**  parseVideoOnYouTubeForHTMLTag runs if
+ *      1. user is on youtube
+ *      2. user is not on youtube, but also not on vimeo
+ *
+ *      @param The ahref or iframe tag to check for a valid Youtube URL
  */
 -(void) parseVideosOnYouTubeForHTMLTag:(NSString *)currentLink{
 
@@ -267,10 +206,11 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 }
 
 /** parseVideoOnVimeoForHTMLTag runs if
- 1. user is on vimeo
- 2. user is not on vimeo, but also not on youtube
- 
- @param The ahref or iframe tag to check for a valid Youtube URL
+ *  
+ *      1. user is on vimeo
+ *      2. user is not on vimeo, but also not on youtube
+ *
+ *      @param The ahref or iframe tag to check for a valid Youtube URL
  */
 -(void) parseVideosOnVimeoForHTMLTag:(NSString *)currentLink {
     
@@ -282,9 +222,10 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 
 }
 
-/** Goes through an NSArray of URLs generated from TFHpple pod (href and src values for all <a> and <iframe> tags)
-    @param NSArray * ahreflist : array of URLs
-    @param NSURL * url : current URL user has called extension from
+/**  Goes through an NSArray of URLs generated from TFHpple pod (href and src values for all <a> and <iframe> tags)
+ *
+ *      @param NSArray * ahreflist : array of URLs
+ *      @param NSURL * url : current URL user has called extension from
  */
 -(void) parseMediaURLsFrom:(NSArray *)ahrefList inURL:(NSURL *)url
 {
@@ -300,24 +241,28 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
             currentLink = [linkElement objectForKey:@"src"]; //  <iframe src>
         }
 
-        if ([self onYouTube:url]) {
+        if ([TBRContextParsingHelper currentURLIsYoutube:url]) {
+            
             [self parseVideosOnYouTubeForHTMLTag:currentLink];
-        }else if ([self onVimeo:url]){
+            
+        }else if ([TBRContextParsingHelper currentURLIsVimeo:url]){
+            
             [self parseVideosOnVimeoForHTMLTag:currentLink];
+            
         }
-        else{
-            // run both, on neither youtube nor vimeo
+        else{ // run both, on neither youtube nor vimeo
             [self parseVideosOnVimeoForHTMLTag:currentLink];
             [self parseVideosOnYouTubeForHTMLTag:currentLink];
         }
     }
 }
 
-/** Uses the passed regex string to determine if there is a video ID
-    @param (NSString*)link FQDN URL extracted from HTML/iFrame tag
-    @param (NSString*)regex regex query string
- 
-    @return The extracted video ID, or empty string if none found
+/**  Uses the passed regex string to determine if there is a video ID
+ *
+ *      @param (NSString*)link FQDN URL extracted from HTML/iFrame tag
+ *      @param (NSString*)regex regex query string
+ *
+ *      @return The extracted video ID, or empty string if none found
 */
 -(NSString *) extractMediaLink:(NSString *)link withRegex:(NSString *)regex
 {
@@ -337,12 +282,15 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
     return matchedResults.length ? matchedResults : @"";
 }
 
+
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     
     NSNumber * keyValueChangeType = change[@"kind"];
     if ([keyValueChangeType integerValue] == NSKeyValueChangeInsertion) {
+        
         NSString * retrievedVideoID = (NSString *)[change[@"new"] anyObject];
+        
         if ([keyPath isEqualToString:kYoutubeObserverKey] && retrievedVideoID ) {
             
             [[TBRServiceAPIManager sharedAPIManager] verifyYouTubeForID:retrievedVideoID withHandler:^(YoutubeVideo * locatedVideo) {
@@ -360,7 +308,7 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
             
             [[TBRServiceAPIManager sharedAPIManager] verifyVimeoForID:cleanedString withHandler:^(VimeoVideo * locatedVideo) {
                 if (locatedVideo) {
-                    
+                    [self.videoTableView addVimeoVideoToTable:locatedVideo];
                 }
             }];
         }
@@ -395,7 +343,6 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
          NSItemProvider * currentItem = (NSItemProvider *)obj;
          if([currentItem hasItemConformingToTypeIdentifier:(__bridge NSString *)kUTTypeURL])
          {
-             
              //if an URL is found, its loaded and passed to the completionHandler
              [currentItem loadItemForTypeIdentifier:(__bridge NSString *)kUTTypeURL
                                             options:nil
@@ -404,6 +351,47 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
          
      }];
 }
+
+/** Adds a video ID URL to self.youtubeLinkSet
+ And calls on the KVO notification for the set
+ @param The video ID of a valid youtube URL
+ */
+-(void) addLocatedYoutubeURLToList:(NSString *)youtubeURL{
+    
+    // -- KVO Update of Youtube Links -- //
+    [self willChangeValueForKey:kYoutubeObserverKey
+                withSetMutation:NSKeyValueUnionSetMutation
+                   usingObjects:[NSSet setWithObject:youtubeURL]];
+    
+    [self.youtubeLinksSet addObject:youtubeURL];
+    
+    [self didChangeValueForKey:kYoutubeObserverKey
+               withSetMutation:NSKeyValueUnionSetMutation
+                  usingObjects:[NSSet setWithObject:youtubeURL]];
+    
+}
+
+/** Adds a video ID URL to self.vimeoLinksSet
+ And calls on the KVO notification for the set
+ @param The video ID of a valid vimeo URL
+ */
+-(void) addLocatedVimeoURLToList:(NSString *)vimeoURL{
+    
+    // -- KVO Update of Vimeo Links -- //
+    [self willChangeValueForKey:kVimeoObserverKey
+                withSetMutation:NSKeyValueUnionSetMutation
+                   usingObjects:[NSSet setWithObjects:vimeoURL, nil ]];
+    
+    
+    [self.vimeoLinksSet addObject:vimeoURL];
+    
+    
+    [self didChangeValueForKey:kVimeoObserverKey
+               withSetMutation:NSKeyValueUnionSetMutation
+                  usingObjects:[NSSet setWithObjects:vimeoURL, nil ]];
+    // -- KVO Update of Vimeo Links -- //
+}
+
 #pragma mark -- PASTEBOARD-SPECIFIC --
 -(void) checkPasteBoardForURLs{
     
@@ -482,74 +470,6 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
     //[[NSOperationQueue mainQueue] addOperationWithBlock:^{
       //  self.shareVideoView.addVideoURLTextField.text = url;
     //}];
-}
-
-/**********************************************************************************
- *
- *
- *      REGEX TESTING --- REMOVE BEFORE DEPLOYING
- *
- *
- ***********************************************************************************/
-#pragma mark - Regex testing REMOVE ME LATER -
-
--(void)testRegexPatternsForYoutubeAndVimeo
-{
-    NSURL * youtubeBuzzFeed = [[NSBundle mainBundle] URLForResource:@"YoutubeTest_buzzfeed" withExtension:@"html"];
-    NSURL * youtubeMain = [[NSBundle mainBundle] URLForResource:@"YoutubeTest_mainpage" withExtension:@"html"];
-    NSURL * vimeoMain = [[NSBundle mainBundle] URLForResource:@"VimeoTest_mainpage" withExtension:@"html"];
-    NSURL * vimeoCat = [[NSBundle mainBundle] URLForResource:@"VimeoTest_catthoughts" withExtension:@"html"];
-    
-    NSLog(@"\n\n\n  -------------- YOUTUBE MAIN --------------  \n\n\n");
-    [self testParsingForURL:youtubeMain withRegex:youtubeRegexTwoCaptures];
-    
-    NSLog(@"\n\n\n  -------------- YOUTUBE BUZZFEED --------------  \n\n\n");
-    [self testParsingForURL:youtubeBuzzFeed withRegex:youtubeRegexTwoCaptures];
-    
-    NSLog(@"\n\n\n  -------------- VIMEO MAIN --------------  \n\n\n");
-    [self testParsingForURL:vimeoMain withRegex:vimeoTwoCaptures];
-    
-    NSLog(@"\n\n\n  -------------- VIMEO CATS --------------  \n\n\n");
-    [self testParsingForURL:vimeoCat withRegex:vimeoTwoCaptures];
-}
--(void)testParsingForURL:(NSURL *)url withRegex:(NSString *)regex
-{
-    NSData * urlDataToParse = [NSData dataWithContentsOfURL:url];
-    TFHpple * parser = [TFHpple hppleWithHTMLData:urlDataToParse];
-    NSArray * ahrefNodes = [parser searchWithXPathQuery:@"//a[@href]|//iframe[@src]"]; //array of all <a href>'s
-    
-    NSArray * results = [self testParseMediaFrom:ahrefNodes withRegex:regex];
-    
-    NSLog(@" -------- RESULTS FOUND ------- \n\n\n%@",results);
-    
-}
--(NSArray *)testParseMediaFrom:(NSArray*)ahrefList withRegex:(NSString *)regex
-{
-    
-    NSMutableSet * setOfMatches = [[NSMutableSet alloc] init];
-    NSString * currentLink;
-    for (TFHppleElement * linkElement in ahrefList)
-    {
-        if ( [[linkElement.attributes allKeys] containsObject:@"href"] )
-        {
-            currentLink = [linkElement objectForKey:@"href"]; //  <a href>
-        }
-        else if ( [[linkElement.attributes allKeys] containsObject:@"src"]  )
-        {
-            currentLink = [linkElement objectForKey:@"src"]; //  <iframe src>
-        }
-        else
-        {
-            NSLog(@"Some other weird shit: %@", linkElement);
-        }
-        
-        NSString * results = [self extractMediaLink:currentLink withRegex:regex];
-        if ( results.length ) {
-            [setOfMatches addObject:results];
-        }
-        
-    }
-    return [setOfMatches allObjects];
 }
 
 @end

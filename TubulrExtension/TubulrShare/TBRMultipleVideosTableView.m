@@ -16,6 +16,10 @@
 
 static NSString * const kCellIdentifier = @"cell";
 
+static CGFloat const kHorizontalMarginPercent = 0.10;
+static CGFloat const kVerticalMarginPercent = 0.20;
+static CGFloat const kNumberOfCellsToDisplay = 2.50;
+
 @interface TBRMultipleVideosTableView() <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) UIView * parentView;
@@ -33,8 +37,8 @@ static NSString * const kCellIdentifier = @"cell";
  *
  **********************************************************************************/
 
- /**     Something `Something`.
-  *      @p presentTableViewIn:
+ /**  Instatiates and draws a multiple video table view in the view passed in
+  *
   *      @brief Creates instance of TubulrVideoTableView
   *      @copyright Louis Tur 2015
   *
@@ -43,6 +47,7 @@ static NSString * const kCellIdentifier = @"cell";
     TBRMultipleVideosTableView * classObject = [[[TBRMultipleVideosTableView class] alloc] initWithFrame:view.frame inView:view animated:animated];
     return classObject;
 }
+
 /**     SEL initWithFrame:inView:animated: is the designated initializer
  *
  *      this will add an instance of TubulrTableView in the view passed
@@ -153,21 +158,24 @@ static NSString * const kCellIdentifier = @"cell";
         id currentVideo = [self.videosArray objectAtIndex:indexPath.row];
         
         if ([currentVideo isKindOfClass:[YoutubeVideo class]]) {
-            YoutubeVideo * youtubeVideo = (YoutubeVideo *)currentVideo;
-            NSURL * videoThumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", youtubeVideo.imgURL_120x90]];
-            videoThumbnailView = [[UIImageView alloc] initWithFrame:cell.bounds];
-            [videoThumbnailView setImageWithURL:videoThumbURL];
             
+            YoutubeVideo * youtubeVideo = (YoutubeVideo *)currentVideo;
+            NSURL * videoThumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", youtubeVideo.imgURL_480x360]];
+            videoThumbnailView = [[UIImageView alloc] initWithFrame:cell.bounds];
+            [videoThumbnailView setContentMode:UIViewContentModeScaleAspectFill];
             [cell.contentView addSubview:videoThumbnailView];
+            
+            [videoThumbnailView setImageWithURL:videoThumbURL];
             
         }else if ([currentVideo isKindOfClass:[VimeoVideo class]]){
+            
             VimeoVideo * vimeoVideo = (VimeoVideo *)currentVideo;
-            NSURL * videoThumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", vimeoVideo.imgURL_100x75]];
+            NSURL * videoThumbURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", vimeoVideo.imgURL_295x166]];
             videoThumbnailView = [[UIImageView alloc] initWithFrame:cell.bounds];
+            [videoThumbnailView setContentMode:UIViewContentModeScaleAspectFill];
+            [cell.contentView addSubview:videoThumbnailView];
             
             [videoThumbnailView setImageWithURL:videoThumbURL];
-            
-            [cell.contentView addSubview:videoThumbnailView];
         }
     }else{
         cell.textLabel.text = @"Video should have img";
@@ -182,7 +190,7 @@ static NSString * const kCellIdentifier = @"cell";
     return [self.videosArray count] > 0 ? self.videosArray.count : 1;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 120.0;
+    return [TBRMultipleVideosTableView maxCellHeightFor16x9Ratio];
 }
 
 /*---------------------------------------------------------------------------------------
@@ -214,28 +222,28 @@ static NSString * const kCellIdentifier = @"cell";
                                                                          toItem:_alignmentView
                                                                       attribute:NSLayoutAttributeLeft
                                                                      multiplier:1
-                                                                       constant:applicationFrame.size.width * .15],
+                                                                       constant:applicationFrame.size.width * kHorizontalMarginPercent],
                                          [NSLayoutConstraint constraintWithItem:_containerView
                                                                       attribute:NSLayoutAttributeRight
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:_alignmentView
                                                                       attribute:NSLayoutAttributeRight
                                                                      multiplier:1
-                                                                       constant:-(applicationFrame.size.width * .15)],
+                                                                       constant:-(applicationFrame.size.width * kHorizontalMarginPercent)],
                                          [NSLayoutConstraint constraintWithItem:_containerView
                                                                       attribute:NSLayoutAttributeTop
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:self
                                                                       attribute:NSLayoutAttributeTop
                                                                      multiplier:1
-                                                                       constant:applicationFrame.size.height * .30],
+                                                                       constant:applicationFrame.size.height * kVerticalMarginPercent],
                                          [NSLayoutConstraint constraintWithItem:_containerView
                                                                       attribute:NSLayoutAttributeBottom
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:self
                                                                       attribute:NSLayoutAttributeBottom
                                                                      multiplier:1
-                                                                       constant:-(applicationFrame.size.height * .30)]                              ];
+                                                                       constant:-(applicationFrame.size.height * kVerticalMarginPercent)]                              ];
     [self addConstraints:contentConstraints];
 }
 -(void)setUpConstraintsForTableView{
@@ -262,7 +270,18 @@ static NSString * const kCellIdentifier = @"cell";
     }
     
 }
+
+// -- Convinience Methods -- //
+
++(CGFloat) maxCellHeightFor16x9Ratio{
+    
+    CGRect displaySize = [UIScreen mainScreen].applicationFrame;
+    CGFloat tableHeight = displaySize.size.height - (displaySize.size.height * kVerticalMarginPercent * 2);
+    
+    return roundf(tableHeight / kNumberOfCellsToDisplay );
+
+}
 +(BOOL)requiresConstraintBasedLayout{
-    return YES;// custom views that use Autolayout return YES
+    return YES; // custom views that use Autolayout return YES
 }
 @end

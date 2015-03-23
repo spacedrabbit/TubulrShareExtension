@@ -18,6 +18,10 @@
 		149D4F411AAD6C2400FACB8D /* TBRQueueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 149D4F3F1AAD6C2400FACB8D /* TBRQueueManager.m */; };
 		14A83CDA1AA81A14009094F7 /* TBRDeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A83CD91AA81A14009094F7 /* TBRDeviceManager.m */; };
 		14A83CDB1AA81A14009094F7 /* TBRDeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A83CD91AA81A14009094F7 /* TBRDeviceManager.m */; };
+		14B77A951ABF993C005B5ECF /* TBRContextParsingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B77A941ABF993C005B5ECF /* TBRContextParsingHelper.m */; };
+		14B77A961ABF993C005B5ECF /* TBRContextParsingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B77A941ABF993C005B5ECF /* TBRContextParsingHelper.m */; };
+		14B77A991ABF99DF005B5ECF /* TBRHTMLRegexTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B77A981ABF99DF005B5ECF /* TBRHTMLRegexTester.m */; };
+		14B77A9A1ABF99DF005B5ECF /* TBRHTMLRegexTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B77A981ABF99DF005B5ECF /* TBRHTMLRegexTester.m */; };
 		25CF1B8B1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */; };
 		25CF1B8C1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */; };
 		7B3EF8CA8AE35B28ABEDA658 /* libPods-TubulrExtensionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE86017F5B4D359B62977FC /* libPods-TubulrExtensionTests.a */; };
@@ -93,6 +97,10 @@
 		149D4F3F1AAD6C2400FACB8D /* TBRQueueManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBRQueueManager.m; sourceTree = "<group>"; };
 		14A83CD81AA81A14009094F7 /* TBRDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBRDeviceManager.h; sourceTree = "<group>"; };
 		14A83CD91AA81A14009094F7 /* TBRDeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBRDeviceManager.m; sourceTree = "<group>"; };
+		14B77A931ABF993C005B5ECF /* TBRContextParsingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBRContextParsingHelper.h; sourceTree = "<group>"; };
+		14B77A941ABF993C005B5ECF /* TBRContextParsingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBRContextParsingHelper.m; sourceTree = "<group>"; };
+		14B77A971ABF99DF005B5ECF /* TBRHTMLRegexTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBRHTMLRegexTester.h; sourceTree = "<group>"; };
+		14B77A981ABF99DF005B5ECF /* TBRHTMLRegexTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBRHTMLRegexTester.m; sourceTree = "<group>"; };
 		23852FB9CED180D14A077714 /* Pods-TubulrExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TubulrExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TubulrExtension/Pods-TubulrExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		25CF1B891A97C24E00EB380A /* UIColor+TubulrColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TubulrColors.h"; sourceTree = "<group>"; };
 		25CF1B8A1A97C24E00EB380A /* UIColor+TubulrColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TubulrColors.m"; sourceTree = "<group>"; };
@@ -222,6 +230,19 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		14B77A9B1ABF9DC9005B5ECF /* Helper Classes */ = {
+			isa = PBXGroup;
+			children = (
+				14B77A971ABF99DF005B5ECF /* TBRHTMLRegexTester.h */,
+				14B77A981ABF99DF005B5ECF /* TBRHTMLRegexTester.m */,
+				14B77A931ABF993C005B5ECF /* TBRContextParsingHelper.h */,
+				14B77A941ABF993C005B5ECF /* TBRContextParsingHelper.m */,
+				149D4F3E1AAD6C2400FACB8D /* TBRQueueManager.h */,
+				149D4F3F1AAD6C2400FACB8D /* TBRQueueManager.m */,
+			);
+			name = "Helper Classes";
+			sourceTree = "<group>";
+		};
 		25CF1B841A97BF6000EB380A /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,8 +334,7 @@
 		B19D1A261A70B24500563321 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				149D4F3E1AAD6C2400FACB8D /* TBRQueueManager.h */,
-				149D4F3F1AAD6C2400FACB8D /* TBRQueueManager.m */,
+				14B77A9B1ABF9DC9005B5ECF /* Helper Classes */,
 				14530AA51A96FECB00470262 /* Models */,
 				B10CA6D31A7758F1009CB360 /* UI Elements */,
 				B19D1A271A70B24500563321 /* Supporting Files */,
@@ -607,10 +627,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1639AE21A81E37D00D0722E /* TBRServiceAPIManager.m in Sources */,
+				14B77A951ABF993C005B5ECF /* TBRContextParsingHelper.m in Sources */,
 				14A83CDA1AA81A14009094F7 /* TBRDeviceManager.m in Sources */,
 				149D4F401AAD6C2400FACB8D /* TBRQueueManager.m in Sources */,
 				25CF1B8B1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */,
 				B19D1A041A70B1F100563321 /* ViewController.m in Sources */,
+				14B77A991ABF99DF005B5ECF /* TBRHTMLRegexTester.m in Sources */,
 				B19D1A011A70B1F100563321 /* AppDelegate.m in Sources */,
 				B19D19FE1A70B1F100563321 /* main.m in Sources */,
 				B1639AE61A81E48700D0722E /* VimeoVideo.m in Sources */,
@@ -632,10 +654,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				141F6A601A889D8E00D64D12 /* TBRMultipleVideosTableView.m in Sources */,
+				14B77A961ABF993C005B5ECF /* TBRContextParsingHelper.m in Sources */,
 				14A83CDB1AA81A14009094F7 /* TBRDeviceManager.m in Sources */,
 				149D4F411AAD6C2400FACB8D /* TBRQueueManager.m in Sources */,
 				25CF1B8C1A97C24E00EB380A /* UIColor+TubulrColors.m in Sources */,
 				B153E7CF1A70E8FD006CCBCA /* TubularView.m in Sources */,
+				14B77A9A1ABF99DF005B5ECF /* TBRHTMLRegexTester.m in Sources */,
 				B19D1A2B1A70B24500563321 /* TBRExtensionViewController.m in Sources */,
 				B1639AE71A81E48700D0722E /* VimeoVideo.m in Sources */,
 				B1639AE31A81E37D00D0722E /* TBRServiceAPIManager.m in Sources */,

@@ -10,6 +10,7 @@ target 'TubulrExtension' do
 	pod 'MCSwipeTableViewCell', '~> 2.1'
 	pod 'FontAwesomeKit/FontAwesome'
 	pod 'RMSwipeTableViewCell'
+	pod 'CocoaLumberjack'
 
 end
 
@@ -27,6 +28,7 @@ target 'TubulrShare' do
 	pod 'MCSwipeTableViewCell', '~> 2.1'
 	pod 'FontAwesomeKit/FontAwesome'
 	pod 'RMSwipeTableViewCell'
+	pod 'CocoaLumberjack'
 
 end
 

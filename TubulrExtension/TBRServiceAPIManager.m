@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 com.SRLabs. All rights reserved.
 //
 
-
+#import <CocoaLumberjack/CocoaLumberjack.h>
 #import <AFNetworking/AFNetworking.h>
 #import "TBRServiceAPIManager.h"
 #import "VimeoVideo.h"
@@ -59,7 +59,7 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
 -(void) verifyVimeoForID:(NSString *)videoID withHandler:(void(^)(VimeoVideo *))complete
 {
     
-    [self.vimeoSessionManager.requestSerializer setValue:kVimeoToken forHTTPHeaderField:@"Authorization"];
+    [self.vimeoSessionManager.requestSerializer  setValue:kVimeoToken forHTTPHeaderField:@"Authorization"];
     [self.vimeoSessionManager.responseSerializer setAcceptableContentTypes:[NSSet setWithObjects:@"application/vnd.vimeo.video+json", @"application/vnd.vimeo.*+json;version=3.2", @"application/vnd.vimeo.error+json", nil]];
     
     NSURLSessionDataTask * videoVerificationTask = [self.vimeoSessionManager GET:videoID
@@ -68,24 +68,27 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
     {
         NSHTTPURLResponse * videoResponse = (NSHTTPURLResponse *)task.response;
         if (videoResponse.statusCode == 200) {
+            
+            DDLogDebug(@"Response received for Vimeo check");
+            
             VimeoVideo * locatedVideo = [[VimeoVideo alloc] initWithResponse:responseObject];
             complete(locatedVideo);
         }
         else if (videoResponse.statusCode == 404){
-            NSLog(@"404'd on Vimeo");
+            DDLogError(@"404'd on Vimeo");
         }
     }
                                                                     failure:^(NSURLSessionDataTask *task, NSError *error)
     {
-        NSLog(@"Failure on Vimeo Query: %@", error);
+        DDLogError(@"Failure on Vimeo Query: %@", error);
     }];
     [videoVerificationTask resume];
 }
 
 -(void) verifyYouTubeForID:(NSString *)videoID withHandler:(void(^)(YoutubeVideo *)) complete{
+    
     [self.youtubeSessionsManager.responseSerializer setAcceptableContentTypes:[NSSet setWithArray:@[@"application/json"]]];
     
-    //__block NSInteger numberOfResults = 0;
     NSURLSessionDataTask * videoVerificationTask = [self.youtubeSessionsManager GET:@""
                                                                          parameters:@{ @"key"   : kYoutubeKey,
                                                                                        @"part"  : @"snippet,id,contentDetails,player",
@@ -95,29 +98,29 @@ static NSString * const kYoutubeBaseVideoQueuryURL = @"https://www.googleapis.co
         NSHTTPURLResponse * videoResponse = (NSHTTPURLResponse *)task.response;
         NSDictionary * jsonResponse = (NSDictionary *)responseObject;
         NSNumber * numberOfResults = jsonResponse[@"pageInfo"][@"totalResults"];
-        NSLog(@"FICK");
         
-        if ( (videoResponse.statusCode == 200) && [numberOfResults integerValue] ) // you can have a 200 with 0 results
-        {
-            NSLog(@"YouTube 200 code");
+        DDLogDebug(@"Number of results found: %@", numberOfResults);
+        
+        if ( (videoResponse.statusCode == 200) && [numberOfResults integerValue] ){
+            DDLogDebug(@"YouTube 200 code");
+            
             YoutubeVideo * locatedVideo = [[YoutubeVideo alloc] initWithResponse:jsonResponse[@"items"][0]];
             complete(locatedVideo);
         }
-        else if (videoResponse.statusCode == 404)
-        {
-            NSLog(@"Youtube 404: Video not found");
+        else if (videoResponse.statusCode == 404) {
+            DDLogDebug(@"Youtube 404: Video not found");
         }
         else
         {
-            NSLog(@"Status code: %lu", videoResponse.statusCode);
-            NSLog(@"Number of results: %li", [numberOfResults integerValue]);
+            DDLogDebug(@"Status code: %lu", videoResponse.statusCode);
+            DDLogDebug(@"Number of results: %li", [numberOfResults integerValue]);
         }
         
         complete(nil);
     }
                                                                             failure:^(NSURLSessionDataTask *task, NSError *error)
     {
-        NSLog(@"Failure in Youtube Query: %@", error);
+        DDLogError(@"Failure in Youtube Query: %@", error);
         complete(nil);
     }];
     
