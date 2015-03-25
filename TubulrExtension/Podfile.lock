@@ -34,6 +34,7 @@ PODS:
     - FontAwesomeKit/Core
   - hpple (0.2.0)
   - MCSwipeTableViewCell (2.1.2)
+  - NewRelicAgent (4.186)
   - RMSwipeTableViewCell (0.6)
   - Specta (0.4.0)
 
@@ -44,6 +45,7 @@ DEPENDENCIES:
   - FontAwesomeKit/FontAwesome
   - hpple (~> 0.2)
   - MCSwipeTableViewCell (~> 2.1)
+  - NewRelicAgent
   - RMSwipeTableViewCell
   - Specta
 
@@ -54,6 +56,7 @@ SPEC CHECKSUMS:
   FontAwesomeKit: 61f0b4f12f1b11b7489bc7d1507a8692547f3857
   hpple: f4eb7c21a8db83ec264e5d614ec7509e10e5adec
   MCSwipeTableViewCell: 8e78ff197ab06ba7bfd5c938a00149de8a33afa9
+  NewRelicAgent: 3ad10d9fe34dc0bffa1f2a1d50793d607b62823a
   RMSwipeTableViewCell: 150021ada2d86b21db04556f08351462bd58919b
   Specta: 1df326d6ec48603c77f507a0ab1f89ad2df1c582
 

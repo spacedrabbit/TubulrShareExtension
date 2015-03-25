@@ -81,27 +81,35 @@ NSString * const kTubulrHelveticaNeue = @"Helvetica-Neue Bold";
     self.color3 = [UIColor srl_watchBlueColor];
     self.color4 = [UIColor srl_watchBlueColor];
     
-    typeof(self) __weak weakSelf = self;
+    typeof(self) __weak weakHeartSelf = self;
     [self setSwipeGestureWithView:heartImageView
                             color:[UIColor srl_heartPinkColor]
                              mode:MCSwipeTableViewCellModeSwitch
                             state:MCSwipeTableViewCellState1
                   completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
      {
-         TBRTableViewCell * currentCell = (TBRTableViewCell *)cell;
-         currentCell.currentTubulrStatusLabel.attributedText = [weakSelf.heartIcon attributedString];
-         NSLog(@"Swiped heart?");
-         // handle "heart" swipe
+         typeof(self) __strong strongSelf = weakHeartSelf;
+         if (strongSelf) {
+             TBRTableViewCell * currentCell = (TBRTableViewCell *)cell;
+             currentCell.currentTubulrStatusLabel.attributedText = [strongSelf.heartIcon attributedString];
+             NSLog(@"Swiped heart?");
+             // handle "heart" swipe
+         }
      }];
+    typeof(self) __weak weakWatchSelf = self;
     [self setSwipeGestureWithView:watchLaterImageView
                             color:[UIColor srl_watchBlueColor]
                              mode:MCSwipeTableViewCellModeSwitch
                             state:MCSwipeTableViewCellState3
                   completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
      {
-         weakSelf.currentTubulrStatusLabel.attributedText = [weakSelf.watchIcon attributedString];
-         NSLog(@"Swiped watch?");
-         // handle "watch" swipe
+         typeof(self) __strong strongSelf = weakWatchSelf;
+         if (strongSelf) {
+             TBRTableViewCell * currentCell = (TBRTableViewCell *)cell;
+             currentCell.currentTubulrStatusLabel.attributedText = [strongSelf.watchIcon attributedString];
+             NSLog(@"Swiped watch?");
+           // handle "watch" swipe
+         }
      }];
 
     
@@ -206,7 +214,7 @@ NSString * const kTubulrHelveticaNeue = @"Helvetica-Neue Bold";
 
 - (void) adjustContentOverlayVisibility{
 
-    CGFloat alphaValue;
+    __block CGFloat alphaValue;
     if (self.contentOverlayIsHidden) {
         alphaValue = 0.0;
     }else{
@@ -214,7 +222,7 @@ NSString * const kTubulrHelveticaNeue = @"Helvetica-Neue Bold";
     }
     
     [UIView animateWithDuration:.3 animations:^{
-        [_contentOverlayView setAlpha:alphaValue];
+        [self->_contentOverlayView setAlpha:alphaValue];
     }];
     
 }

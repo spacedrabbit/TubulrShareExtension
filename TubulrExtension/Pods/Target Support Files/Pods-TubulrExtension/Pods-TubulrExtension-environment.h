@@ -90,6 +90,12 @@
 #define COCOAPODS_VERSION_MINOR_MCSwipeTableViewCell 1
 #define COCOAPODS_VERSION_PATCH_MCSwipeTableViewCell 2
 
+// NewRelicAgent
+#define COCOAPODS_POD_AVAILABLE_NewRelicAgent
+#define COCOAPODS_VERSION_MAJOR_NewRelicAgent 4
+#define COCOAPODS_VERSION_MINOR_NewRelicAgent 186
+#define COCOAPODS_VERSION_PATCH_NewRelicAgent 0
+
 // RMSwipeTableViewCell
 #define COCOAPODS_POD_AVAILABLE_RMSwipeTableViewCell
 #define COCOAPODS_VERSION_MAJOR_RMSwipeTableViewCell 0

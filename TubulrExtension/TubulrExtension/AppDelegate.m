@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
+#import <NewRelicAgent/NewRelic.h>
 
 @interface AppDelegate ()
 
@@ -17,6 +18,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    //New Relic Init
+    [NewRelicAgent startWithApplicationToken:@"AAc729d1ab5df18e5f81c4a2fcd4f34b115bb3c513"];
     
     //Cocoa Lumberjack inits
     [DDLog addLogger:[DDASLLogger sharedInstance]];

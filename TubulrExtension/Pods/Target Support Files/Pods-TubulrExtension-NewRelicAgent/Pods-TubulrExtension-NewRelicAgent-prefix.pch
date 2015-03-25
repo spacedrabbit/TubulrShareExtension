@@ -1,0 +1,6 @@
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <NewRelicAgent/NewRelic.h>
+#endif
+
+#import "Pods-TubulrExtension-environment.h"

@@ -85,8 +85,8 @@ static NSString * const vimeoTwoCaptures = @"(?:(?:vimeo.com/|clip_|href=\\\"|^/
 }
 
 /** Uses the passed regex string to determine if there is a video ID
- @param (NSString*)link FQDN URL extracted from HTML/iFrame tag
- @param (NSString*)regex regex query string
+ @param link FQDN URL extracted from HTML/iFrame tag
+ @param regex regex query string
  
  @return The extracted video ID, or empty string if none found
  */
